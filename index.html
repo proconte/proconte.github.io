@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laberinto Aleatorio</title>
+    <title>Laberinto Aleatorio con Explorador</title>
     <style>
         body {
             display: flex;
@@ -30,6 +30,7 @@
 
         let grid = [];
         let stack = [];
+        let explorer; // El explorador (círculo ámbar)
 
         class Cell {
             constructor(x, y) {
@@ -46,13 +47,13 @@
                 ctx.strokeStyle = "#fff";
                 ctx.lineWidth = 2;
 
-                // Draw walls
-                if (this.walls[0]) ctx.strokeRect(x, y, cellSize, 0); // Top
-                if (this.walls[1]) ctx.strokeRect(x + cellSize, y, 0, cellSize); // Right
-                if (this.walls[2]) ctx.strokeRect(x, y + cellSize, cellSize, 0); // Bottom
-                if (this.walls[3]) ctx.strokeRect(x, y, 0, cellSize); // Left
+                // Dibujar paredes
+                if (this.walls[0]) ctx.strokeRect(x, y, cellSize, 0); // Superior
+                if (this.walls[1]) ctx.strokeRect(x + cellSize, y, 0, cellSize); // Derecha
+                if (this.walls[2]) ctx.strokeRect(x, y + cellSize, cellSize, 0); // Inferior
+                if (this.walls[3]) ctx.strokeRect(x, y, 0, cellSize); // Izquierda
 
-                // Mark cell as visited
+                // Marcar celda como visitada
                 if (this.visited) {
                     ctx.fillStyle = "#222";
                     ctx.fillRect(x, y, cellSize, cellSize);
@@ -87,8 +88,8 @@
         function removeWalls(a, b) {
             const x = a.x - b.x;
             if (x === 1) {
-                a.walls[3] = false; // Remove left wall of a
-                b.walls[1] = false; // Remove right wall of b
+                a.walls[3] = false; // Eliminar pared izquierda de a
+                b.walls[1] = false; // Eliminar pared derecha de b
             } else if (x === -1) {
                 a.walls[1] = false;
                 b.walls[3] = false;
@@ -96,8 +97,8 @@
 
             const y = a.y - b.y;
             if (y === 1) {
-                a.walls[0] = false; // Remove top wall of a
-                b.walls[2] = false; // Remove bottom wall of b
+                a.walls[0] = false; // Eliminar pared superior de a
+                b.walls[2] = false; // Eliminar pared inferior de b
             } else if (y === -1) {
                 a.walls[2] = false;
                 b.walls[0] = false;
@@ -116,7 +117,7 @@
             stack.push(start);
         }
 
-        function draw() {
+        function drawMaze() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             for (let cell of grid) {
@@ -135,12 +136,45 @@
             }
 
             if (stack.length > 0) {
-                requestAnimationFrame(draw);
+                requestAnimationFrame(drawMaze);
+            } else {
+                explorer = grid[0]; // Una vez terminado el laberinto, colocar al explorador en la posición inicial
+                animateExplorer();
+            }
+        }
+
+        function animateExplorer() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let cell of grid) {
+                cell.draw();
+            }
+
+            // Dibujar el explorador (círculo ámbar)
+            const x = explorer.x * cellSize + cellSize / 2;
+            const y = explorer.y * cellSize + cellSize / 2;
+            ctx.beginPath();
+            ctx.arc(x, y, cellSize / 4, 0, Math.PI * 2);
+            ctx.fillStyle = "orange";
+            ctx.fill();
+
+            const next = explorer.checkNeighbors();
+
+            if (next) {
+                stack.push(explorer);
+                next.visited = true;
+                explorer = next;
+            } else if (stack.length > 0) {
+                explorer = stack.pop();
+            }
+
+            if (stack.length > 0 || explorer !== grid[0]) {
+                requestAnimationFrame(animateExplorer);
             }
         }
 
         setup();
-        draw();
+        drawMaze();
     </script>
 </body>
 </html>
