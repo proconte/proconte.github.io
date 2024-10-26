@@ -36,6 +36,7 @@
         const cellSize = canvas.width / cols;
 
         let grid = [];
+        let stack = [];
         let totalPoints = 0;
         let explorer;
         let puntosRestantes;
@@ -57,10 +58,10 @@
                 ctx.lineWidth = 2;
 
                 // Dibujar paredes
-                if (this.walls[0]) ctx.strokeRect(x, y, cellSize, 0); // Superior
-                if (this.walls[1]) ctx.strokeRect(x + cellSize, y, 0, cellSize); // Derecha
-                if (this.walls[2]) ctx.strokeRect(x, y + cellSize, cellSize, 0); // Inferior
-                if (this.walls[3]) ctx.strokeRect(x, y, 0, cellSize); // Izquierda
+                if (this.walls[0]) ctx.beginPath(), ctx.moveTo(x, y), ctx.lineTo(x + cellSize, y), ctx.stroke(); // Superior
+                if (this.walls[1]) ctx.beginPath(), ctx.moveTo(x + cellSize, y), ctx.lineTo(x + cellSize, y + cellSize), ctx.stroke(); // Derecha
+                if (this.walls[2]) ctx.beginPath(), ctx.moveTo(x, y + cellSize), ctx.lineTo(x + cellSize, y + cellSize), ctx.stroke(); // Inferior
+                if (this.walls[3]) ctx.beginPath(), ctx.moveTo(x, y), ctx.lineTo(x, y + cellSize), ctx.stroke(); // Izquierda
 
                 // Marcar celda como visitada
                 if (this.visited) {
@@ -75,6 +76,25 @@
                     ctx.arc(x + cellSize / 2, y + cellSize / 2, cellSize / 8, 0, Math.PI * 2);
                     ctx.fill();
                 }
+            }
+
+            checkNeighbors() {
+                const neighbors = [];
+
+                const top = grid[index(this.x, this.y - 1)];
+                const right = grid[index(this.x + 1, this.y)];
+                const bottom = grid[index(this.x, this.y + 1)];
+                const left = grid[index(this.x - 1, this.y)];
+
+                if (top && !top.visited) neighbors.push(top);
+                if (right && !right.visited) neighbors.push(right);
+                if (bottom && !bottom.visited) neighbors.push(bottom);
+                if (left && !left.visited) neighbors.push(left);
+
+                if (neighbors.length > 0) {
+                    return neighbors[Math.floor(Math.random() * neighbors.length)];
+                }
+                return undefined;
             }
         }
 
@@ -105,6 +125,7 @@
 
         function setup() {
             grid = [];
+            stack = [];
             totalPoints = 0;
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
@@ -118,7 +139,7 @@
             const start = grid[0];
             start.visited = true;
             explorer = start;
-            stack = [start];
+            stack.push(start);
             drawMaze();
         }
 
