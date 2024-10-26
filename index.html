@@ -1,1 +1,146 @@
-echo "<!DOCTYPE html><html><head><title>Mi sitio</title></head><body><h1>Bienvenidos a proconte.github.io</h1></body></html>" > index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laberinto Aleatorio</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #333;
+        }
+        canvas {
+            border: 2px solid #fff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="laberintoCanvas" width="600" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('laberintoCanvas');
+        const ctx = canvas.getContext('2d');
+        const cols = 20;
+        const rows = 20;
+        const cellSize = canvas.width / cols;
+
+        let grid = [];
+        let stack = [];
+
+        class Cell {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.walls = [true, true, true, true]; // top, right, bottom, left
+                this.visited = false;
+            }
+
+            draw() {
+                const x = this.x * cellSize;
+                const y = this.y * cellSize;
+                
+                ctx.strokeStyle = "#fff";
+                ctx.lineWidth = 2;
+
+                // Draw walls
+                if (this.walls[0]) ctx.strokeRect(x, y, cellSize, 0); // Top
+                if (this.walls[1]) ctx.strokeRect(x + cellSize, y, 0, cellSize); // Right
+                if (this.walls[2]) ctx.strokeRect(x, y + cellSize, cellSize, 0); // Bottom
+                if (this.walls[3]) ctx.strokeRect(x, y, 0, cellSize); // Left
+
+                // Mark cell as visited
+                if (this.visited) {
+                    ctx.fillStyle = "#222";
+                    ctx.fillRect(x, y, cellSize, cellSize);
+                }
+            }
+
+            checkNeighbors() {
+                const neighbors = [];
+
+                const top = grid[index(this.x, this.y - 1)];
+                const right = grid[index(this.x + 1, this.y)];
+                const bottom = grid[index(this.x, this.y + 1)];
+                const left = grid[index(this.x - 1, this.y)];
+
+                if (top && !top.visited) neighbors.push(top);
+                if (right && !right.visited) neighbors.push(right);
+                if (bottom && !bottom.visited) neighbors.push(bottom);
+                if (left && !left.visited) neighbors.push(left);
+
+                if (neighbors.length > 0) {
+                    return neighbors[Math.floor(Math.random() * neighbors.length)];
+                }
+                return undefined;
+            }
+        }
+
+        function index(x, y) {
+            if (x < 0 || y < 0 || x >= cols || y >= rows) return -1;
+            return x + y * cols;
+        }
+
+        function removeWalls(a, b) {
+            const x = a.x - b.x;
+            if (x === 1) {
+                a.walls[3] = false; // Remove left wall of a
+                b.walls[1] = false; // Remove right wall of b
+            } else if (x === -1) {
+                a.walls[1] = false;
+                b.walls[3] = false;
+            }
+
+            const y = a.y - b.y;
+            if (y === 1) {
+                a.walls[0] = false; // Remove top wall of a
+                b.walls[2] = false; // Remove bottom wall of b
+            } else if (y === -1) {
+                a.walls[2] = false;
+                b.walls[0] = false;
+            }
+        }
+
+        function setup() {
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const cell = new Cell(x, y);
+                    grid.push(cell);
+                }
+            }
+            const start = grid[0];
+            start.visited = true;
+            stack.push(start);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let cell of grid) {
+                cell.draw();
+            }
+
+            const current = stack[stack.length - 1];
+            const next = current.checkNeighbors();
+
+            if (next) {
+                next.visited = true;
+                stack.push(next);
+                removeWalls(current, next);
+            } else if (stack.length > 0) {
+                stack.pop();
+            }
+
+            if (stack.length > 0) {
+                requestAnimationFrame(draw);
+            }
+        }
+
+        setup();
+        draw();
+    </script>
+</body>
+</html>
