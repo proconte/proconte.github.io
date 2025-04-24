@@ -1,267 +1,140 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang='es'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laberinto con Explorador y Puntos</title>
+    <meta charset='UTF-8'>
+    <title>Visor y Conversor Markdown</title>
     <style>
+        /* Estilos generales */
         body {
+            font-family: 'Aptos', sans-serif;
+            font-size: 1em;
+            background-color: #2e2e2e;
+            color: #999999;
+            padding: 1em;
+            margin: auto;
+            width: 90vw;
+        }
+        a { color: #c9d1d9; text-decoration: none; }
+
+        /* Zonas de arrastre */
+        .drop-zone {
+            width: 90%;
+            max-width: 800px;
+            height: 200px;
+            margin: 50px auto;
+            border: 2px dashed #888;
+            border-radius: 10px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
-            background-color: #333;
-            color: #fff;
-            font-family: Arial, sans-serif;
+            justify-content: center;
+            font-family: sans-serif;
+            color: #666;
+            text-align: center;
+            cursor: pointer;
         }
-        #info {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-            width: 600px;
+        .drop-zone.hover {
+            border-color: #444;
+            color: #222;
         }
-        canvas {
-            border: 2px solid #fff;
+
+        /* Salida de Markdown */
+        #output {
+            margin-top: 20px;
         }
+        #output h1, #output h2, #output h3, #output h4, #output h5, #output h6 {
+            margin-bottom: 0 !important;
+            color: #b8860b;
+        }
+        #output h1 + p, #output h2 + p, #output h3 + p,
+        #output h4 + p, #output h5 + p, #output h6 + p {
+            margin-top: 0 !important;
+        }
+        #output a { color: #c9d1d9; }
+        pre {
+            position: relative;
+            font-family: 'Terminal', monospace;
+            font-size: calc(1em - 1pt);
+            color: #FFC107;
+            background-color: #3a3a3a;
+            border: 1px solid #30363d;
+            padding: 1em;
+            line-height: 1.4;
+            overflow: auto;
+            border-radius: 10px;
+        }
+        pre code {
+            border: none;
+            background-color: transparent;
+            padding: 0;
+            display: block;
+        }
+        #output code {
+            font-family: 'Terminal', monospace;
+            font-size: calc(1em - 1pt);
+            color: #c9d1d9;
+        }
+        .copy-button {
+            position: absolute;
+            top: 0.25em;
+            right: 0.25em;
+            background: #444;
+            color: #c9d1d9;
+            border: none;
+            padding: 0.25em 0.5em;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+        .copy-button:hover { opacity: 1; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.14/mammoth.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/turndown@7.1.1/dist/turndown.min.js"></script>
+    <script>
+        function decodeText(buffer) {
+            try { return new TextDecoder('utf-8', { fatal: true }).decode(buffer); } catch { return new TextDecoder('windows-1252').decode(buffer); }
+        }
+        function addCopyButtons() {
+            document.querySelectorAll('#output pre').forEach(pre => {
+                if (pre.querySelector('.copy-button')) return;
+                const btn = document.createElement('button'); btn.className='copy-button'; btn.textContent='Copiar';
+                btn.onclick = ()=>{
+                    const txt = pre.querySelector('code')?.innerText || pre.innerText;
+                    navigator.clipboard.writeText(txt).then(()=>btn.textContent='Copiado');
+                    setTimeout(()=>btn.textContent='Copiar',2000);
+                };
+                pre.insertBefore(btn, pre.firstChild);
+            });
+        }
+        window.addEventListener('DOMContentLoaded', ()=>{
+            const viewer=document.getElementById('viewer-zone');
+            const converter=document.getElementById('converter-zone');
+            const docx2md=document.getElementById('docx2md-zone');
+            const output=document.getElementById('output');
+            const inpViewer=document.createElement('input'); inpViewer.type='file'; inpViewer.accept='.md'; inpViewer.style.display='none'; document.body.append(inpViewer);
+            const inpConverter=document.createElement('input'); inpConverter.type='file'; inpConverter.accept='.md'; inpConverter.style.display='none'; document.body.append(inpConverter);
+            const inpDocx=document.createElement('input'); inpDocx.type='file'; inpDocx.accept='.docx'; inpDocx.style.display='none'; document.body.append(inpDocx);
+            function hideZones(){viewer.style.display='none'; converter.style.display='none'; docx2md.style.display='none';}
+            function processViewer(file){ if(!file.name.endsWith('.md')) return; hideZones(); const r=new FileReader(); r.onload=e=>{ const md=decodeText(e.target.result); marked.setOptions({gfm:true,breaks:true}); output.innerHTML=marked.parse(md); addCopyButtons(); }; r.readAsArrayBuffer(file);}            
+            function processConverter(file){ if(!file.name.toLowerCase().endsWith('.md')) return; const r=new FileReader(); r.onload=e=>{ const md=decodeText(e.target.result); const html=marked.parse(md,{gfm:true,breaks:true}); const full=`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:'Aptos',sans-serif;}pre,code{font-family:'Cascadia Code',monospace;}a{color:inherit;text-decoration:none;}</style></head><body>${html}</body></html>`; saveAs(htmlDocx.asBlob(full),file.name.replace(/\.md$/i,'.docx')); }; r.readAsArrayBuffer(file);}            
+            function processDocx(file){ if(!file.name.toLowerCase().endsWith('.docx')) return; hideZones(); const r=new FileReader(); r.onload=async e=>{ try{ const res=await mammoth.convertToHtml({arrayBuffer:e.target.result}); const md=new TurndownService().turndown(res.value); const blob=new Blob([md],{type:'text/markdown'}); saveAs(blob,file.name.replace(/\.docx$/i,'.md')); output.innerHTML=`<pre><code>${md.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</code></pre>`; addCopyButtons(); }catch{ output.textContent='Error en conversión'; }}; r.readAsArrayBuffer(file);}            
+            [viewer,converter,docx2md].forEach(z=>{ ['dragenter','dragover','dragleave','drop'].forEach(evt=>z.addEventListener(evt,e=>{e.preventDefault();e.stopPropagation();})); ['dragenter','dragover'].forEach(evt=>z.addEventListener(evt,()=>z.classList.add('hover'))); ['dragleave','drop'].forEach(evt=>z.addEventListener(evt,()=>z.classList.remove('hover'))); });
+            viewer.ondrop=e=>processViewer(e.dataTransfer.files[0]);
+            converter.ondrop=e=>processConverter(e.dataTransfer.files[0]);
+            docx2md.ondrop=e=>processDocx(e.dataTransfer.files[0]);
+            viewer.onclick=()=>inpViewer.click(); inpViewer.onchange=e=>processViewer(e.target.files[0]);
+            converter.onclick=()=>inpConverter.click(); inpConverter.onchange=e=>processConverter(e.target.files[0]);
+            docx2md.onclick=()=>inpDocx.click(); inpDocx.onchange=e=>processDocx(e.target.files[0]);
+        });
+    </script>
 </head>
 <body>
-    <canvas id="laberintoCanvas" width="600" height="600"></canvas>
-    <div id="info">
-        <div>Puntos restantes: <span id="puntos"></span></div>
-        <div>Pasos: <span id="pasos">0</span></div>
-        <div>Tiempo: <span id="segundos">0</span> segundos</div>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('laberintoCanvas');
-        const ctx = canvas.getContext('2d');
-        const cols = 20;
-        const rows = 20;
-        const cellSize = canvas.width / cols;
-
-        let grid = [];
-        let stack = [];
-        let totalPoints = 0;
-        let explorer;
-        let puntosRestantes;
-        let pasos = 0;
-        let keys = { ArrowUp: false, ArrowRight: false, ArrowDown: false, ArrowLeft: false };
-        let lastMoveTime = 0;
-        let startTime;
-        let gameActive = false;
-
-        class Cell {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.walls = [true, true, true, true]; // top, right, bottom, left
-                this.visited = false;
-                this.hasPoint = true; // Puntos en cada celda
-            }
-
-            draw() {
-                const x = this.x * cellSize;
-                const y = this.y * cellSize;
-                
-                ctx.strokeStyle = "#fff";
-                ctx.lineWidth = 2;
-
-                // Dibujar paredes
-                if (this.walls[0]) ctx.beginPath(), ctx.moveTo(x, y), ctx.lineTo(x + cellSize, y), ctx.stroke(); // Superior
-                if (this.walls[1]) ctx.beginPath(), ctx.moveTo(x + cellSize, y), ctx.lineTo(x + cellSize, y + cellSize), ctx.stroke(); // Derecha
-                if (this.walls[2]) ctx.beginPath(), ctx.moveTo(x, y + cellSize), ctx.lineTo(x + cellSize, y + cellSize), ctx.stroke(); // Inferior
-                if (this.walls[3]) ctx.beginPath(), ctx.moveTo(x, y), ctx.lineTo(x, y + cellSize), ctx.stroke(); // Izquierda
-
-                // Marcar celda como visitada
-                if (this.visited) {
-                    ctx.fillStyle = "#222";
-                    ctx.fillRect(x, y, cellSize, cellSize);
-                }
-
-                // Dibujar punto si tiene
-                if (this.hasPoint) {
-                    ctx.fillStyle = "darkgreen";
-                    ctx.beginPath();
-                    ctx.arc(x + cellSize / 2, y + cellSize / 2, cellSize / 8, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-
-            checkNeighbors() {
-                const neighbors = [];
-
-                const top = grid[index(this.x, this.y - 1)];
-                const right = grid[index(this.x + 1, this.y)];
-                const bottom = grid[index(this.x, this.y + 1)];
-                const left = grid[index(this.x - 1, this.y)];
-
-                if (top && !top.visited) neighbors.push(top);
-                if (right && !right.visited) neighbors.push(right);
-                if (bottom && !bottom.visited) neighbors.push(bottom);
-                if (left && !left.visited) neighbors.push(left);
-
-                if (neighbors.length > 0) {
-                    return neighbors[Math.floor(Math.random() * neighbors.length)];
-                }
-                return undefined;
-            }
-        }
-
-        function index(x, y) {
-            if (x < 0 || y < 0 || x >= cols || y >= rows) return -1;
-            return x + y * cols;
-        }
-
-        function removeWalls(a, b) {
-            const x = a.x - b.x;
-            if (x === 1) {
-                a.walls[3] = false;
-                b.walls[1] = false;
-            } else if (x === -1) {
-                a.walls[1] = false;
-                b.walls[3] = false;
-            }
-
-            const y = a.y - b.y;
-            if (y === 1) {
-                a.walls[0] = false;
-                b.walls[2] = false;
-            } else if (y === -1) {
-                a.walls[2] = false;
-                b.walls[0] = false;
-            }
-        }
-
-        function setup() {
-            grid = [];
-            stack = [];
-            totalPoints = 0;
-            pasos = 0;
-            gameActive = false;
-            document.getElementById("puntos").textContent = 0;
-            document.getElementById("segundos").textContent = 0;
-            document.getElementById("pasos").textContent = 0;
-
-            for (let y = 0; y < rows; y++) {
-                for (let x = 0; x < cols; x++) {
-                    const cell = new Cell(x, y);
-                    grid.push(cell);
-                    totalPoints++;
-                }
-            }
-            puntosRestantes = totalPoints;
-            document.getElementById("puntos").textContent = puntosRestantes;
-            const start = grid[0];
-            start.visited = true;
-            explorer = start;
-            stack.push(start);
-            drawMaze();
-        }
-
-        function drawMaze() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let cell of grid) {
-                cell.draw();
-            }
-
-            const current = stack[stack.length - 1];
-            const next = current.checkNeighbors();
-
-            if (next) {
-                next.visited = true;
-                stack.push(next);
-                removeWalls(current, next);
-            } else if (stack.length > 0) {
-                stack.pop();
-            }
-
-            if (stack.length > 0) {
-                requestAnimationFrame(drawMaze);
-            } else {
-                startTime = Date.now(); // Iniciar el temporizador cuando el laberinto está listo
-                gameActive = true;
-                updateTimer();
-                drawExplorer();
-                requestAnimationFrame(updateExplorer); // Iniciar el movimiento continuo
-            }
-        }
-
-        function drawExplorer() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let cell of grid) {
-                cell.draw();
-            }
-            const x = explorer.x * cellSize + cellSize / 2;
-            const y = explorer.y * cellSize + cellSize / 2;
-            ctx.fillStyle = "orange";
-            ctx.beginPath();
-            ctx.arc(x, y, cellSize / 4, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        function moveExplorer(dx, dy) {
-            if (!gameActive) return; // Detener movimiento si el juego ha terminado
-
-            const newX = explorer.x + dx;
-            const newY = explorer.y + dy;
-            const newCell = grid[index(newX, newY)];
-
-            if (newCell && !explorer.walls[["top", "right", "bottom", "left"].indexOf(direction(dx, dy))]) {
-                explorer = newCell;
-                pasos++;
-                document.getElementById("pasos").textContent = pasos;
-
-                if (explorer.hasPoint) {
-                    explorer.hasPoint = false;
-                    puntosRestantes--;
-                    document.getElementById("puntos").textContent = puntosRestantes;
-                }
-                drawExplorer();
-
-                if (puntosRestantes === 0) {
-                    gameActive = false; // Detener el juego
-                }
-            }
-        }
-
-        function direction(dx, dy) {
-            if (dx === 0 && dy === -1) return "top";
-            if (dx === 1 && dy === 0) return "right";
-            if (dx === 0 && dy === 1) return "bottom";
-            if (dx === -1 && dy === 0) return "left";
-        }
-
-        function updateExplorer(timestamp) {
-            if (!gameActive) return; // Detener movimiento si el juego ha terminado
-            if (timestamp - lastMoveTime > 100) {
-                if (keys.ArrowUp) moveExplorer(0, -1);
-                if (keys.ArrowRight) moveExplorer(1, 0);
-                if (keys.ArrowDown) moveExplorer(0, 1);
-                if (keys.ArrowLeft) moveExplorer(-1, 0);
-                lastMoveTime = timestamp;
-            }
-            requestAnimationFrame(updateExplorer);
-        }
-
-        function updateTimer() {
-            if (!gameActive) return; // Detener el temporizador si el juego ha terminado
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            document.getElementById("segundos").textContent = elapsed;
-            requestAnimationFrame(updateTimer);
-        }
-
-        document.addEventListener("keydown", (e) => {
-            if (keys[e.key] !== undefined) keys[e.key] = true;
-        });
-
-        document.addEventListener("keyup", (e) => {
-            if (keys[e.key] !== undefined) keys[e.key] = false;
-        });
-
-        setup();
-    </script>
+    <div id='viewer-zone' class='drop-zone'>Visualizar MD</div>
+    <div id='output'></div>
+    <div id='converter-zone' class='drop-zone'>Convertir MD a .docx</div>
+    <div id='docx2md-zone' class='drop-zone'>Convertir .docx a MD</div>
 </body>
 </html>
