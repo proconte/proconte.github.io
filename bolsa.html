@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cotizaciones de activos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .widget-box {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .fondo-info {
+      text-align: center;
+      font-size: 15px;
+    }
+    .boton-ficha {
+      display: inline-block;
+      background-color: #0044cc;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid-container">
+    <!-- Airbus -->
+    <div class="widget-box">
+      <h3>Airbus Group (XETR:AIR)</h3>
+      <div id="airbus"></div>
+    </div>
+
+    <!-- Alphabet Inc Class C -->
+    <div class="widget-box">
+      <h3>Alphabet Inc. C (NASDAQ:GOOG)</h3>
+      <div id="alphabet"></div>
+    </div>
+
+    <!-- Amazon -->
+    <div class="widget-box">
+      <h3>Amazon (NASDAQ:AMZN)</h3>
+      <div id="amazon"></div>
+    </div>
+
+    <!-- Microsoft -->
+    <div class="widget-box">
+      <h3>Microsoft (NASDAQ:MSFT)</h3>
+      <div id="microsoft"></div>
+    </div>
+
+    <!-- Intel -->
+    <div class="widget-box">
+      <h3>Intel (NASDAQ:INTC)</h3>
+      <div id="intel"></div>
+    </div>
+
+    <!-- S&P 500 (via SPY ETF) -->
+    <div class="widget-box">
+      <h3>S&P 500 (ETF: SPY)</h3>
+      <div id="sp500"></div>
+    </div>
+
+    <!-- Fondo JPM US Select Equity A (acc) EUR -->
+    <div class="widget-box fondo-info">
+      <h3>Fondo JPM US Select Equity A (acc) EUR</h3>
+      <p>Este fondo no permite inserción directa. Se muestra un ETF proxy similar.</p>
+      <div id="etfproxy"></div>
+      <a class="boton-ficha"
+         href="https://www.justetf.com/es/etf-profile.html?isin=LU0218171717"
+         target="_blank">
+        Ver ficha completa del fondo
+      </a>
+    </div>
+
+    <!-- NASDAQ Composite (mostrando NASDAQ 100 como proxy) -->
+    <div class="widget-box fondo-info">
+      <h3>NASDAQ Composite (proxy: NASDAQ 100)</h3>
+      <p>Gráfico funcional del índice tecnológico NASDAQ 100.</p>
+      <div id="nasdaq"></div>
+      <a class="boton-ficha"
+         href="https://www.nasdaq.com/market-activity/index/comp"
+         target="_blank">
+        Ver índice oficial en Nasdaq.com
+      </a>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script>
+    const widgets = [
+      { id: "airbus", symbol: "XETR:AIR" },
+      { id: "alphabet", symbol: "NASDAQ:GOOG" },
+      { id: "amazon", symbol: "NASDAQ:AMZN" },
+      { id: "microsoft", symbol: "NASDAQ:MSFT" },
+      { id: "intel", symbol: "NASDAQ:INTC" },
+      { id: "sp500", symbol: "AMEX:SPY" },
+      { id: "etfproxy", symbol: "XETR:IUSA" },       // ETF proxy del fondo JPM
+      { id: "nasdaq", symbol: "NASDAQ:NDX" }         // NASDAQ 100 como proxy del Composite
+    ];
+
+    widgets.forEach(w => {
+      new TradingView.widget({
+        width: "100%",
+        height: 300,
+        symbol: w.symbol,
+        interval: "D",
+        timezone: "Etc/UTC",
+        theme: "dark",
+        style: "1",
+        locale: "es",
+        toolbar_bg: "#1e1e1e",
+        container_id: w.id
+      });
+    });
+  </script>
+</body>
+</html>
