@@ -1,25 +1,21 @@
 <!DOCTYPE html>
-<html lang='es'>
+<html lang="es">
 <head>
-    <meta charset='UTF-8'>
+    <meta charset="UTF-8">
     <title>Visor y Conversor Markdown</title>
     <style>
-        /* Estilos generales */
         body {
             font-family: 'Aptos', sans-serif;
             font-size: 1em;
             background-color: #2e2e2e;
-            color: #999999;
+            color: #999;
+            margin: 0 auto;
             padding: 1em;
-            margin: auto;
-            width: 90vw;
+            max-width: 90vw;
         }
         a { color: #c9d1d9; text-decoration: none; }
-
-        /* Zonas de arrastre */
         .drop-zone {
-            width: 90%;
-            max-width: 800px;
+            width: 90%; max-width: 800px;
             height: 200px;
             margin: 50px auto;
             border: 2px dashed #888;
@@ -32,59 +28,48 @@
             text-align: center;
             cursor: pointer;
         }
-        .drop-zone.hover {
-            border-color: #444;
-            color: #222;
-        }
-
-        /* Salida de Markdown */
-        #output {
-            margin-top: 20px;
-        }
-        #output h1, #output h2, #output h3, #output h4, #output h5, #output h6 {
-            margin-bottom: 0 !important;
+        .drop-zone-small { height: 100px; }
+        .drop-zone.hover { border-color: #444; color: #222; }
+        #output { margin-top: 20px; }
+        #output h1,#output h2,#output h3,#output h4,#output h5,#output h6 {
+            margin-bottom: 0!important;
             color: #b8860b;
         }
-        #output h1 + p, #output h2 + p, #output h3 + p,
-        #output h4 + p, #output h5 + p, #output h6 + p {
-            margin-top: 0 !important;
+        #output h1+p,#output h2+p,#output h3+p,#output h4+p,#output h5+p,#output h6+p {
+            margin-top: 0!important;
         }
-        #output a { color: #c9d1d9; }
         pre {
             position: relative;
-            font-family: 'Terminal', monospace;
-            font-size: calc(1em - 1pt);
-            color: #FFC107;
-            background-color: #3a3a3a;
+            background: #3a3a3a;
             border: 1px solid #30363d;
+            border-radius: 10px;
             padding: 1em;
             line-height: 1.4;
             overflow: auto;
-            border-radius: 10px;
+            color: #FFC107;
+            font-family: 'Terminal', monospace;
+            font-size: calc(1em - 1pt);
         }
-        pre code {
+        pre code, #output code {
+            background: transparent;
             border: none;
-            background-color: transparent;
             padding: 0;
             display: block;
-        }
-        #output code {
             font-family: 'Terminal', monospace;
             font-size: calc(1em - 1pt);
             color: #c9d1d9;
         }
         .copy-button {
             position: absolute;
-            top: 0.25em;
-            right: 0.25em;
+            top: .25em; right: .25em;
             background: #444;
             color: #c9d1d9;
             border: none;
-            padding: 0.25em 0.5em;
+            padding: .25em .5em;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.8em;
-            opacity: 0.8;
+            font-size: .8em;
+            opacity: .8;
         }
         .copy-button:hover { opacity: 1; }
     </style>
@@ -94,47 +79,79 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.14/mammoth.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/turndown@7.1.1/dist/turndown.min.js"></script>
     <script>
-        function decodeText(buffer) {
-            try { return new TextDecoder('utf-8', { fatal: true }).decode(buffer); } catch { return new TextDecoder('windows-1252').decode(buffer); }
-        }
-        function addCopyButtons() {
+        const decodeText = buffer => {
+            try { return new TextDecoder('utf-8',{fatal:true}).decode(buffer); }
+            catch { return new TextDecoder('windows-1252').decode(buffer); }
+        };
+        const addCopyButtons = () => {
             document.querySelectorAll('#output pre').forEach(pre => {
                 if (pre.querySelector('.copy-button')) return;
-                const btn = document.createElement('button'); btn.className='copy-button'; btn.textContent='Copiar';
-                btn.onclick = ()=>{
+                const btn = document.createElement('button');
+                btn.className = 'copy-button';
+                btn.textContent = 'Copiar';
+                btn.onclick = () => {
                     const txt = pre.querySelector('code')?.innerText || pre.innerText;
-                    navigator.clipboard.writeText(txt).then(()=>btn.textContent='Copiado');
-                    setTimeout(()=>btn.textContent='Copiar',2000);
+                    navigator.clipboard.writeText(txt).then(() => btn.textContent = 'Copiado');
+                    setTimeout(() => btn.textContent = 'Copiar', 2000);
                 };
-                pre.insertBefore(btn, pre.firstChild);
+                pre.prepend(btn);
             });
-        }
-        window.addEventListener('DOMContentLoaded', ()=>{
-            const viewer=document.getElementById('viewer-zone');
-            const converter=document.getElementById('converter-zone');
-            const docx2md=document.getElementById('docx2md-zone');
-            const output=document.getElementById('output');
-            const inpViewer=document.createElement('input'); inpViewer.type='file'; inpViewer.accept='.md'; inpViewer.style.display='none'; document.body.append(inpViewer);
-            const inpConverter=document.createElement('input'); inpConverter.type='file'; inpConverter.accept='.md'; inpConverter.style.display='none'; document.body.append(inpConverter);
-            const inpDocx=document.createElement('input'); inpDocx.type='file'; inpDocx.accept='.docx'; inpDocx.style.display='none'; document.body.append(inpDocx);
-            function hideZones(){viewer.style.display='none'; converter.style.display='none'; docx2md.style.display='none';}
-            function processViewer(file){ if(!file.name.endsWith('.md')) return; hideZones(); const r=new FileReader(); r.onload=e=>{ const md=decodeText(e.target.result); marked.setOptions({gfm:true,breaks:true}); output.innerHTML=marked.parse(md); addCopyButtons(); }; r.readAsArrayBuffer(file);}            
-            function processConverter(file){ if(!file.name.toLowerCase().endsWith('.md')) return; const r=new FileReader(); r.onload=e=>{ const md=decodeText(e.target.result); const html=marked.parse(md,{gfm:true,breaks:true}); const full=`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:'Aptos',sans-serif;}pre,code{font-family:'Cascadia Code',monospace;}a{color:inherit;text-decoration:none;}</style></head><body>${html}</body></html>`; saveAs(htmlDocx.asBlob(full),file.name.replace(/\.md$/i,'.docx')); }; r.readAsArrayBuffer(file);}            
-            function processDocx(file){ if(!file.name.toLowerCase().endsWith('.docx')) return; hideZones(); const r=new FileReader(); r.onload=async e=>{ try{ const res=await mammoth.convertToHtml({arrayBuffer:e.target.result}); const md=new TurndownService().turndown(res.value); const blob=new Blob([md],{type:'text/markdown'}); saveAs(blob,file.name.replace(/\.docx$/i,'.md')); output.innerHTML=`<pre><code>${md.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</code></pre>`; addCopyButtons(); }catch{ output.textContent='Error en conversión'; }}; r.readAsArrayBuffer(file);}            
-            [viewer,converter,docx2md].forEach(z=>{ ['dragenter','dragover','dragleave','drop'].forEach(evt=>z.addEventListener(evt,e=>{e.preventDefault();e.stopPropagation();})); ['dragenter','dragover'].forEach(evt=>z.addEventListener(evt,()=>z.classList.add('hover'))); ['dragleave','drop'].forEach(evt=>z.addEventListener(evt,()=>z.classList.remove('hover'))); });
-            viewer.ondrop=e=>processViewer(e.dataTransfer.files[0]);
-            converter.ondrop=e=>processConverter(e.dataTransfer.files[0]);
-            docx2md.ondrop=e=>processDocx(e.dataTransfer.files[0]);
-            viewer.onclick=()=>inpViewer.click(); inpViewer.onchange=e=>processViewer(e.target.files[0]);
-            converter.onclick=()=>inpConverter.click(); inpConverter.onchange=e=>processConverter(e.target.files[0]);
-            docx2md.onclick=()=>inpDocx.click(); inpDocx.onchange=e=>processDocx(e.target.files[0]);
+        };
+        window.addEventListener('DOMContentLoaded', () => {
+            const output = document.getElementById('output');
+            const zones = [
+                {id: 'viewer-zone', accept: '.md', handler: async file => {
+                        if (!file.name.endsWith('.md')) return;
+                        zones.forEach(z => document.getElementById(z.id).style.display = 'none');
+                        const md = decodeText(await file.arrayBuffer());
+                        marked.setOptions({gfm:true,breaks:true});
+                        output.innerHTML = marked.parse(md);
+                        addCopyButtons();
+                    }},
+                {id: 'converter-zone', accept: '.md', handler: async file => {
+                        if (!file.name.toLowerCase().endsWith('.md')) return;
+                        const md = decodeText(await file.arrayBuffer());
+                        const html = marked.parse(md,{gfm:true,breaks:true});
+                        const full = `<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><style>body{font-family:'Aptos',sans-serif;}pre,code{font-family:'Cascadia Code',monospace;}a{color:inherit;text-decoration:none;}</style></head><body>${html}</body></html>`;
+                        saveAs(htmlDocx.asBlob(full),file.name.replace(/\.md$/i,'.docx'));
+                    }},
+                {id: 'docx2md-zone', accept: '.docx', handler: async file => {
+                        if (!file.name.toLowerCase().endsWith('.docx')) return;
+                        zones.forEach(z => document.getElementById(z.id).style.display = 'none');
+                        const arrayBuffer = await file.arrayBuffer();
+                        try {
+                            const res = await mammoth.convertToHtml({arrayBuffer});
+                            const md = new TurndownService().turndown(res.value);
+                            const blob = new Blob([md],{type:'text/markdown'});
+                            saveAs(blob,file.name.replace(/\.docx$/i,'.md'));
+                            output.innerHTML = `<pre><code>${md.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</code></pre>`;
+                            addCopyButtons();
+                        } catch {
+                            output.textContent = 'Error en conversión';
+                        }
+                    }}
+            ];
+            zones.forEach(({id,accept,handler}) => {
+                const zone = document.getElementById(id);
+                const input = Object.assign(document.createElement('input'),{type:'file',accept,style:'display:none;'});
+                document.body.append(input);
+                zone.onclick = () => input.click();
+                input.onchange = e => handler(e.target.files[0]);
+                ['dragenter','dragover','dragleave','drop'].forEach(evt => zone.addEventListener(evt,e=>{e.preventDefault();e.stopPropagation();}));
+                ['dragenter','dragover'].forEach(evt => zone.addEventListener(evt,()=>zone.classList.add('hover')));
+                ['dragleave','drop'].forEach(evt => zone.addEventListener(evt,()=>zone.classList.remove('hover')));
+                zone.ondrop = e => handler(e.dataTransfer.files[0]);
+            });
         });
     </script>
 </head>
 <body>
-    <div id='viewer-zone' class='drop-zone'>Visualizar MD</div>
-    <div id='output'></div>
-    <div id='converter-zone' class='drop-zone'>Convertir MD a .docx</div>
-    <div id='docx2md-zone' class='drop-zone'>Convertir .docx a MD</div>
+    <div id="viewer-zone" class="drop-zone">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Markdown-mark.svg" alt="Markdown Logo"
+             style="max-height:80%;max-width:80%;filter:brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);">
+    </div>
+    <div id="output"></div>
+    <div id="converter-zone" class="drop-zone drop-zone-small">md2docx</div>
+    <div id="docx2md-zone" class="drop-zone drop-zone-small">docx2md</div>
 </body>
 </html>
