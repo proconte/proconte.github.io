@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Visor y Conversor Markdown</title>
+    <title>Markdown</title>
     <style>
         body {
             font-family: 'Aptos', sans-serif;
@@ -72,8 +72,71 @@
             opacity: .8;
         }
         .copy-button:hover { opacity: 1; }
-    </style>
+    
+		#output table {
+			border-collapse: collapse;
+			/* width: 100%; */ /* Comentado correctamente */
+		}
+		#output table, #output th, #output td {
+			border: 1px solid #ccc;
+		}
+		#output th, #output td {
+			padding: 0.5em;
+		}
+		#output th {
+			background-color: #444; 
+			color: #eee;            
+		}
+
+</style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+mermaid.initialize({
+    startOnLoad: false,
+    theme: "base",
+    themeVariables: {
+        primaryColor: "#444",
+        primaryBorderColor: "#bbb",
+        primaryTextColor: "#eee",
+        lineColor: "#ccc",
+        textColor: "#eee",
+        fontSize: "16px",
+        actorBorder: "#ccc",
+        actorTextColor: "#eee",
+		pie1: "#ffb300",  // Ámbar dorado
+		pie2: "#cddc39",  // Verde lima intenso
+		pie3: "#ef6c00",  // Naranja tostado
+		pie4: "#e53935",  // Rojo escarlata
+		pie5: "#2e7d32",  // Verde esmeralda oscuro
+		pie6: "#8e24aa"   // Púrpura saturado
+    },
+    flowchart: { useMaxWidth: true }
+});
+document.addEventListener("DOMContentLoaded", () => {
+    // Inyección de estilos por clase en todos los diagramas Mermaid renderizados
+    const observer = new MutationObserver(() => {
+        document.querySelectorAll('.node rect').forEach((el, i) => {
+            const colors = ['#ffa000', '#ff8f00', '#ff6f00', '#ef6c00', '#e65100'];
+            el.style.fill = colors[i % colors.length];
+            el.style.stroke = '#000';
+            el.style.strokeWidth = '1px';
+        });
+        document.querySelectorAll('.node ellipse').forEach((el, i) => {
+            el.style.fill = '#1f77b4';
+            el.style.stroke = '#000';
+            el.style.strokeWidth = '1px';
+        });
+        document.querySelectorAll('.node polygon').forEach((el, i) => {
+            el.style.fill = '#2ca02c';
+            el.style.stroke = '#000';
+            el.style.strokeWidth = '1px';
+        });
+    });
+    observer.observe(document.getElementById("output"), { childList: true, subtree: true });
+});
+
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.14/mammoth.browser.min.js"></script>
@@ -104,15 +167,49 @@
                         if (!file.name.endsWith('.md')) return;
                         zones.forEach(z => document.getElementById(z.id).style.display = 'none');
                         const md = decodeText(await file.arrayBuffer());
-                        marked.setOptions({gfm:true,breaks:true});
-                        output.innerHTML = marked.parse(md);
+                        marked.setOptions({gfm:true,breaks:true,langPrefix:'language-'});
+                        const rawHTML = marked.parse(md);
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = rawHTML;
+                        tempDiv.querySelectorAll('pre > code.language-mermaid').forEach(code => {
+                            const diagram = code.textContent.trim();
+                            if (/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|gantt|erDiagram|journey|pie)\b/.test(diagram)) {
+                                const mermaidDiv = document.createElement('div');
+                                mermaidDiv.className = 'mermaid';
+                                mermaidDiv.textContent = diagram;
+                                code.parentElement.replaceWith(mermaidDiv);
+                            } else {
+                                const fallbackPre = document.createElement('pre');
+                                const fallbackCode = document.createElement('code');
+                                fallbackCode.textContent = diagram;
+                                fallbackPre.appendChild(fallbackCode);
+                                code.parentElement.replaceWith(fallbackPre);
+                            }
+                        });
+                        output.innerHTML = tempDiv.innerHTML;
+                        try {
+                            mermaid.init(undefined, output.querySelectorAll('.mermaid'));
+                        } catch (e) {
+                            console.warn("Error al renderizar Mermaid:", e);
+                        }
                         addCopyButtons();
                     }},
                 {id: 'converter-zone', accept: '.md', handler: async file => {
                         if (!file.name.toLowerCase().endsWith('.md')) return;
                         const md = decodeText(await file.arrayBuffer());
                         const html = marked.parse(md,{gfm:true,breaks:true});
-                        const full = `<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><style>body{font-family:'Aptos',sans-serif;}pre,code{font-family:'Cascadia Code',monospace;}a{color:inherit;text-decoration:none;}</style></head><body>${html}</body></html>`;
+                        const full = `<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><style>body{font-family:'Aptos',sans-serif;}pre,code{font-family:'Cascadia Code',monospace;}a{color:inherit;text-decoration:none;}
+        #output table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #output table, #output th, #output td {
+            border: 1px solid #ccc;
+        }
+        #output th, #output td {
+            padding: 0.5em;
+        }
+</style></head><body>${html}</body></html>`;
                         saveAs(htmlDocx.asBlob(full),file.name.replace(/\.md$/i,'.docx'));
                     }},
                 {id: 'docx2md-zone', accept: '.docx', handler: async file => {
