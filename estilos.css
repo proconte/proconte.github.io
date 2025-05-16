@@ -1,0 +1,56 @@
+:root {
+    --fondo: #fefefe;
+    --texto: #1a1a1a;
+    --gris-suave: #e0e0e0;
+    --azul-enlace: #2a5d9f;
+    --azul-hover: #183b6b;
+}
+
+body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    color: var(--texto);
+    background-color: var(--fondo);
+    margin: 0;
+    padding: 2em;
+    line-height: 1.6;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 1.5em;
+    border-bottom: 2px solid var(--gris-suave);
+    padding-bottom: 0.5em;
+}
+
+ol {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-left: 1.5em;
+}
+
+li {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border-left: 4px solid var(--gris-suave);
+    background-color: #fafafa;
+}
+
+a {
+    color: var(--azul-enlace);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    color: var(--azul-hover);
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 1em;
+        font-size: 15px;
+    }
+}

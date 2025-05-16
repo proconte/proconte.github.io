@@ -181,6 +181,13 @@
             if (stack.length > 0) {
                 requestAnimationFrame(drawMaze);
             } else {
+                // Laberinto terminado, consumir el punto inicial
+                if (explorer.hasPoint) {
+                    explorer.hasPoint = false;
+                    puntosRestantes--;
+                    document.getElementById("puntos").textContent = puntosRestantes;
+                }
+
                 startTime = Date.now(); // Iniciar el temporizador cuando el laberinto está listo
                 gameActive = true;
                 updateTimer();
