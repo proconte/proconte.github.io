@@ -2,32 +2,69 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Generador de Prompts XML para ChatGPT</title>
+  <title>Generador de PROMPT XML para LLM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Aptos&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Aptos', sans-serif;
       margin: 2rem;
       background: #f5f5f5;
+      color: #1f2937;
+    }
+    h1 {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      font-size: 2rem;
+      color: #1f2937;
+    }
+    h1 .subtitulo {
+      font-size: 0.7rem;
+      font-weight: normal;
+      color: #cc6a0e;
     }
     label {
       font-weight: bold;
       display: block;
       margin-top: 1rem;
+      color: #1f2937;
     }
     textarea {
       width: 100%;
       height: 100px;
-      margin-bottom: 1rem;
+      margin-bottom: 0;
       padding: 0.5rem;
       font-family: monospace;
+      font-size: 1rem;
       resize: vertical;
+      border: 1px solid #4d4d4d;
+      background: #ffffff;
+    }
+    select {
+      width: 100%;
+      padding: 0.4rem;
+      font-family: monospace;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      margin-top: 0;
+      border: 1px solid #4d4d4d;
+      background: #ffffff;
     }
     button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.60rem;
       cursor: pointer;
       margin-right: 1rem;
       margin-top: 1rem;
+      background-color: #1f77b4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    #generarBtn {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #cc6a0e;
     }
     pre {
       background: #eeeeee;
@@ -36,14 +73,14 @@
       word-break: break-word;
       margin-top: 2rem;
       border: 1px solid #ccc;
+      font-family: monospace;
     }
   </style>
 </head>
 <body>
 
-  <h1>Generador de Prompts XML para ChatGPT</h1>
-  <h2>jar'25</h2>
-  <button onclick="ponerEjemplo()">Poner ejemplo</button>
+  <h1>Generador de PROMPT XML para LLM <span class="subtitulo">jar'25</span></h1>
+  <button onclick="ponerEjemplo()">Rellenar areas con ejemplo completo</button>
 
   <label for="contexto">Contexto</label>
   <textarea id="contexto" placeholder="Introduce aquí el contexto..."></textarea>
@@ -53,32 +90,63 @@
 
   <label for="restricciones">Restricciones</label>
   <textarea id="restricciones" placeholder="Condiciones que debe respetar la respuesta..."></textarea>
+  <select onchange="insertarEnTextarea('restricciones', this)">
+    <option selected disabled>-- Añadir restricción --</option>
+    <option>No usar las palabras "crucial", "esencial" o "relevante", "sugerir" o cualquiera de sus variantes</option>
+    <option>No usar estructuras del tipo "no solo" - "sino que"</option>
+    <option>No utilizar lenguaje coloquial ni frases ambiguas.</option>
+    <option>No usar lenguaje informal</option>
+    <option>Evitar enumeraciones</option>
+    <option>Respuesta no debe superar 500 palabras</option>
+    <option>Contestar por aquí una sola opción y directamente por el chat</option>
+    <option>Uso de terminología especializada</option>
+    <option>Evitar repeticiones léxicas</option>
+    <option>Excluir ejemplos de uso personal o anecdótico</option>
+    <option>No utilizar conclusiones explícitas</option>
+    <option>Redacción sin estructuras causales simples</option>
+    <option>No incluir juicios de valor subjetivos</option>
+  </select>
 
   <label for="formato">Formato</label>
   <textarea id="formato" placeholder="¿Cómo debe estructurarse la respuesta?"></textarea>
+  <select onchange="insertarEnTextarea('formato', this)">
+    <option selected disabled>-- Añadir formato --</option>
+    <option>Texto continuo sin apartados explícitos</option>
+    <option>Respuesta en bloques numerados</option>
+    <option>Incluir referencias si procede</option>
+    <option>No incluir una sección final de resumen</option>
+    <option>Formato LaTeX para fórmulas</option>
+    <option>Evitar negritas, cursivas o subrayados</option>
+    <option>Redacción fluida en párrafos de tamaño medio</option>
+    <option>Insertar código en bloques con sintaxis explícita</option>
+  </select>
 
   <label for="estilo">Estilo</label>
   <textarea id="estilo" placeholder="Estilo de redacción deseado..."></textarea>
+  <select onchange="insertarEnTextarea('estilo', this)">
+    <option selected disabled>-- Añadir estilo --</option>
+    <option>Tono técnico-formal</option>
+    <option>Evitar expresiones coloquiales</option>
+    <option>Uso de terminología especializada</option>
+    <option>Estilo narrativo denso y claro, sin redundancias</option>
+    <option>Imitación del discurso de Umberto Eco o Isaac Asimov</option>
+    <option>Construcciones sintácticas complejas y subordinadas</option>
+    <option>Evitar estructuras enfatizantes y exclamativas</option>
+    <option>Lenguaje neutro y objetivo, con claridad conceptual</option>
+  </select>
 
-  <button onclick="generarPrompt()">Generar XML</button>
-  <button onclick="copiarAlPortapapeles()">Copiar XML al portapapeles (ctrl+v) para pegar</button>
+  <button id="generarBtn" onclick="generarPrompt()">Generar XML y ctrl+c</button>
 
   <pre id="resultado"></pre>
 
   <script>
     function escapeXML(str) {
-      return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
     function indentText(text, level = 2) {
       const indentation = ' '.repeat(level * 2);
-      return text
-        .split('\n')
-        .map(line => indentation + line.trim())
-        .join('\n');
+      return text.split('\n').map(line => indentation + line.trim()).join('\n');
     }
 
     function generarPrompt() {
@@ -88,46 +156,36 @@
       const formato = indentText(escapeXML(document.getElementById("formato").value.trim()));
       const estilo = indentText(escapeXML(document.getElementById("estilo").value.trim()));
 
-      const xml = `<prompt>
-  <contexto>
-${contexto}
-  </contexto>
-  <tarea>
-${tarea}
-  </tarea>
-  <restricciones>
-${restricciones}
-  </restricciones>
-  <formato>
-${formato}
-  </formato>
-  <estilo>
-${estilo}
-  </estilo>
-</prompt>`;
+      const xml = `<prompt>\n  <contexto>\n${contexto}\n  </contexto>\n  <tarea>\n${tarea}\n  </tarea>\n  <restricciones>\n${restricciones}\n  </restricciones>\n  <formato>\n${formato}\n  </formato>\n  <estilo>\n${estilo}\n  </estilo>\n</prompt>`;
 
       document.getElementById("resultado").textContent = xml;
+      navigator.clipboard.writeText(xml);
     }
 
     function ponerEjemplo() {
-      document.getElementById("contexto").value = `La incorporación de algoritmos de IA en entornos industriales está reconfigurando de manera profunda procesos tales como el mantenimiento predictivo, el control automatizado de la calidad y la gestión optimizada del consumo energético. Mediante el empleo de redes neuronales, esquemas de aprendizaje por refuerzo y modelos de inferencia supervisada, se habilita la detección anticipada de fallos, la modulación adaptativa de parámetros operativos y el incremento sostenido de la eficiencia en sistemas de producción complejos. Este impacto se intensifica cuando dichas técnicas, tradicionalmente desplegadas de forma aislada, se articulan de manera sinérgica en el marco de un Sistema Cognitivo integrado.`;
-      
-      document.getElementById("tarea").value = `1. Describir los principales tipos de algoritmos de IA utilizados actualmente en el ámbito industrial.\n2. Explicar cómo se aplican en contextos concretos como mantenimiento, control de calidad o logística.\n3. Analizar los beneficios técnicos y económicos que aportan.\n4. Señalar las limitaciones o condiciones para su implantación efectiva.`;
-      
-      document.getElementById("restricciones").value = `1. No incluir ejemplos del sector doméstico ni del ámbito educativo.\n2. Evitar listas con viñetas; redactar en forma expositiva.\n3. No utilizar lenguaje coloquial ni frases ambiguas.\n4. Extensión máxima: 500 palabras.`;
-      
-      document.getElementById("formato").value = `Texto articulado en párrafos con cohesión temática, sin títulos ni numeraciones explícitas. Incluir referencias técnicas si son pertinentes.`;
-      
-      document.getElementById("estilo").value = `Redacción académica, técnica, sobria y clara. Evitar expresiones enfáticas. Preferencia por términos de raíz grecolatina y estructuras sintácticas complejas.`;
+      document.getElementById("contexto").value =
+`La incorporación de algoritmos de IA en entornos industriales está reconfigurando de manera profunda procesos tales como el mantenimiento predictivo, el control automatizado de la calidad y la gestión optimizada del consumo energético.`;
+      document.getElementById("tarea").value =
+`- Describir los principales tipos de algoritmos de IA utilizados actualmente en el ámbito industrial.\n- Explicar cómo se aplican en contextos concretos como mantenimiento, control de calidad o logística.\n- Analizar los beneficios técnicos y económicos que aportan.\n- Señalar las limitaciones o condiciones para su implantación efectiva.`;
+      document.getElementById("restricciones").value =
+`- Redacción académica, técnica, sobria y clara.\n- Evitar listas con viñetas; redactar en forma expositiva.\n- Evitar expresiones enfáticas.\n- Uso de terminología especializada.`;
+      document.getElementById("formato").value =
+`- Texto articulado en párrafos con cohesión temática.\n- Sin títulos ni numeraciones explícitas.\n- Incluir referencias técnicas si son pertinentes.`;
+      document.getElementById("estilo").value =
+`- Redacción académica, técnica, sobria y clara.\n- Evitar expresiones enfáticas.\n- Preferencia por términos de raíz grecolatina y estructuras sintácticas complejas.`;
     }
 
-    function copiarAlPortapapeles() {
-      const texto = document.getElementById("resultado").textContent;
-      navigator.clipboard.writeText(texto)
-        .then(() => alert("XML copiado al portapapeles."))
-        .catch(err => alert("Error al copiar: " + err));
+    function insertarEnTextarea(areaId, selectElement) {
+      const textarea = document.getElementById(areaId);
+      const texto = selectElement.value;
+      if (texto && !textarea.value.includes(texto)) {
+        if (textarea.value.trim() !== '') {
+          textarea.value += '\n';
+        }
+        textarea.value += `- ${texto}`;
+      }
+      selectElement.selectedIndex = 0;
     }
   </script>
-
 </body>
 </html>
