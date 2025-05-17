@@ -8,7 +8,7 @@
     body {
       font-family: 'Aptos', sans-serif;
       margin: 2rem;
-      background: #f5f5f5;
+      background: #d6d6d6;
       color: #1f2937;
     }
     h1 {
@@ -16,11 +16,12 @@
       align-items: baseline;
       gap: 1rem;
       font-size: 2rem;
+      font-weight: bold;
       color: #1f2937;
     }
     h1 .subtitulo {
       font-size: 0.7rem;
-      font-weight: normal;
+      font-weight: bold;
       color: #cc6a0e;
     }
     label {
@@ -34,21 +35,21 @@
       height: 100px;
       margin-bottom: 0;
       padding: 0.5rem;
-      font-family: monospace;
+      font-family: 'Aptos', sans-serif;
       font-size: 1rem;
       resize: vertical;
       border: 1px solid #4d4d4d;
-      background: #ffffff;
+      background: #eeeeee;
     }
     select {
       width: 100%;
       padding: 0.4rem;
-      font-family: monospace;
+      font-family: 'Aptos', sans-serif;
       font-size: 1rem;
       margin-bottom: 1rem;
       margin-top: 0;
       border: 1px solid #4d4d4d;
-      background: #ffffff;
+      background: #eeeeee;
     }
     button {
       padding: 0.25rem 0.5rem;
@@ -56,8 +57,8 @@
       cursor: pointer;
       margin-right: 1rem;
       margin-top: 1rem;
-      background-color: #1f77b4;
-      color: white;
+      background-color: #cc6a0e;
+      color: lightgrey;
       border: none;
       border-radius: 4px;
     }
@@ -79,7 +80,7 @@
 </head>
 <body>
 
-  <h1>Generador de PROMPT XML para LLM <span class="subtitulo">jar'25</span></h1>
+  <h1>Generador de PROMPT en XML para LLMs <span class="subtitulo">jar'25</span></h1>
   <button onclick="ponerEjemplo()">Rellenar areas con ejemplo completo</button>
 
   <label for="contexto">Contexto</label>
@@ -144,6 +145,18 @@
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
+    function transformarItems(texto) {
+      return texto.split('\n').map(linea => {
+        const contenido = linea.trim();
+        if (contenido.startsWith('-')) {
+          const limpio = contenido.substring(1).trim();
+          return `    <item>${escapeXML(limpio)}</item>`;
+        } else {
+          return `    ${escapeXML(contenido)}`;
+        }
+      }).join('\n');
+    }
+
     function indentText(text, level = 2) {
       const indentation = ' '.repeat(level * 2);
       return text.split('\n').map(line => indentation + line.trim()).join('\n');
@@ -151,12 +164,29 @@
 
     function generarPrompt() {
       const contexto = indentText(escapeXML(document.getElementById("contexto").value.trim()));
-      const tarea = indentText(escapeXML(document.getElementById("tarea").value.trim()));
-      const restricciones = indentText(escapeXML(document.getElementById("restricciones").value.trim()));
-      const formato = indentText(escapeXML(document.getElementById("formato").value.trim()));
-      const estilo = indentText(escapeXML(document.getElementById("estilo").value.trim()));
+      const tarea = transformarItems(document.getElementById("tarea").value.trim());
+      const restricciones = transformarItems(document.getElementById("restricciones").value.trim());
+      const formato = transformarItems(document.getElementById("formato").value.trim());
+      const estilo = transformarItems(document.getElementById("estilo").value.trim());
 
-      const xml = `<prompt>\n  <contexto>\n${contexto}\n  </contexto>\n  <tarea>\n${tarea}\n  </tarea>\n  <restricciones>\n${restricciones}\n  </restricciones>\n  <formato>\n${formato}\n  </formato>\n  <estilo>\n${estilo}\n  </estilo>\n</prompt>`;
+      const xml =
+`<prompt>
+  <contexto>
+${contexto}
+  </contexto>
+  <tarea>
+${tarea}
+  </tarea>
+  <restricciones>
+${restricciones}
+  </restricciones>
+  <formato>
+${formato}
+  </formato>
+  <estilo>
+${estilo}
+  </estilo>
+</prompt>`;
 
       document.getElementById("resultado").textContent = xml;
       navigator.clipboard.writeText(xml);
