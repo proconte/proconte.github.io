@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Artículos en audio</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 40px auto;
+      max-width: 720px;
+      background-color: #f8f9fa;
+      color: #212529;
+      line-height: 1.6;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #343a40;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 12px 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #0056b3;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: #d63384;
+    }
+
+    audio {
+      display: block;
+      width: 100%;
+      margin-top: 30px;
+      border-radius: 12px;
+      background-color: #e9ecef;
+    }
+  </style>
+</head>
+<body>
+  <h1>Revisión de artículos en formato audio</h1>
+  <ul>
+    <li><a href="#" onclick="playAudio('mp3/Artículo 1 - Sistemas Cognitivos y Eficiencia Energética Industrial.mp3')">Artículo 1 - Sistemas Cognitivos y eficiencia energética industrial</a></li>
+    <li><a href="#" onclick="playAudio('mp3/Artículo 2 - IA en Agroalimentación Española_ Aplicaciones y Retos.mp3')">Artículo 2 - IA en Agroalimentación Española: aplicaciones y retos</a></li>
+    <li><a href="#" onclick="playAudio('mp3/Artículo 3 - Pautas de IA para el Desarrollo Rural Sostenible y la Resiliencia Climática.mp3')">Artículo 3 -IA y desarrollo rural sostenible </a></li>
+    <li><a href="#" onclick="playAudio('mp3/Artículo 4 - Sesgos en Investigación de Ingeniería con IA.mp3')">Artículo 4 - Sesgos en investigación de ingeniería con IA</a></li>
+    <li><a href="#" onclick="playAudio('mp3/Artículo 6 - Arquitectura Cognitiva CLEAR_ Razonamiento Avanzado con KG y LLM.mp3')">Artículo 6 - Arquitectura Cognitiva CLEAR</a></li>
+    <li><a href="#" onclick="playAudio('mp3/Artículo 7 - Conciencia Artificial Funcional y Sistemas Cognitivos.mp3')">Artículo 7 - Sistemas Cognitivos y Consciencia Artificial</a></li>
+  </ul>
+
+  <audio id="player" controls>
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+
+  <script>
+    function playAudio(file) {
+      const player = document.getElementById('player');
+      player.src = file;
+      player.play();
+    }
+  </script>
+</body>
+</html>
