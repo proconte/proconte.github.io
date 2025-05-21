@@ -17,10 +17,18 @@
     }
 
     h1 {
-      margin-bottom: 10px;
+      margin-bottom: 4px;
       font-size: 16px;
       font-weight: 600;
       color: #343a40;
+    }
+
+    .separador {
+      border: none;
+      height: 1px;
+      background-color: #000000;
+      margin: 8px 0 16px 0;
+      width: 100%;
     }
 
     ul {
@@ -66,7 +74,7 @@
     #robot {
       position: absolute;
       right: 10px;
-      bottom: 80px; /* justo encima del reproductor */
+      bottom: 80px;
       width: 100px;
       z-index: 0;
       opacity: 0.9;
@@ -81,6 +89,7 @@
 </head>
 <body>
   <h1>Pixel&Games - technoSP</h1>
+  <hr class="separador">
 
   <ul id="playlist">
     <li><a href="#" onclick="playAudio(0)">01. Azul y negro - No tengo tiempo</a></li>
