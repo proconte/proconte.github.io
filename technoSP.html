@@ -10,13 +10,10 @@
       margin: 12px;
       padding: 0;
       background-color: #f8f9fa;
-      background-image: url("technoSP/robot.gif");
-      background-repeat: no-repeat;
-      background-position: calc(100% - 10px) calc(100% - 90px); /* derecha-abajo controlada */
-      background-size: 100px auto;
       color: #212529;
       line-height: 1.2;
       font-size: 10.5px;
+      position: relative;
     }
 
     h1 {
@@ -66,9 +63,18 @@
       font-size: 12px;
     }
 
+    #robot {
+      position: absolute;
+      right: 10px;
+      bottom: 80px; /* justo encima del reproductor */
+      width: 100px;
+      z-index: 0;
+      opacity: 0.9;
+    }
+
     @media (max-width: 600px) {
-      body {
-        background-image: none;
+      #robot {
+        display: none;
       }
     }
   </style>
@@ -100,6 +106,8 @@
   </ul>
 
   <audio id="player" controls></audio>
+
+  <img src="technoSP/robot.gif" id="robot" alt="robot animado">
 
   <script>
     const player = document.getElementById('player');
