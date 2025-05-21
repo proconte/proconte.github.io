@@ -89,7 +89,7 @@
     <li><a href="#" onclick="playAudio(19)">20. Fangoria - Disfraz de tigre</a></li>
   </ul>
 
-  <audio id="player" controls muted autoplay></audio>
+  <audio id="player" controls></audio>
 
   <!-- Imagen del robot en segundo plano -->
   <img src="technoSP/robot.gif" alt="robot" style="
@@ -127,7 +127,7 @@
       'technoSP/20 Fangoria - Disfraz de tigre.mp3'
     ];
 
-    let currentTrack = 0;
+    let currentTrack = null;
     const listItems = document.querySelectorAll('#playlist li');
 
     function highlightTrack(index) {
@@ -139,24 +139,17 @@
     function playAudio(index) {
       currentTrack = index;
       player.src = playlist[currentTrack];
-      player.play().catch(() => {
-        console.warn("Autoplay bloqueado.");
-      });
+      player.play();
       highlightTrack(currentTrack);
     }
 
     player.addEventListener('ended', () => {
-      currentTrack = (currentTrack + 1) % playlist.length;
-      player.src = playlist[currentTrack];
-      player.play();
-      highlightTrack(currentTrack);
-    });
-
-    window.addEventListener('DOMContentLoaded', () => {
-      playAudio(0);
-      setTimeout(() => {
-        player.muted = false;
-      }, 300);
+      if (currentTrack !== null) {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        player.src = playlist[currentTrack];
+        player.play();
+        highlightTrack(currentTrack);
+      }
     });
   </script>
 </body>
