@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Pixel&Games - technoSP</title>
+  <title>Pixel & Games - technoSP</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 12px;
       padding: 0;
       background-color: #f8f9fa;
+      background-image: url("technoSP/robot.gif");
+      background-repeat: no-repeat;
+      background-position: calc(100% - 10px) calc(100% - 90px); /* derecha-abajo controlada */
+      background-size: 100px auto;
       color: #212529;
       line-height: 1.2;
       font-size: 10.5px;
@@ -62,16 +66,15 @@
       font-size: 12px;
     }
 
-    .robot {
-      display: block;
-      margin-top: 16px;
-      margin-left: auto;
-      width: 120px;
+    @media (max-width: 600px) {
+      body {
+        background-image: none;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Pixel&Games - technoSP</h1>
+  <h1>Pixel & Games - technoSP</h1>
 
   <ul id="playlist">
     <li><a href="#" onclick="playAudio(0)">01. Azul y negro - No tengo tiempo</a></li>
@@ -97,9 +100,6 @@
   </ul>
 
   <audio id="player" controls></audio>
-
-  <!-- Robot debajo del reproductor -->
-  <img src="technoSP/robot.gif" alt="robot" class="robot">
 
   <script>
     const player = document.getElementById('player');
