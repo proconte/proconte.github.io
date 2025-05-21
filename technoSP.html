@@ -61,6 +61,13 @@
       font-weight: bold;
       font-size: 12px;
     }
+
+    .robot {
+      display: block;
+      margin-top: 16px;
+      margin-left: auto;
+      width: 120px;
+    }
   </style>
 </head>
 <body>
@@ -91,16 +98,8 @@
 
   <audio id="player" controls></audio>
 
-  <!-- Imagen del robot en segundo plano -->
-  <img src="technoSP/robot.gif" alt="robot" style="
-    position: fixed;
-    top: 40px;
-    right: 0;
-    width: 350px;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.9;
-  ">
+  <!-- Robot debajo del reproductor -->
+  <img src="technoSP/robot.gif" alt="robot" class="robot">
 
   <script>
     const player = document.getElementById('player');
