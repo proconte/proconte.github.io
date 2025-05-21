@@ -60,6 +60,15 @@
       margin-top: 16px;
       border-radius: 10px;
     }
+
+    .playing {
+      background-color: #000000;
+    }
+
+    .playing a {
+      color: red;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -115,23 +124,38 @@
       'technoSP/19 Ladilla rusa - los coches del pasado.mp3',
       'technoSP/20 Fangoria - Disfraz de tigre.mp3'
     ];
+
     let currentTrack = 0;
+    const listItems = document.querySelectorAll('#playlist li');
+
+    function highlightTrack(index) {
+      listItems.forEach((li, i) => {
+        li.classList.toggle('playing', i === index);
+      });
+    }
 
     function playAudio(file) {
-      player.src = file;
-      player.play();
+      const index = playlist.indexOf(file);
+      if (index !== -1) {
+        currentTrack = index;
+        player.src = file;
+        player.play();
+        highlightTrack(currentTrack);
+      }
     }
 
     function playPlaylist() {
       currentTrack = 0;
       player.src = playlist[currentTrack];
       player.play();
+      highlightTrack(currentTrack);
     }
 
     player.addEventListener('ended', () => {
       currentTrack = (currentTrack + 1) % playlist.length;
       player.src = playlist[currentTrack];
       player.play();
+      highlightTrack(currentTrack);
     });
   </script>
 </body>
