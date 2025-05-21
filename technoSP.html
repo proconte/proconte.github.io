@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Techno Español 90s</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #212529;
+      line-height: 1.5;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+      font-size: 22px;
+      font-weight: 600;
+      color: #343a40;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #0056b3;
+      font-size: 16px;
+      display: block;
+      word-wrap: break-word;
+    }
+
+    a:hover {
+      color: #d63384;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 24px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1> Pixel&Games - techno español</h1>
+  <ul>
+    <li><a href="#" onclick="playAudio('technoSP/01 Azul y negro - No tengo tiempo.mp3')">01 Azul y negro - No tengo tiempo</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/02 Tino Casal - Panico en el Eden.mp3')">02 Tino Casal - Pánico en el Edén</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/03 Azul y negro - Me estoy volviendo loco.mp3')">03 Azul y negro - Me estoy volviendo loco</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/04 Tino Casal - Embrujada.mp3')">04 Tino Casal - Embrujada</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/05 Azul y negro - The night.mp3')">05 Azul y negro - The night</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/06 Tino Casal - Champu de Huevo.mp3')">06 Tino Casal - Champú de Huevo</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/07 Ole ole - no controles.mp3')">07 Olé Olé - No controles</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/08 Tino Casal - Eloise.mp3')">08 Tino Casal - Eloise</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/09 Tino Casal - embrujada instrumental.mp3')">09 Tino Casal - Embrujada instrumental</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/10 Chimo Bayo - Asi me gusta a mi.mp3')">10 Chimo Bayo - Así me gusta a mí</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/11 Minerva - estoy llorando por ti.mp3')">11 Minerva - Estoy llorando por ti</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/12 Chimo Bayo - Quimica.mp3')">12 Chimo Bayo - Química</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/13 Fuego - El diablo.mp3')">13 Fuego - El diablo</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/14 Atahualpa - ultimo imperio.mp3')">14 Atahualpa - Último imperio</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/15 Chimo Bayo - Bombas.mp3')">15 Chimo Bayo - Bombas</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/16 Chimo Bayo - Diablo.mp3')">16 Chimo Bayo - Diablo</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/17 Ojete calor - Tonta gilipo.mp3')">17 Ojete Calor - Tonta gilipo</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/18 Las bicicletas - historia del arte.mp3')">18 Las Bicicletas - Historia del arte</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/19 Ladilla rusa - los coches del pasado.mp3')">19 Ladilla Rusa - Los coches del pasado</a></li>
+    <li><a href="#" onclick="playAudio('technoSP/20 Fangoria - Disfraz de tigre.mp3')">20 Fangoria - Disfraz de tigre</a></li>
+  </ul>
+
+  <audio id="player" controls>
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+
+  <script>
+    function playAudio(file) {
+      const player = document.getElementById('player');
+      player.src = file;
+      player.play();
+    }
+  </script>
+</body>
+</html>
