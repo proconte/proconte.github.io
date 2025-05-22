@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Pixel&Games - Heavy</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 12px;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #212529;
+      line-height: 1.2;
+      font-size: 10.5px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #070707;
+      font-size: 10.5px;
+      display: block;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    a:hover {
+      color: #f67f00;
+      font-weight: bold;
+    }
+
+    .player-wrapper {
+      position: relative;
+      margin-top: 16px;
+    }
+
+    .player-wrapper audio {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .robot-overlay {
+      position: absolute;
+      right: 10px;
+      bottom: 100%;
+      width: 360px;
+      margin-bottom: 5px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .playing {
+      background-color: #000000;
+    }
+
+    .playing a {
+      color: rgb(250, 250, 250);
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .header-img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <img src="heavy/pixelandgames.png" alt="Pixel and Games" class="header-img">
+
+  <ul id="playlist">
+    <li><a href="#" onclick="playAudio(0)">01. ACDC - Thunder</a></li>
+    <li><a href="#" onclick="playAudio(1)">02. Scorpions - Rock You Like A Hurricane</a></li>
+    <li><a href="#" onclick="playAudio(2)">03. Iron Maiden - The Trooper</a></li>
+    <li><a href="#" onclick="playAudio(3)">04. ACDC - High Way to Heaven</a></li>
+    <li><a href="#" onclick="playAudio(4)">05. Iron Maiden - The Number of the Beast</a></li>
+    <li><a href="#" onclick="playAudio(5)">06. Scorpions - Always Somewhere</a></li>
+    <li><a href="#" onclick="playAudio(6)">07. Europe - The Final Countdown</a></li>
+    <li><a href="#" onclick="playAudio(7)">08. Scorpions - Holiday</a></li>
+    <li><a href="#" onclick="playAudio(8)">09. Scorpions - No One Like You</a></li>
+    <li><a href="#" onclick="playAudio(9)">10. Guns N' Roses - You Could Be Mine</a></li>
+    <li><a href="#" onclick="playAudio(10)">11. Scorpions - Still Loving You</a></li>
+    <li><a href="#" onclick="playAudio(11)">12. Guns N' Roses - Welcome to the Jungle</a></li>
+    <li><a href="#" onclick="playAudio(12)">13. Scorpions - When the Smoke is Going Down</a></li>
+    <li><a href="#" onclick="playAudio(13)">14. Scorpions - Wind of Change</a></li>
+    <li><a href="#" onclick="playAudio(14)">15. Barón Rojo - Barón Rojo</a></li>
+    <li><a href="#" onclick="playAudio(15)">16. Obús - Dinero, Dinero</a></li>
+    <li><a href="#" onclick="playAudio(16)">17. Barón Rojo - Breakthoeven</a></li>
+    <li><a href="#" onclick="playAudio(17)">18. Barón Rojo - Casi Me Mato</a></li>
+    <li><a href="#" onclick="playAudio(18)">19. Obús - Vamos Muy Bien</a></li>
+    <li><a href="#" onclick="playAudio(19)">20. Obús - Va a Estallar el Obús</a></li>
+  </ul>
+
+  <div class="player-wrapper">
+    <img src="heavy/heavy.gif" alt="Heavy Metal" class="robot-overlay">
+    <audio id="player" controls></audio>
+  </div>
+
+  <script>
+    const player = document.getElementById('player');
+    const playlist = [
+      'heavy/01. ACDC- Thunder.MP3',
+      'heavy/02. Scorpions-Rock You Like A Hurricane.mp3',
+      'heavy/03. Iron Maiden - The Trooper.mp3',
+      'heavy/04. ACDC - High way to heaven.mp3',
+      'heavy/05. Iron Maiden - The Number of the Beast.mp3',
+      'heavy/06. Scorpions - always somewhere.mp3',
+      'heavy/07. Europe - The final count down.mp3',
+      'heavy/08. Scorpions - holiday.mp3',
+      'heavy/09. Scorpions - No One Like You.mp3',
+      'heavy/10. Guns N Roses -  You could be mine.mp3',
+      'heavy/11. Scorpions - still loving you.mp3',
+      'heavy/12. Guns N Roses - Welcome to the jungle.mp3',
+      'heavy/13. Scorpions - when the smoke is going down.mp3',
+      'heavy/14. Scorpions - Wind Of Change.MP3',
+      'heavy/15. Baron Rojo - Baron Rojo.mp3',
+      'heavy/16. OBUS - Dinero, dinero.mp3',
+      'heavy/17. Baron Rojo - Breakthoveen.mp3',
+      'heavy/18. Baron Rojo - Casi me mato.mp3',
+      'heavy/19. OBUS - Vamos Muy Bien.mp3',
+      'heavy/20. OBUS - Va a estallar el Obus.mp3'
+    ];
+
+    let currentTrack = null;
+    const listItems = document.querySelectorAll('#playlist li');
+
+    function highlightTrack(index) {
+      listItems.forEach((li, i) => {
+        li.classList.toggle('playing', i === index);
+      });
+    }
+
+    function playAudio(index) {
+      currentTrack = index;
+      player.src = playlist[currentTrack];
+      player.play();
+      highlightTrack(currentTrack);
+    }
+
+    player.addEventListener('ended', () => {
+      if (currentTrack !== null) {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        player.src = playlist[currentTrack];
+        player.play();
+        highlightTrack(currentTrack);
+      }
+    });
+  </script>
+</body>
+</html>
