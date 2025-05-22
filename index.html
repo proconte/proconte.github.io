@@ -11,7 +11,6 @@
       background-color: #f8f9fa;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #212529;
-      position: relative;
       min-height: 100vh;
     }
 
@@ -21,7 +20,6 @@
       align-items: center;
       justify-content: flex-start;
       overflow-x: hidden;
-      padding-bottom: 200px; /* espacio reservado para Pacman */
     }
 
     .header-img {
@@ -35,7 +33,7 @@
     ul {
       list-style: none;
       padding: 0;
-      margin: 3vh 0 40px 0;
+      margin: 3vh 0 30vh 0; /* espacio visual inferior para el Pacman */
       width: 90%;
       max-width: 800px;
       z-index: 2;
@@ -59,7 +57,7 @@
     }
 
     .pacman-background {
-      position: absolute;
+      position: fixed;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
