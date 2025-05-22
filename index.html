@@ -11,6 +11,7 @@
       background-color: #f8f9fa;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #212529;
+      position: relative;
       min-height: 100vh;
     }
 
@@ -20,7 +21,7 @@
       align-items: center;
       justify-content: flex-start;
       overflow-x: hidden;
-      position: relative;
+      padding-bottom: 200px; /* espacio reservado para Pacman */
     }
 
     .header-img {
@@ -57,19 +58,17 @@
       color: #f67f00;
     }
 
-    .pacman-container {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
     .pacman-background {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
       max-width: 800px;
-      width: 100%;
       height: auto;
       opacity: 1;
       pointer-events: none;
+      z-index: 0;
     }
   </style>
 </head>
@@ -84,8 +83,6 @@
     <li><a href="mp3/calorro.html">Calorro</a></li>
   </ul>
 
-  <div class="pacman-container">
-    <img src="mp3/img/pacman.gif" alt="Pacman de fondo" class="pacman-background">
-  </div>
+  <img src="mp3/img/pacman.gif" alt="Pacman de fondo" class="pacman-background">
 </body>
 </html>
