@@ -11,7 +11,7 @@
       background-color: #f8f9fa;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #212529;
-      height: 100%;
+      min-height: 100vh;
     }
 
     body {
@@ -19,7 +19,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      min-height: 100vh;
       overflow-x: hidden;
       position: relative;
     }
@@ -32,33 +31,10 @@
       z-index: 2;
     }
 
-    .pacman-background {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 1;
-      pointer-events: none;
-      z-index: 0;
-      height: auto;
-    }
-
-    @media (max-width: 800px) {
-      .pacman-background {
-        width: 100vw;
-      }
-    }
-
-    @media (min-width: 801px) {
-      .pacman-background {
-        width: 800px;
-      }
-    }
-
     ul {
       list-style: none;
       padding: 0;
-      margin: 3vh 0 40px 0; 
+      margin: 3vh 0 40px 0;
       width: 90%;
       max-width: 800px;
       z-index: 2;
@@ -80,11 +56,25 @@
     a:hover {
       color: #f67f00;
     }
+
+    .pacman-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .pacman-background {
+      max-width: 800px;
+      width: 100%;
+      height: auto;
+      opacity: 1;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
   <img src="mp3/img/pixelandgames.png" alt="Pixel and Games" class="header-img">
-  <img src="mp3/img/pacman.gif" alt="Pacman de fondo" class="pacman-background">
 
   <ul>
     <li><a href="mp3/technoSP.html">Techno Español</a></li>
@@ -93,5 +83,9 @@
     <li><a href="mp3/heavymetal.html">Heavy Metal</a></li>
     <li><a href="mp3/calorro.html">Calorro</a></li>
   </ul>
+
+  <div class="pacman-container">
+    <img src="mp3/img/pacman.gif" alt="Pacman de fondo" class="pacman-background">
+  </div>
 </body>
 </html>
