@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Calorro Playlist</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 12px;
+      background-image: url('calorro/flamenco.gif');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: top center;
+      background-attachment: scroll;
+      color: #212529;
+      line-height: 1.2;
+      font-size: 10.5px;
+    }
+
+    .header-img {
+      display: block;
+      max-width: 240px;
+      height: auto;
+      margin: 0 auto 16px auto;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #070707;
+      font-size: 10.5px;
+      display: block;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    a:hover {
+      color: #c6262e;
+      font-weight: bold;
+    }
+
+    .player-wrapper {
+      position: relative;
+      margin-top: 16px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .player-wrapper audio {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .playing {
+      background-color: #000000;
+    }
+
+    .playing a {
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <img src="calorro/pixelandgames.png" alt="Cabecera" class="header-img">
+
+  <ul id="playlist">
+    <li><a href="#" onclick="playAudio(0)">01. Las Grecas - Te Estoy Amando Locamente</a></li>
+    <li><a href="#" onclick="playAudio(1)">02. Los Chichos - Ni más ni menos</a></li>
+    <li><a href="#" onclick="playAudio(2)">03. Las Grecas - Achilipu</a></li>
+    <li><a href="#" onclick="playAudio(3)">04. Los Chunguitos - Carmen</a></li>
+    <li><a href="#" onclick="playAudio(4)">05. Los Chunguitos - Tengo libertad</a></li>
+    <li><a href="#" onclick="playAudio(5)">06. Los Chichos - Quiero ser libre</a></li>
+    <li><a href="#" onclick="playAudio(6)">07. Los Amaya - Caramelos</a></li>
+    <li><a href="#" onclick="playAudio(7)">08. Lo Chunguitos - Me Quedo Contigo</a></li>
+    <li><a href="#" onclick="playAudio(8)">09. Los Amaya - Vete</a></li>
+    <li><a href="#" onclick="playAudio(9)">10. Gipsy Kings - Volare</a></li>
+    <li><a href="#" onclick="playAudio(10)">11. Los Manolos - Amigos para Siempre</a></li>
+    <li><a href="#" onclick="playAudio(11)">12. Gipsy Kings - Bamboleó</a></li>
+    <li><a href="#" onclick="playAudio(12)">13. Los Manolos - All my loving</a></li>
+    <li><a href="#" onclick="playAudio(13)">14. Camela - Cuando zarpa el amor</a></li>
+    <li><a href="#" onclick="playAudio(14)">15. Estopa - El del medio de los chichos</a></li>
+    <li><a href="#" onclick="playAudio(15)">16. Camela - Háblale de mi</a></li>
+    <li><a href="#" onclick="playAudio(16)">17. Camela - Lágrimas de amor</a></li>
+    <li><a href="#" onclick="playAudio(17)">18. Chambao - Pokito a poko</a></li>
+    <li><a href="#" onclick="playAudio(18)">19. Estopa - La raja de tu falda</a></li>
+    <li><a href="#" onclick="playAudio(19)">20. Chambao - Ahí Estás Tú</a></li>
+  </ul>
+
+  <div class="player-wrapper">
+    <audio id="player" controls></audio>
+  </div>
+
+  <script>
+    const player = document.getElementById('player');
+    const playlist = [
+      'calorro/01. Las Grecas - Te Estoy Amando Locamente.mp3',
+      'calorro/02. Los Chichos - Ni más ni menos.mp3',
+      'calorro/03. Las Grecas - Achilipu.mp3',
+      'calorro/04. Los Chunguitos - Carmen.mp3',
+      'calorro/05. Los Chunguitos - Tengo libertad.mp3',
+      'calorro/06. Los Chichos - Quiero ser libre.mp3',
+      'calorro/07. Los Amaya - Caramelos.mp3',
+      'calorro/08. Lo Chunguitos - Me Quedo Contigo.mp3',
+      'calorro/09. Los Amaya - Vete.mp3',
+      'calorro/10. Gipsy Kings - Volare.mp3',
+      'calorro/11. Los Manolos - Amigos para Siempre.mp3',
+      'calorro/12. Gipsy Kings - Bamboleó.mp3',
+      'calorro/13. Los Manolos - All my loving.mp3',
+      'calorro/14. Camela - Cuando zarpa el amor.mp3',
+      'calorro/15. Estopa - El del medio de los chichos.mp3',
+      'calorro/16. Camela - Háblale de mi.mp3',
+      'calorro/17. Camela - Lágrimas de amor.mp3',
+      'calorro/18. Chambao - Pokito a poko.mp3',
+      'calorro/19. Estopa - La raja de tu falda.mp3',
+      'calorro/20. Chambao - Ahí Estás Tú.mp3'
+    ];
+
+    let currentTrack = null;
+    const listItems = document.querySelectorAll('#playlist li');
+
+    function highlightTrack(index) {
+      listItems.forEach((li, i) => {
+        li.classList.toggle('playing', i === index);
+      });
+    }
+
+    function playAudio(index) {
+      currentTrack = index;
+      player.src = playlist[currentTrack];
+      player.play();
+      highlightTrack(currentTrack);
+    }
+
+    player.addEventListener('ended', () => {
+      if (currentTrack !== null) {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        player.src = playlist[currentTrack];
+        player.play();
+        highlightTrack(currentTrack);
+      }
+    });
+  </script>
+</body>
+</html>
