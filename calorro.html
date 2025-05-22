@@ -3,36 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Calorro Playlist</title>
+  <title>Pixel&Games - Calorro</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 12px;
-      background-image: url('calorro/flamenco.gif');
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: top center;
-      background-attachment: scroll;
+      margin: 12px;
+      padding: 0;
+      background-color: #f8f9fa;
       color: #212529;
       line-height: 1.2;
       font-size: 10.5px;
-    }
-
-    .header-img {
-      display: block;
-      max-width: 240px;
-      height: auto;
-      margin: 0 auto 16px auto;
     }
 
     ul {
       list-style: none;
       padding: 0;
       margin: 0;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
-      padding: 12px;
     }
 
     li {
@@ -49,16 +35,13 @@
     }
 
     a:hover {
-      color: #c6262e;
+      color: #f67f00;
       font-weight: bold;
     }
 
     .player-wrapper {
       position: relative;
       margin-top: 16px;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
-      padding: 10px;
     }
 
     .player-wrapper audio {
@@ -66,19 +49,36 @@
       border-radius: 10px;
     }
 
+    .robot-overlay {
+      position: absolute;
+      right: 10px;
+      bottom: 100%;
+      width: 300px;
+      margin-bottom: 5px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
     .playing {
       background-color: #000000;
     }
 
     .playing a {
-      color: rgb(255, 255, 255);
+      color: rgb(250, 250, 250);
       font-weight: bold;
       font-size: 12px;
+    }
+
+    .header-img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
-  <img src="calorro/pixelandgames.png" alt="Cabecera" class="header-img">
+  <img src="calorro/pixelandgames.png" alt="Pixel and Games" class="header-img">
 
   <ul id="playlist">
     <li><a href="#" onclick="playAudio(0)">01. Las Grecas - Te Estoy Amando Locamente</a></li>
@@ -88,7 +88,7 @@
     <li><a href="#" onclick="playAudio(4)">05. Los Chunguitos - Tengo libertad</a></li>
     <li><a href="#" onclick="playAudio(5)">06. Los Chichos - Quiero ser libre</a></li>
     <li><a href="#" onclick="playAudio(6)">07. Los Amaya - Caramelos</a></li>
-    <li><a href="#" onclick="playAudio(7)">08. Lo Chunguitos - Me Quedo Contigo</a></li>
+    <li><a href="#" onclick="playAudio(7)">08. Lo Chunguitos - Me quedo contigo</a></li>
     <li><a href="#" onclick="playAudio(8)">09. Los Amaya - Vete</a></li>
     <li><a href="#" onclick="playAudio(9)">10. Gipsy Kings - Volare</a></li>
     <li><a href="#" onclick="playAudio(10)">11. Los Manolos - Amigos para Siempre</a></li>
@@ -104,6 +104,7 @@
   </ul>
 
   <div class="player-wrapper">
+    <img src="calorro/flamenco.gif" alt="Flamenca bailando" class="robot-overlay">
     <audio id="player" controls></audio>
   </div>
 
@@ -117,11 +118,11 @@
       'calorro/05. Los Chunguitos - Tengo libertad.mp3',
       'calorro/06. Los Chichos - Quiero ser libre.mp3',
       'calorro/07. Los Amaya - Caramelos.mp3',
-      'calorro/08. Lo Chunguitos - Me Quedo Contigo.mp3',
+      'calorro/08. Los Chungitos - Me Quedo Contigo.mp3',
       'calorro/09. Los Amaya - Vete.mp3',
       'calorro/10. Gipsy Kings - Volare.mp3',
       'calorro/11. Los Manolos - Amigos para Siempre.mp3',
-      'calorro/12. Gipsy Kings - Bamboleó.mp3',
+      'calorro/12. Gipsy Kings - Bamboléo.mp3',
       'calorro/13. Los Manolos - All my loving.mp3',
       'calorro/14. Camela - Cuando zarpa el amor.mp3',
       'calorro/15. Estopa - El del medio de los chichos.mp3',
