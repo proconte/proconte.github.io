@@ -5,14 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>Pixel&Games - technoSP</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 12px;
+    html, body {
+      margin: 0;
       padding: 0;
       background-color: #f8f9fa;
       color: #212529;
-      line-height: 1.2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      padding: 12px;
       font-size: 10.5px;
+      line-height: 1.2;
+      position: relative;
+    }
+
+    .header-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto 8px auto;
     }
 
     ul {
@@ -51,10 +70,10 @@
 
     .robot-overlay {
       position: absolute;
-      right: 10px;
+      right: -40px;
       bottom: 100%;
-      width: 300px;
-      margin-bottom: 5px;
+      max-height: 80vh;
+      height: auto;
       opacity: 0.5;
       pointer-events: none;
     }
@@ -69,43 +88,46 @@
       font-size: 12px;
     }
 
-    .header-img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 8px;
+    @media (min-width: 481px) {
+      body {
+        overflow-x: hidden;
+      }
     }
   </style>
 </head>
 <body>
-  <img src="img/pixelandgames.png" alt="Pixel and Games" class="header-img">
+  <div class="wrapper">
+    <div class="container">
+      <img src="img/pixelandgames.png" alt="Pixel and Games" class="header-img">
 
-  <ul id="playlist">
-    <li><a href="#" onclick="playAudio(0)">01. Azul y negro - No tengo tiempo</a></li>
-    <li><a href="#" onclick="playAudio(1)">02. Tino Casal - Pánico en el Edén</a></li>
-    <li><a href="#" onclick="playAudio(2)">03. Azul y negro - Me estoy volviendo loco</a></li>
-    <li><a href="#" onclick="playAudio(3)">04. Tino Casal - Embrujada</a></li>
-    <li><a href="#" onclick="playAudio(4)">05. Azul y negro - The night</a></li>
-    <li><a href="#" onclick="playAudio(5)">06. Tino Casal - Champú de Huevo</a></li>
-    <li><a href="#" onclick="playAudio(6)">07. Olé Olé - No controles</a></li>
-    <li><a href="#" onclick="playAudio(7)">08. Tino Casal - Eloise</a></li>
-    <li><a href="#" onclick="playAudio(8)">09. Locomía</a></li>
-    <li><a href="#" onclick="playAudio(9)">10. Chimo Bayo - Así me gusta a mí</a></li>
-    <li><a href="#" onclick="playAudio(10)">11. Minerva - Estoy llorando por ti</a></li>
-    <li><a href="#" onclick="playAudio(11)">12. Chimo Bayo - Química</a></li>
-    <li><a href="#" onclick="playAudio(12)">13. Fuego - El diablo</a></li>
-    <li><a href="#" onclick="playAudio(13)">14. Atahualpa - Último imperio</a></li>
-    <li><a href="#" onclick="playAudio(14)">15. Chimo Bayo - Bombas</a></li>
-    <li><a href="#" onclick="playAudio(15)">16. Chimo Bayo - Diablo</a></li>
-    <li><a href="#" onclick="playAudio(16)">17. Ojete Calor - Tonta gilipo</a></li>
-    <li><a href="#" onclick="playAudio(17)">18. Las Bistecs - Historia del arte</a></li>
-    <li><a href="#" onclick="playAudio(18)">19. Ladilla Rusa - Los coches del pasado</a></li>
-    <li><a href="#" onclick="playAudio(19)">20. Fangoria - Disfraz de tigre</a></li>
-  </ul>
+      <ul id="playlist">
+        <li><a href="#" onclick="playAudio(0)">01. Azul y negro - No tengo tiempo</a></li>
+        <li><a href="#" onclick="playAudio(1)">02. Tino Casal - Pánico en el Edén</a></li>
+        <li><a href="#" onclick="playAudio(2)">03. Azul y negro - Me estoy volviendo loco</a></li>
+        <li><a href="#" onclick="playAudio(3)">04. Tino Casal - Embrujada</a></li>
+        <li><a href="#" onclick="playAudio(4)">05. Azul y negro - The night</a></li>
+        <li><a href="#" onclick="playAudio(5)">06. Tino Casal - Champú de Huevo</a></li>
+        <li><a href="#" onclick="playAudio(6)">07. Olé Olé - No controles</a></li>
+        <li><a href="#" onclick="playAudio(7)">08. Tino Casal - Eloise</a></li>
+        <li><a href="#" onclick="playAudio(8)">09. Locomía</a></li>
+        <li><a href="#" onclick="playAudio(9)">10. Chimo Bayo - Así me gusta a mí</a></li>
+        <li><a href="#" onclick="playAudio(10)">11. Minerva - Estoy llorando por ti</a></li>
+        <li><a href="#" onclick="playAudio(11)">12. Chimo Bayo - Química</a></li>
+        <li><a href="#" onclick="playAudio(12)">13. Fuego - El diablo</a></li>
+        <li><a href="#" onclick="playAudio(13)">14. Atahualpa - Último imperio</a></li>
+        <li><a href="#" onclick="playAudio(14)">15. Chimo Bayo - Bombas</a></li>
+        <li><a href="#" onclick="playAudio(15)">16. Chimo Bayo - Diablo</a></li>
+        <li><a href="#" onclick="playAudio(16)">17. Ojete Calor - Tonta gilipo</a></li>
+        <li><a href="#" onclick="playAudio(17)">18. Las Bistecs - Historia del arte</a></li>
+        <li><a href="#" onclick="playAudio(18)">19. Ladilla Rusa - Los coches del pasado</a></li>
+        <li><a href="#" onclick="playAudio(19)">20. Fangoria - Disfraz de tigre</a></li>
+      </ul>
 
-  <div class="player-wrapper">
-    <img src="img/carlton.gif" alt="Carlton bailando" class="robot-overlay">
-    <audio id="player" controls></audio>
+      <div class="player-wrapper">
+        <img src="img/carlton.gif" alt="Carlton bailando" class="robot-overlay">
+        <audio id="player" controls></audio>
+      </div>
+    </div>
   </div>
 
   <script>
