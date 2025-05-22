@@ -2,38 +2,43 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pixel&Games - playlist</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 12px;
+    html, body {
+      margin: 0;
       padding: 0;
       background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #212529;
-      line-height: 1.4;
-      font-size: 12px;
-      position: relative;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .header-img {
-      display: block;
-      max-width: 100%;
+      width: 100%;
+      max-width: 800px;
       height: auto;
-      margin-bottom: 0;
+      margin-top: 12px;
       z-index: 2;
-      position: relative;
     }
 
     .pacman-background {
       position: absolute;
-      top: 140px; /* debajo de la cabecera */
+      top: 140px;
       left: 50%;
       transform: translateX(-50%);
-      width: 1000px;
-      max-width: 80%;
-      opacity: 1;
+      width: 80vw;
+      max-width: 1000px;
+      opacity: 0.1;
       pointer-events: none;
       z-index: 0;
     }
@@ -41,25 +46,27 @@
     ul {
       list-style: none;
       padding: 0;
-      margin: 40px 0 0 0;
-      position: relative;
+      margin: 5vh 0 0 0;
+      width: 90%;
+      max-width: 800px;
       z-index: 2;
+      text-align: center;
     }
 
     li {
-      margin: 12px 0;
+      margin: 5vh 0;
     }
 
     a {
       text-decoration: none;
       color: #070707;
-      font-size: 52px;
+      font-weight: bold;
+      font-size: clamp(28px, 6.5vw, 60px);
       display: inline-block;
     }
 
     a:hover {
       color: #f67f00;
-      font-weight: bold;
     }
   </style>
 </head>
