@@ -13,19 +13,32 @@
       color: #212529;
       line-height: 1.4;
       font-size: 12px;
+      position: relative;
     }
 
     .header-img {
       display: block;
       max-width: 100%;
       height: auto;
-      margin-bottom: 12px;
+      margin-bottom: 0;
+    }
+
+    .pacman-gif {
+      position: absolute;
+      top: 120px; /* debajo de la imagen de cabecera */
+      right: 10px;
+      width: 480px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 1;
     }
 
     ul {
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 24px 0 0 0;
+      position: relative;
+      z-index: 2;
     }
 
     li {
@@ -47,6 +60,7 @@
 </head>
 <body>
   <img src="heavy/pixelandgames.png" alt="Pixel and Games" class="header-img">
+  <img src="pacman.gif" alt="Pacman animado" class="pacman-gif">
 
   <ul>
     <li><a href="technoSP.html">Techno Español</a></li>
