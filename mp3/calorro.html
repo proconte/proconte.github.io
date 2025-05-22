@@ -5,14 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>Pixel&Games - Calorro</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 12px;
+    html, body {
+      margin: 0;
       padding: 0;
       background-color: #f8f9fa;
       color: #212529;
-      line-height: 1.2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      padding: 12px;
+      padding-bottom: 100px;
       font-size: 10.5px;
+      line-height: 1.2;
+      position: relative;
+    }
+
+    .header-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto 8px auto;
     }
 
     ul {
@@ -51,10 +71,10 @@
 
     .robot-overlay {
       position: absolute;
-      right: 10px;
+      right: -30px;
       bottom: 100%;
-      width: 300px;
-      margin-bottom: 5px;
+      max-height: 80vh;
+      height: auto;
       opacity: 0.5;
       pointer-events: none;
     }
@@ -69,43 +89,46 @@
       font-size: 12px;
     }
 
-    .header-img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 8px;
+    @media (min-width: 481px) {
+      body {
+        overflow-x: hidden;
+      }
     }
   </style>
 </head>
 <body>
-  <img src="img/pixelandgames.png" alt="Pixel and Games" class="header-img">
+  <div class="wrapper">
+    <div class="container">
+      <img src="img/pixelandgames.png" alt="Pixel and Games" class="header-img">
 
-  <ul id="playlist">
-    <li><a href="#" onclick="playAudio(0)">01. Las Grecas - Te estoy amando locamente</a></li>
-    <li><a href="#" onclick="playAudio(1)">02. Los Chichos - Ni más ni menos</a></li>
-    <li><a href="#" onclick="playAudio(2)">03. Las Grecas - Achilipu</a></li>
-    <li><a href="#" onclick="playAudio(3)">04. Los Chunguitos - Carmen</a></li>
-    <li><a href="#" onclick="playAudio(4)">05. Los Chunguitos - Tengo libertad</a></li>
-    <li><a href="#" onclick="playAudio(5)">06. Los Chichos - Quiero ser libre</a></li>
-    <li><a href="#" onclick="playAudio(6)">07. Los Amaya - Caramelos</a></li>
-    <li><a href="#" onclick="playAudio(7)">08. Lo Chunguitos - Me quedo contigo</a></li>
-    <li><a href="#" onclick="playAudio(8)">09. Los Amaya - Vete</a></li>
-    <li><a href="#" onclick="playAudio(9)">10. Gipsy Kings - Volare</a></li>
-    <li><a href="#" onclick="playAudio(10)">11. Los Manolos - Amigos para siempre</a></li>
-    <li><a href="#" onclick="playAudio(11)">12. Gipsy Kings - Bamboleó</a></li>
-    <li><a href="#" onclick="playAudio(12)">13. Los Manolos - All my loving</a></li>
-    <li><a href="#" onclick="playAudio(13)">14. Camela - Cuando zarpa el amor</a></li>
-    <li><a href="#" onclick="playAudio(14)">15. Estopa - El del medio de los chichos</a></li>
-    <li><a href="#" onclick="playAudio(15)">16. Camela - Háblale de mi</a></li>
-    <li><a href="#" onclick="playAudio(16)">17. Camela - Lágrimas de amor</a></li>
-    <li><a href="#" onclick="playAudio(17)">18. Chambao - Pokito a poko</a></li>
-    <li><a href="#" onclick="playAudio(18)">19. Estopa - La raja de tu falda</a></li>
-    <li><a href="#" onclick="playAudio(19)">20. Chambao - Ahí Estás Tú</a></li>
-  </ul>
+      <ul id="playlist">
+        <li><a href="#" onclick="playAudio(0)">01. Las Grecas - Te estoy amando locamente</a></li>
+        <li><a href="#" onclick="playAudio(1)">02. Los Chichos - Ni más ni menos</a></li>
+        <li><a href="#" onclick="playAudio(2)">03. Las Grecas - Achilipu</a></li>
+        <li><a href="#" onclick="playAudio(3)">04. Los Chunguitos - Carmen</a></li>
+        <li><a href="#" onclick="playAudio(4)">05. Los Chunguitos - Tengo libertad</a></li>
+        <li><a href="#" onclick="playAudio(5)">06. Los Chichos - Quiero ser libre</a></li>
+        <li><a href="#" onclick="playAudio(6)">07. Los Amaya - Caramelos</a></li>
+        <li><a href="#" onclick="playAudio(7)">08. Lo Chunguitos - Me quedo contigo</a></li>
+        <li><a href="#" onclick="playAudio(8)">09. Los Amaya - Vete</a></li>
+        <li><a href="#" onclick="playAudio(9)">10. Gipsy Kings - Volare</a></li>
+        <li><a href="#" onclick="playAudio(10)">11. Los Manolos - Amigos para siempre</a></li>
+        <li><a href="#" onclick="playAudio(11)">12. Gipsy Kings - Bamboleó</a></li>
+        <li><a href="#" onclick="playAudio(12)">13. Los Manolos - All my loving</a></li>
+        <li><a href="#" onclick="playAudio(13)">14. Camela - Cuando zarpa el amor</a></li>
+        <li><a href="#" onclick="playAudio(14)">15. Estopa - El del medio de los chichos</a></li>
+        <li><a href="#" onclick="playAudio(15)">16. Camela - Háblale de mi</a></li>
+        <li><a href="#" onclick="playAudio(16)">17. Camela - Lágrimas de amor</a></li>
+        <li><a href="#" onclick="playAudio(17)">18. Chambao - Pokito a poko</a></li>
+        <li><a href="#" onclick="playAudio(18)">19. Estopa - La raja de tu falda</a></li>
+        <li><a href="#" onclick="playAudio(19)">20. Chambao - Ahí Estás Tú</a></li>
+      </ul>
 
-  <div class="player-wrapper">
-    <img src="img/flamenco.gif" alt="Flamenca bailando" class="robot-overlay">
-    <audio id="player" controls></audio>
+      <div class="player-wrapper">
+        <img src="img/flamenco.gif" alt="Flamenca bailando" class="robot-overlay">
+        <audio id="player" controls></audio>
+      </div>
+    </div>
   </div>
 
   <script>

@@ -5,14 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>Pixel&Games - Heavy</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 12px;
+    html, body {
+      margin: 0;
       padding: 0;
       background-color: #f8f9fa;
       color: #212529;
-      line-height: 1.2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      padding: 12px;
+      padding-bottom: 100px;
       font-size: 10.5px;
+      line-height: 1.2;
+      position: relative;
+    }
+
+    .header-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto 8px auto;
     }
 
     ul {
@@ -51,10 +71,10 @@
 
     .robot-overlay {
       position: absolute;
-      right: 10px;
+      right: -30px;
       bottom: 100%;
-      width: 360px;
-      margin-bottom: 5px;
+      max-height: 52vh;
+      height: auto;
       opacity: 0.5;
       pointer-events: none;
     }
@@ -69,43 +89,46 @@
       font-size: 12px;
     }
 
-    .header-img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 8px;
+    @media (min-width: 481px) {
+      body {
+        overflow-x: hidden;
+      }
     }
   </style>
 </head>
 <body>
-  <img src="img/pixelandgames.png" alt="Pixel and Games" class="header-img">
+  <div class="wrapper">
+    <div class="container">
+      <img src="img/pixelandgames.png" alt="Pixel and Games" class="header-img">
 
-  <ul id="playlist">
-    <li><a href="#" onclick="playAudio(0)">01. ACDC - Thunder</a></li>
-    <li><a href="#" onclick="playAudio(1)">02. Scorpions - Rock You Like A Hurricane</a></li>
-    <li><a href="#" onclick="playAudio(2)">03. Iron Maiden - The Trooper</a></li>
-    <li><a href="#" onclick="playAudio(3)">04. ACDC - High Way to Heaven</a></li>
-    <li><a href="#" onclick="playAudio(4)">05. Iron Maiden - The Number of the Beast</a></li>
-    <li><a href="#" onclick="playAudio(5)">06. Scorpions - Always Somewhere</a></li>
-    <li><a href="#" onclick="playAudio(6)">07. Europe - The Final Countdown</a></li>
-    <li><a href="#" onclick="playAudio(7)">08. Scorpions - Holiday</a></li>
-    <li><a href="#" onclick="playAudio(8)">09. Scorpions - No One Like You</a></li>
-    <li><a href="#" onclick="playAudio(9)">10. Guns N' Roses - You Could Be Mine</a></li>
-    <li><a href="#" onclick="playAudio(10)">11. Scorpions - Still Loving You</a></li>
-    <li><a href="#" onclick="playAudio(11)">12. Guns N' Roses - Welcome to the Jungle</a></li>
-    <li><a href="#" onclick="playAudio(12)">13. Scorpions - When the Smoke is Going Down</a></li>
-    <li><a href="#" onclick="playAudio(13)">14. Scorpions - Wind of Change</a></li>
-    <li><a href="#" onclick="playAudio(14)">15. Barón Rojo - Barón Rojo</a></li>
-    <li><a href="#" onclick="playAudio(15)">16. Obús - Dinero, Dinero</a></li>
-    <li><a href="#" onclick="playAudio(16)">17. Barón Rojo - Breakthoeven</a></li>
-    <li><a href="#" onclick="playAudio(17)">18. Barón Rojo - Casi Me Mato</a></li>
-    <li><a href="#" onclick="playAudio(18)">19. Obús - Vamos Muy Bien</a></li>
-    <li><a href="#" onclick="playAudio(19)">20. Obús - Va a Estallar el Obús</a></li>
-  </ul>
+      <ul id="playlist">
+        <li><a href="#" onclick="playAudio(0)">01. ACDC - Thunder</a></li>
+        <li><a href="#" onclick="playAudio(1)">02. Scorpions - Rock You Like A Hurricane</a></li>
+        <li><a href="#" onclick="playAudio(2)">03. Iron Maiden - The Trooper</a></li>
+        <li><a href="#" onclick="playAudio(3)">04. ACDC - High Way to Heaven</a></li>
+        <li><a href="#" onclick="playAudio(4)">05. Iron Maiden - The Number of the Beast</a></li>
+        <li><a href="#" onclick="playAudio(5)">06. Scorpions - Always Somewhere</a></li>
+        <li><a href="#" onclick="playAudio(6)">07. Europe - The Final Countdown</a></li>
+        <li><a href="#" onclick="playAudio(7)">08. Scorpions - Holiday</a></li>
+        <li><a href="#" onclick="playAudio(8)">09. Scorpions - No One Like You</a></li>
+        <li><a href="#" onclick="playAudio(9)">10. Guns N' Roses - You Could Be Mine</a></li>
+        <li><a href="#" onclick="playAudio(10)">11. Scorpions - Still Loving You</a></li>
+        <li><a href="#" onclick="playAudio(11)">12. Guns N' Roses - Welcome to the Jungle</a></li>
+        <li><a href="#" onclick="playAudio(12)">13. Scorpions - When the Smoke is Going Down</a></li>
+        <li><a href="#" onclick="playAudio(13)">14. Scorpions - Wind of Change</a></li>
+        <li><a href="#" onclick="playAudio(14)">15. Barón Rojo - Barón Rojo</a></li>
+        <li><a href="#" onclick="playAudio(15)">16. Obús - Dinero, Dinero</a></li>
+        <li><a href="#" onclick="playAudio(16)">17. Barón Rojo - Breakthoeven</a></li>
+        <li><a href="#" onclick="playAudio(17)">18. Barón Rojo - Casi Me Mato</a></li>
+        <li><a href="#" onclick="playAudio(18)">19. Obús - Vamos Muy Bien</a></li>
+        <li><a href="#" onclick="playAudio(19)">20. Obús - Va a Estallar el Obús</a></li>
+      </ul>
 
-  <div class="player-wrapper">
-    <img src="img/heavy.gif" alt="Heavy Metal" class="robot-overlay">
-    <audio id="player" controls></audio>
+      <div class="player-wrapper">
+        <img src="img/heavy.gif" alt="Heavy Metal" class="robot-overlay">
+        <audio id="player" controls></audio>
+      </div>
+    </div>
   </div>
 
   <script>
