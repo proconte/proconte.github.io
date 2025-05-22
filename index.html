@@ -2,85 +2,94 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pixel&Games - playlist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Pixel&Games - technoSP</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       background-color: #f8f9fa;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #212529;
-      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    body {
+    .wrapper {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      overflow-x: hidden;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      padding: 12px;
+      font-size: 10.5px;
+      line-height: 1.2;
+      position: relative;
+      text-align: center;
     }
 
     .header-img {
+      display: block;
       width: 100%;
-      max-width: 800px;
       height: auto;
-      margin-top: 12px;
-      z-index: 2;
+      margin: 0 auto 8px auto;
     }
 
     ul {
       list-style: none;
       padding: 0;
-      margin: 3vh 0 30vh 0; /* espacio visual inferior para el Pacman */
-      width: 90%;
-      max-width: 800px;
-      z-index: 2;
-      text-align: center;
+      margin: 0;
     }
 
     li {
-      margin: 3vh 0;
+      margin: 12px 0;
     }
 
     a {
       text-decoration: none;
-      color: #070707;
+      color: #4d4d4d;
+      font-size: 30px;
       font-weight: bold;
-      font-size: clamp(28px, 6.5vw, 60px);
       display: inline-block;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     a:hover {
       color: #f67f00;
+      font-weight: bold;
     }
 
-    .pacman-background {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100vw;
-      max-width: 800px;
+    .robot-visible {
+      display: block;
+      margin: 16px auto 0 auto;
+      max-width: 100%;
       height: auto;
       opacity: 1;
-      pointer-events: none;
-      z-index: 0;
+    }
+
+    @media (min-width: 481px) {
+      body {
+        overflow-x: hidden;
+      }
     }
   </style>
 </head>
 <body>
-  <img src="mp3/img/pixelandgames.png" alt="Pixel and Games" class="header-img">
+  <div class="wrapper">
+    <div class="container">
+      <img src="mp3/img/pixelandgames.png" alt="Pixel and Games" class="header-img">
 
-  <ul>
-    <li><a href="mp3/technoSP.html">Techno Español</a></li>
-    <li><a href="mp3/technopop.html">Techno Pop</a></li>
-    <li><a href="mp3/electro.html">Electro Techno</a></li>
-    <li><a href="mp3/heavymetal.html">Heavy Metal</a></li>
-    <li><a href="mp3/calorro.html">Calorro</a></li>
-  </ul>
+      <ul>
+        <li><a href="mp3/technoSP.html">Techno Español</a></li>
+        <li><a href="mp3/technopop.html">Techno Pop</a></li>
+        <li><a href="mp3/electro.html">Electro Techno</a></li>
+        <li><a href="mp3/heavymetal.html">Heavy Metal</a></li>
+        <li><a href="mp3/calorro.html">Calorro</a></li>
+      </ul>
 
-  <img src="mp3/img/pacman.gif" alt="Pacman de fondo" class="pacman-background">
+      <img src="mp3/img/pacman.gif" alt="pacman" class="robot-visible">
+    </div>
+  </div>
 </body>
 </html>
