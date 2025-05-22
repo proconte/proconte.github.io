@@ -34,20 +34,33 @@
 
     .pacman-background {
       position: absolute;
-      top: 100px;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 100vw;
-      height: auto;
       opacity: 0.5;
       pointer-events: none;
       z-index: 0;
+      height: auto;
+    }
+
+    /* Versión para móviles */
+    @media (max-width: 800px) {
+      .pacman-background {
+        width: 100vw;
+      }
+    }
+
+    /* Versión para pantallas grandes */
+    @media (min-width: 801px) {
+      .pacman-background {
+        width: 800px;
+      }
     }
 
     ul {
       list-style: none;
       padding: 0;
-      margin: 6vh 0 0 0;
+      margin: 6vh 0 80px 0; /* margen inferior para no tapar el pacman */
       width: 90%;
       max-width: 800px;
       z-index: 2;
@@ -76,8 +89,9 @@
   <img src="mp3/img/pacman.gif" alt="Pacman de fondo" class="pacman-background">
 
   <ul>
-    <li><a href="mp3/technoSP.html">Techno SP</a></li>
+    <li><a href="mp3/technoSP.html">Techno Español</a></li>
     <li><a href="mp3/technopop.html">Techno Pop</a></li>
+    <li><a href="mp3/electro.html">Electro Techno</a></li>
     <li><a href="mp3/heavymetal.html">Heavy Metal</a></li>
     <li><a href="mp3/calorro.html">Calorro</a></li>
   </ul>
