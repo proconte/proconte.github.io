@@ -2,221 +2,98 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Generador de PROMPT XML para LLM</title>
-  <link href="https://fonts.googleapis.com/css2?family=Aptos&display=swap" rel="stylesheet">
+  <title>Reseñas de libros de Javier Arévalo Royo</title>
   <style>
     body {
-      font-family: 'Aptos', sans-serif;
-      margin: 2rem;
-      background: #d6d6d6;
-      color: #1f2937;
+      margin: 0;
+      padding: 0;
+      font-family: Georgia, 'Times New Roman', serif;
+      background-color: #111;
+      color: #eee;
     }
-    h1 {
+
+    .marco-central {
+      width: 1024px;
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+
+    .contenedor {
       display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #1f2937;
+      justify-content: space-between;
+      align-items: flex-start;
     }
-    h1 .subtitulo {
-      font-size: 0.7rem;
-      font-weight: bold;
-      color: #cc6a0e;
+
+    .video-columna {
+      flex: 0 0 32%;
+      text-align: center;
     }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 1rem;
-      color: #1f2937;
+
+    h1 {
+      font-size: 1.4em;
+      text-align: center;
+      color: #ddd;
+      font-family: "Courier New", Courier, monospace;
+      font-weight: normal;
+      margin-bottom: 30px;
     }
-    textarea {
+
+    .video-columna h3 {
+      font-size: 1em;
+      margin-top: 10px;
+      color: #ddd;
+      font-family: "Courier New", Courier, monospace;
+      font-weight: normal;
+    }
+
+    video {
       width: 100%;
-      height: 100px;
-      margin-bottom: 0;
-      padding: 0.5rem;
-      font-family: 'Aptos', sans-serif;
-      font-size: 1rem;
-      resize: vertical;
-      border: 1px solid #4d4d4d;
-      background: #eeeeee;
-    }
-    select {
-      width: 100%;
-      padding: 0.4rem;
-      font-family: 'Aptos', sans-serif;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      margin-top: 0;
-      border: 1px solid #4d4d4d;
-      background: #eeeeee;
-    }
-    button {
-      padding: 0.25rem 0.5rem;
-      font-size: 0.60rem;
-      cursor: pointer;
-      margin-right: 1rem;
-      margin-top: 1rem;
-      background-color: #cc6a0e;
-      color: lightgrey;
+      height: auto;
+      background-color: #000;
+      outline: none;
       border: none;
-      border-radius: 4px;
-    }
-    #generarBtn {
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      background-color: #cc6a0e;
-    }
-    pre {
-      background: #eeeeee;
-      padding: 1rem;
-      white-space: pre-wrap;
-      word-break: break-word;
-      margin-top: 2rem;
-      border: 1px solid #ccc;
-      font-family: monospace;
     }
   </style>
 </head>
 <body>
-
-  <h1>Generador de PROMPT en XML para LLMs <span class="subtitulo">jar'25</span></h1>
-  <button onclick="ponerEjemplo()">Rellenar areas con ejemplo completo</button>
-
-  <label for="contexto">Contexto</label>
-  <textarea id="contexto" placeholder="Introduce aquí el contexto..."></textarea>
-
-  <label for="tarea">Tarea</label>
-  <textarea id="tarea" placeholder="¿Qué debe hacer el modelo?"></textarea>
-
-  <label for="restricciones">Restricciones</label>
-  <textarea id="restricciones" placeholder="Condiciones que debe respetar la respuesta..."></textarea>
-  <select onchange="insertarEnTextarea('restricciones', this)">
-    <option selected disabled>-- Añadir restricción --</option>
-    <option>No usar las palabras "crucial", "esencial" o "relevante", "sugerir" o cualquiera de sus variantes</option>
-    <option>No usar estructuras del tipo "no solo" - "sino que"</option>
-    <option>No utilizar lenguaje coloquial ni frases ambiguas.</option>
-    <option>No usar lenguaje informal</option>
-    <option>Evitar enumeraciones</option>
-    <option>Respuesta no debe superar 500 palabras</option>
-    <option>Contestar por aquí una sola opción y directamente por el chat</option>
-    <option>Uso de terminología especializada</option>
-    <option>Evitar repeticiones léxicas</option>
-    <option>Excluir ejemplos de uso personal o anecdótico</option>
-    <option>No utilizar conclusiones explícitas</option>
-    <option>Redacción sin estructuras causales simples</option>
-    <option>No incluir juicios de valor subjetivos</option>
-  </select>
-
-  <label for="formato">Formato</label>
-  <textarea id="formato" placeholder="¿Cómo debe estructurarse la respuesta?"></textarea>
-  <select onchange="insertarEnTextarea('formato', this)">
-    <option selected disabled>-- Añadir formato --</option>
-    <option>Texto continuo sin apartados explícitos</option>
-    <option>Respuesta en bloques numerados</option>
-    <option>Incluir referencias si procede</option>
-    <option>No incluir una sección final de resumen</option>
-    <option>Formato LaTeX para fórmulas</option>
-    <option>Evitar negritas, cursivas o subrayados</option>
-    <option>Redacción fluida en párrafos de tamaño medio</option>
-    <option>Insertar código en bloques con sintaxis explícita</option>
-  </select>
-
-  <label for="estilo">Estilo</label>
-  <textarea id="estilo" placeholder="Estilo de redacción deseado..."></textarea>
-  <select onchange="insertarEnTextarea('estilo', this)">
-    <option selected disabled>-- Añadir estilo --</option>
-    <option>Tono técnico-formal</option>
-    <option>Evitar expresiones coloquiales</option>
-    <option>Uso de terminología especializada</option>
-    <option>Estilo narrativo denso y claro, sin redundancias</option>
-    <option>Imitación del discurso de Umberto Eco o Isaac Asimov</option>
-    <option>Construcciones sintácticas complejas y subordinadas</option>
-    <option>Evitar estructuras enfatizantes y exclamativas</option>
-    <option>Lenguaje neutro y objetivo, con claridad conceptual</option>
-  </select>
-
-  <button id="generarBtn" onclick="generarPrompt()">Generar XML y ctrl+c</button>
-
-  <pre id="resultado"></pre>
+  <div class="marco-central">
+    <!-- <h1>Reseñas de libros de Javier Arévalo Royo</h1>  -->
+    <div class="contenedor">
+      <div class="video-columna">
+        <video controls preload="metadata">
+          <source src="libros/prologo.mp4" type="video/mp4">
+          Su navegador no soporta reproducción de vídeo.
+        </video>
+        <h3>Prólogo a la Inteligencia Artificial:<br>Consciencia Artificial<br>ISBN13: 979-8873304950</h3>
+      </div>
+      <div class="video-columna">
+        <video controls preload="metadata">
+          <source src="libros/Informática.mp4" type="video/mp4">
+          Su navegador no soporta reproducción de vídeo.
+        </video>
+        <h3>Informática: El mundo como información<br>y representación<br>ISBN13: 979-8340452597</h3>
+      </div>
+      <div class="video-columna">
+        <video controls preload="metadata">
+          <source src="libros/breveHistoria.mp4" type="video/mp4">
+          Su navegador no soporta reproducción de vídeo.
+        </video>
+        <h3>Breve historia de la Informática<br>y las Computadoras<br>ISBN13: 979-8874114725</h3>
+      </div>
+    </div>
+  </div>
 
   <script>
-    function escapeXML(str) {
-      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
-
-    function transformarItems(texto) {
-      return texto.split('\n').map(linea => {
-        const contenido = linea.trim();
-        if (contenido.startsWith('-')) {
-          const limpio = contenido.substring(1).trim();
-          return `    <item>${escapeXML(limpio)}</item>`;
-        } else {
-          return `    ${escapeXML(contenido)}`;
-        }
-      }).join('\n');
-    }
-
-    function indentText(text, level = 2) {
-      const indentation = ' '.repeat(level * 2);
-      return text.split('\n').map(line => indentation + line.trim()).join('\n');
-    }
-
-    function generarPrompt() {
-      const contexto = indentText(escapeXML(document.getElementById("contexto").value.trim()));
-      const tarea = transformarItems(document.getElementById("tarea").value.trim());
-      const restricciones = transformarItems(document.getElementById("restricciones").value.trim());
-      const formato = transformarItems(document.getElementById("formato").value.trim());
-      const estilo = transformarItems(document.getElementById("estilo").value.trim());
-
-      const xml =
-`<prompt>
-  <contexto>
-${contexto}
-  </contexto>
-  <tarea>
-${tarea}
-  </tarea>
-  <restricciones>
-${restricciones}
-  </restricciones>
-  <formato>
-${formato}
-  </formato>
-  <estilo>
-${estilo}
-  </estilo>
-</prompt>`;
-
-      document.getElementById("resultado").textContent = xml;
-      navigator.clipboard.writeText(xml);
-    }
-
-    function ponerEjemplo() {
-      document.getElementById("contexto").value =
-`La incorporación de algoritmos de IA en entornos industriales está reconfigurando de manera profunda procesos tales como el mantenimiento predictivo, el control automatizado de la calidad y la gestión optimizada del consumo energético.`;
-      document.getElementById("tarea").value =
-`- Describir los principales tipos de algoritmos de IA utilizados actualmente en el ámbito industrial.\n- Explicar cómo se aplican en contextos concretos como mantenimiento, control de calidad o logística.\n- Analizar los beneficios técnicos y económicos que aportan.\n- Señalar las limitaciones o condiciones para su implantación efectiva.`;
-      document.getElementById("restricciones").value =
-`- Redacción académica, técnica, sobria y clara.\n- Evitar listas con viñetas; redactar en forma expositiva.\n- Evitar expresiones enfáticas.\n- Uso de terminología especializada.`;
-      document.getElementById("formato").value =
-`- Texto articulado en párrafos con cohesión temática.\n- Sin títulos ni numeraciones explícitas.\n- Incluir referencias técnicas si son pertinentes.`;
-      document.getElementById("estilo").value =
-`- Redacción académica, técnica, sobria y clara.\n- Evitar expresiones enfáticas.\n- Preferencia por términos de raíz grecolatina y estructuras sintácticas complejas.`;
-    }
-
-    function insertarEnTextarea(areaId, selectElement) {
-      const textarea = document.getElementById(areaId);
-      const texto = selectElement.value;
-      if (texto && !textarea.value.includes(texto)) {
-        if (textarea.value.trim() !== '') {
-          textarea.value += '\n';
-        }
-        textarea.value += `- ${texto}`;
-      }
-      selectElement.selectedIndex = 0;
-    }
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+      video.addEventListener('play', () => {
+        videos.forEach(v => {
+          if (v !== video) {
+            v.pause();
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>
-
