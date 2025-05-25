@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,6 +15,7 @@
 
     .marco-central {
       width: 1024px;
+      max-width: 100%;
       margin: 0 auto;
       padding: 40px 0;
     }
@@ -22,11 +24,13 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      flex-wrap: wrap;
     }
 
     .video-columna {
       flex: 0 0 32%;
       text-align: center;
+      margin-bottom: 20px;
     }
 
     h1 {
@@ -53,11 +57,22 @@
       outline: none;
       border: none;
     }
+
+    @media (max-width: 768px) {
+      .contenedor {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .video-columna {
+        flex: 0 0 100%;
+        max-width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="marco-central">
-    <!-- <h1>Reseñas de libros de Javier Arévalo Royo</h1>  -->
     <div class="contenedor">
       <div class="video-columna">
         <video controls preload="metadata">
