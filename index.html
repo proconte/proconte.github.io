@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Reseñas de libros de Javier Arévalo Royo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
@@ -14,59 +14,47 @@
     }
 
     .marco-central {
-      width: 1024px;
-      max-width: 100%;
+      max-width: 1024px;
       margin: 0 auto;
-      padding: 40px 0;
+      padding: 30px 10px;
     }
 
     .contenedor {
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
-      align-items: flex-start;
       flex-wrap: wrap;
+      gap: 20px;
     }
 
     .video-columna {
-      flex: 0 0 32%;
+      flex: 1 1 30%;
+      min-width: 280px;
       text-align: center;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: 1.4em;
-      text-align: center;
-      color: #ddd;
-      font-family: "Courier New", Courier, monospace;
-      font-weight: normal;
-      margin-bottom: 30px;
-    }
-
-    .video-columna h3 {
-      font-size: 1em;
-      margin-top: 0px;
-      color: #ddd;
-      font-family: "Courier New", Courier, monospace;
-      font-weight: normal;
     }
 
     video {
       width: 100%;
       height: auto;
       background-color: #000;
-      outline: none;
-      border: none;
     }
 
-    @media (max-width: 768px) {
+    h3 {
+      font-size: 1em;
+      color: #ddd;
+      font-family: "Courier New", Courier, monospace;
+      font-weight: normal;
+      margin-top: 10px;
+    }
+
+    @media screen and (max-width: 768px) {
       .contenedor {
         flex-direction: column;
         align-items: center;
       }
 
       .video-columna {
-        flex: 0 0 100%;
-        max-width: 90%;
+        width: 90%;
       }
     }
   </style>
@@ -77,35 +65,36 @@
       <div class="video-columna">
         <video controls preload="metadata">
           <source src="libros/prologo.mp4" type="video/mp4">
-          Su navegador no soporta reproducción de vídeo.
+          Su navegador no soporta vídeo.
         </video>
         <h3>Prólogo a la IA<br>Consciencia Artificial<br>ISBN13: 979-8873304950</h3>
       </div>
+
       <div class="video-columna">
         <video controls preload="metadata">
           <source src="libros/Informática.mp4" type="video/mp4">
-          Su navegador no soporta reproducción de vídeo.
+          Su navegador no soporta vídeo.
         </video>
         <h3>Informática: El mundo como información y representación<br>ISBN13: 979-8340452597</h3>
       </div>
+
       <div class="video-columna">
         <video controls preload="metadata">
           <source src="libros/breveHistoria.mp4" type="video/mp4">
-          Su navegador no soporta reproducción de vídeo.
+          Su navegador no soporta vídeo.
         </video>
-        <h3>Breve historia de la Informática<br>y las Computadoras<br>ISBN13: 979-8874114725</h3>
+        <h3>Breve historia de la Informática y las Computadoras<br>ISBN13: 979-8874114725</h3>
       </div>
     </div>
   </div>
 
   <script>
+    // Pausar otros vídeos al reproducir uno
     const videos = document.querySelectorAll('video');
     videos.forEach(video => {
       video.addEventListener('play', () => {
         videos.forEach(v => {
-          if (v !== video) {
-            v.pause();
-          }
+          if (v !== video) v.pause();
         });
       });
     });
