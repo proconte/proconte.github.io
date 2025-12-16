@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Generador de PROMPT Estructurado para LLMs (Práctica Jurídica)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --text-main: #111827;
+      --text-sub: #4b5563;
+      --accent: #2563eb;
+      --border: #d1d5db;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: var(--bg-color);
+      color: var(--text-main);
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.5rem;
+    }
+
+    .section {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #f9fafb;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    button.secondary {
+      background-color: var(--text-sub);
+    }
+
+    pre {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 1.5rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border-radius: 8px;
+      font-family: 'Menlo', 'Monaco', monospace;
+      font-size: 0.85rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Generador de Prompt Estructurado para LLMs (Práctica Jurídica)</h1>
+  <p style="margin-top: -1.5rem; margin-bottom: 1.5rem;">
+    <a href="mailto:javierarevaloroyo@gmail.com"
+      style="color: var(--accent); text-decoration: none; font-size: 0.9rem;">javierarevaloroyo@gmail.com</a>
+  </p>
+
+  <div class="btn-group">
+    <select id="ejemploSelect" onchange="cargarEjemplo(this.value)">
+      <option selected disabled value="">-- Cargar Ejemplo Jurídico Predefinido --</option>
+      <option value="civil">Civil: Incumplimiento contractual y medidas cautelares</option>
+      <option value="penal">Penal: Estafa informática y diligencias de investigación</option>
+      <option value="mercantil">Mercantil: Impugnación de acuerdos y responsabilidad de administradores</option>
+      <option value="laboral">Laboral: Despido disciplinario e improcedencia</option>
+      <option value="familia">Familia: Divorcio contencioso, custodia y alimentos</option>
+      <option value="contencioso">Contencioso-administrativo: Sanción y anulación por vicios procedimentales</option>
+      <option value="constitucional">Constitucional: Recurso de amparo por vulneración del art. 24 CE</option>
+      <option value="tributario">Tributario: Reclamación económico-administrativa y sanción</option>
+      <option value="concursal">Concursal: Concurso voluntario e incidente concursal</option>
+    </select>
+  </div>
+
+  <div class="section">
+    <label for="rol">Role (Persona)</label>
+    <textarea id="rol"
+      placeholder="Ej: Eres un abogado litigante especializado en derecho civil y práctica forense..."></textarea>
+    <select onchange="insertarEnTextarea('rol', this)">
+      <option selected disabled>-- Seleccionar Rol Predefinido --</option>
+
+      <optgroup label="Litigación por jurisdicción">
+        <option>Eres un abogado litigante especializado en derecho civil, obligaciones y contratos, con práctica habitual ante Juzgados de Primera Instancia.</option>
+        <option>Eres un abogado penalista con experiencia en instrucción, juicio oral y recursos, especializado en delitos patrimoniales y prueba digital.</option>
+        <option>Eres un abogado mercantilista especializado en derecho societario, impugnación de acuerdos sociales, responsabilidad de administradores y litigación mercantil.</option>
+        <option>Eres un abogado laboralista con práctica ante el orden social, especializado en despidos, reclamaciones de cantidad y tutela de derechos fundamentales en el trabajo.</option>
+        <option>Eres un abogado especializado en derecho de familia, con experiencia en divorcio contencioso, medidas provisionales, custodia, alimentos y ejecución de medidas.</option>
+        <option>Eres un abogado contencioso-administrativo especializado en sancionador, responsabilidad patrimonial, urbanismo y recursos frente a la Administración.</option>
+        <option>Eres un abogado fiscalista especializado en procedimientos de gestión e inspección, recursos y reclamaciones económico-administrativas, y contencioso tributario.</option>
+        <option>Eres un abogado concursal con práctica en concurso voluntario, comunicaciones al juzgado mercantil, incidentes concursales y calificación del concurso.</option>
+        <option>Eres un abogado especializado en derecho constitucional, amparo y tutela de derechos fundamentales, con capacidad de articular doctrina constitucional y convencional.</option>
+      </optgroup>
+
+      <optgroup label="Órganos y operadores jurídicos">
+        <option>Eres un fiscal con experiencia en diligencias de investigación, escritos de acusación, conformidades y juicio oral.</option>
+        <option>Eres un letrado de la Administración de Justicia con experiencia en impulso procesal, admisión de escritos, ejecución y gestión de señalamientos.</option>
+        <option>Eres un magistrado especializado en el orden civil, con atención a la valoración de la prueba y motivación de resoluciones.</option>
+        <option>Eres un magistrado especializado en el orden penal, con experiencia en prueba testifical, pericial y documental electrónica.</option>
+        <option>Eres un magistrado especializado en el orden contencioso-administrativo, con atención a legalidad del procedimiento administrativo y control de discrecionalidad.</option>
+      </optgroup>
+
+      <optgroup label="Representación, mediación y pericia">
+        <option>Eres un procurador con práctica en coordinación de señalamientos, traslado de escritos, ejecución y gestión de plazos procesales.</option>
+        <option>Eres un mediador civil y mercantil, con capacidad de diseñar propuestas de acuerdo, actas y clausulados de transacción.</option>
+        <option>Eres un perito informático forense, especializado en cadena de custodia, análisis de logs, trazabilidad y evidencias digitales en procedimientos penales y civiles.</option>
+        <option>Eres un perito economista especializado en cuantificación de daños, lucro cesante, valoración de empresa y análisis contable para procedimientos civiles y mercantiles.</option>
+        <option>Eres un notario especializado en redacción de instrumentos públicos, legitimación de firmas y asesoramiento en operaciones civiles y mercantiles.</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div class="section">
+    <label for="contexto">Context (Contexto y Antecedentes)</label>
+    <textarea id="contexto" placeholder="Delimitación del expediente: partes, órgano, número, hechos, documentos, trámites ya practicados..."></textarea>
+  </div>
+
+  <div class="section">
+    <label for="tarea">Task (Instrucción Principal)</label>
+    <textarea id="tarea" placeholder="Determinación del objetivo procesal: redactar escrito, preparar estrategia, analizar viabilidad, plan probatorio..."></textarea>
+  </div>
+
+  <div class="section">
+    <label for="pasos">Methodology (Estrategia de Razonamiento)</label>
+    <textarea id="pasos" placeholder="Instrucciones para razonamiento jurídico: subsunción, interpretación, jurisprudencia, prueba y procedimiento..."></textarea>
+    <select onchange="insertarEnTextarea('pasos', this)">
+      <option selected disabled>-- Seleccionar Metodología --</option>
+
+      <optgroup label="Subsunción e interpretación">
+        <option>Subsunción normativa: delimitar hechos relevantes, identificar el supuesto de hecho normativo y derivar consecuencias jurídicas.</option>
+        <option>Interpretación literal: determinar el sentido ordinario del texto legal y su aplicación al caso.</option>
+        <option>Interpretación sistemática: integrar el precepto en el conjunto del ordenamiento y en su coherencia interna.</option>
+        <option>Interpretación teleológica: atender a la finalidad de la norma y al bien jurídico protegido.</option>
+        <option>Interpretación conforme: armonizar norma interna con Constitución, Derecho de la Unión Europea y CEDH cuando resulte aplicable.</option>
+      </optgroup>
+
+      <optgroup label="Jurisprudencia y doctrina">
+        <option>Localización jurisprudencial: localizar resoluciones aplicables (TS, AP, AN, TSJ, TC, TJUE, TEDH) y extraer ratio decidendi.</option>
+        <option>Verificación con ECLI: citar únicamente resoluciones con ECLI, órgano, fecha y ponente verificados en repositorio oficial (CENDOJ u homólogo).</option>
+        <option>Contraste doctrinal: identificar doctrina científica y criterios interpretativos doctrinales cuando se requiera argumentación reforzada.</option>
+      </optgroup>
+
+      <optgroup label="Prueba, hechos controvertidos y estrategia procesal">
+        <option>Teoría del caso: estructurar relato fáctico, tesis jurídica, pretensión y respuesta a la tesis contraria.</option>
+        <option>Carga de la prueba: distribuir onus probandi, concretar hechos controvertidos y seleccionar medios probatorios idóneos.</option>
+        <option>Plan probatorio: proponer prueba documental, testifical, pericial y reconocimiento, con finalidad y pertinencia.</option>
+        <option>Control procesal: verificar competencia, legitimación, postulación, cuantía, procedimiento aplicable y plazos.</option>
+        <option>Anticipación de excepciones: identificar excepciones procesales y materiales previsibles y articular contestación.</option>
+        <option>Medidas cautelares: valorar periculum in mora y fumus boni iuris, y preparar propuesta y caución.</option>
+      </optgroup>
+
+      <optgroup label="Revisión y consistencia">
+        <option>Revisión de coherencia: verificar consistencia entre hechos, fundamentos de derecho y petitum, evitando contradicciones internas.</option>
+        <option>Control de citas: revisar numeración de artículos y referencias normativas, evitando atribuciones incorrectas.</option>
+        <option>Control de plazos: validar caducidad, prescripción, preclusión y cómputo de días hábiles según orden jurisdiccional.</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div class="section">
+    <label for="restricciones">Constraints (Reglas Negativas y Guías)</label>
+    <textarea id="restricciones" placeholder="Límites: no inventar jurisprudencia ni artículos, diferenciar hechos probados, respetar plazos, anonimizar datos..."></textarea>
+    <select onchange="insertarEnTextarea('restricciones', this)">
+      <option selected disabled>-- Añadir Restricción --</option>
+      <option>No inventar jurisprudencia; citar únicamente resoluciones con ECLI y datos verificables en repositorio oficial.</option>
+      <option>No inventar numeración de artículos; si existe duda, citar la norma sin precepto concreto.</option>
+      <option>Diferenciar con precisión hechos acreditados, hechos discutidos y meras alegaciones.</option>
+      <option>Respetar competencia objetiva y territorial; evitar mezclar órdenes jurisdiccionales.</option>
+      <option>Respetar caducidad, prescripción y preclusión; incorporar cómputo y dies a quo/dies ad quem.</option>
+      <option>Evitar datos personales reales; utilizar datos ficticios y anonimización consistente.</option>
+      <option>Mantener estilo forense: hechos, fundamentos de derecho y suplico, con redacción sobria y verificable.</option>
+      <option>No omitir la fase procesal; ajustar el escrito al trámite exacto (interposición, demanda, contestación, recurso, conclusiones, ejecución).</option>
+      <option>Evitar afirmaciones técnicas no sustentadas; en materia pericial, incorporar hipótesis y metodología verificable.</option>
+    </select>
+  </div>
+
+  <div class="section">
+    <label for="formato">Output Format (Formato de Salida)</label>
+    <textarea id="formato" placeholder="Estructura esperada: escrito procesal, dictamen, matriz de hechos y prueba, cronología, checklist..."></textarea>
+    <select onchange="insertarEnTextarea('formato', this)">
+      <option selected disabled>-- Seleccionar Formato --</option>
+
+      <optgroup label="Escritos procesales">
+        <option>Escrito de demanda con hechos, fundamentos de derecho y suplico; anexos documentales numerados y lista de documentos.</option>
+        <option>Escrito de contestación con oposición a hechos, fundamentos de derecho, excepciones procesales y suplico.</option>
+        <option>Escrito de recurso: identificación del acto o resolución recurrida, motivos tasados, fundamentos y petición.</option>
+        <option>Escrito de medidas cautelares con exposición de urgencia, apariencia de buen derecho, riesgo por demora y caución.</option>
+        <option>Escrito de ejecución con título, liquidación, intereses, costas y medidas ejecutivas solicitadas.</option>
+      </optgroup>
+
+      <optgroup label="Penal">
+        <option>Denuncia o querella con relato fáctico, calificación jurídica inicial, diligencias interesadas y documentos.</option>
+        <option>Escrito de acusación con calificación provisional, hechos, tipificación, participación, pena y responsabilidad civil.</option>
+        <option>Escrito de defensa con impugnación de hechos, prueba, calificación alternativa y petición principal.</option>
+      </optgroup>
+
+      <optgroup label="Informes y matrices">
+        <option>Dictamen jurídico: cuestiones planteadas, hechos asumidos, análisis normativo y jurisprudencial, y conclusiones operativas.</option>
+        <option>Matriz de hechos controvertidos y prueba: tabla con hecho, quién lo afirma, medio probatorio, finalidad y riesgo.</option>
+        <option>Cronología procesal: línea temporal con fechas, actuaciones, plazos y próxima actuación recomendada.</option>
+        <option>Checklist procesal: requisitos formales, documentos, plazos y actos de comunicación a verificar antes de presentar el escrito.</option>
+      </optgroup>
+
+      <optgroup label="Pericial y técnico">
+        <option>Informe pericial informático: alcance, metodología, cadena de custodia, hallazgos, limitaciones y conclusiones técnicas.</option>
+        <option>Informe pericial económico: hipótesis, fuentes contables, método de cálculo, cuantificación de daños e intervalos de sensibilidad.</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div class="btn-group">
+    <button onclick="generarPrompt()">Generar XML y Copiar</button>
+  </div>
+
+  <pre id="resultado">El prompt generado aparecerá aquí...</pre>
+
+  <script>
+    function escapeXML(str) {
+      if (!str) return "";
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    // Transforma listas con guiones en items XML, o deja texto plano si no hay lista
+    function procesarInput(texto) {
+      if (!texto) return "";
+      const lineas = texto.trim().split('\n');
+      // Si detectamos formato lista
+      const esLista = lineas.some(l => l.trim().startsWith('-'));
+
+      if (esLista) {
+        return lineas.map(linea => {
+          const contenido = linea.trim();
+          if (contenido.startsWith('-')) {
+            return `    <item>${escapeXML(contenido.substring(1).trim())}</item>`;
+          } else if (contenido.length > 0) {
+            return `    ${escapeXML(contenido)}`;
+          }
+          return "";
+        }).join('\n');
+      } else {
+        return `    ${escapeXML(texto.trim())}`;
+      }
+    }
+
+    function generarPrompt() {
+      const rol = procesarInput(document.getElementById("rol").value);
+      const contexto = procesarInput(document.getElementById("contexto").value);
+      const tarea = procesarInput(document.getElementById("tarea").value);
+      const pasos = procesarInput(document.getElementById("pasos").value);
+      const restricciones = procesarInput(document.getElementById("restricciones").value);
+      const formato = procesarInput(document.getElementById("formato").value);
+
+      // Estructura optimizada para Modelos con ventanas de contexto largas
+      const xml =
+        `<prompt_configuration>
+  <role>
+${rol}
+  </role>
+  
+  <context>
+${contexto}
+  </context>
+  
+  <task>
+${tarea}
+  </task>
+  
+  <methodology>
+${pasos}
+  </methodology>
+  
+  <constraints>
+${restricciones}
+  </constraints>
+  
+  <output_format>
+${formato}
+  </output_format>
+</prompt_configuration>`;
+
+      document.getElementById("resultado").textContent = xml;
+      navigator.clipboard.writeText(xml);
+    }
+
+    function cargarEjemplo(tipo) {
+      const ejemplos = {
+        civil: {
+          rol: `- Eres un abogado litigante especializado en derecho civil y práctica forense en reclamaciones contractuales.
+- Actuar con mentalidad de escrito judicial: precisión fáctica, subsunción normativa y plan probatorio.`,
+          contexto: `- Órgano: Juzgado de Primera Instancia nº 7 de Zaragoza.
+- Procedimiento: Juicio ordinario (cuantía 78.450,00 EUR).
+- Autos: 312/2025.
+- Parte actora: Inversiones Ebro Norte, S.L. (CIF B-12345670).
+- Parte demandada: Obras y Reformas Calatayud, S.L. (CIF B-76543210).
+- Hechos: Contrato de ejecución de obra de fecha 10/02/2024 para reforma integral de nave industrial; entrega pactada 30/06/2024. Retraso acumulado de 124 días y defectos constructivos constatados el 18/11/2024.
+- Documentos disponibles: contrato firmado, actas de replanteo, 7 facturas, correos de requerimiento de 05/07/2024 y 22/09/2024, informe pericial arquitecto técnico de 12/12/2024, fotografías geolocalizadas, presupuesto de reparación.
+- Trámite previo: Requerimiento extrajudicial con acuse (15/01/2025) y negativa de la demandada (29/01/2025).`,
+          tarea: `- Redactar demanda de juicio ordinario solicitando resolución contractual por incumplimiento y, subsidiariamente, cumplimiento con indemnización.
+- Incorporar solicitud de medidas cautelares de retención del aval o anotación preventiva si procede.
+- Preparar propuesta de prueba (documental, pericial, testifical) vinculada a cada hecho controvertido.`,
+          pasos: `- Delimitar hechos jurídicamente operativos: obligación principal, mora, incumplimiento esencial, nexo causal del daño.
+- Aplicar subsunción en Código Civil y normativa de obligaciones y contratos (resolución por incumplimiento, responsabilidad por daños).
+- Concretar pretensiones y su compatibilidad (principal y subsidiaria), cuantificando daños: coste de reparación, lucro cesante y penalidades contractuales si constan.
+- Identificar jurisprudencia del Tribunal Supremo y Audiencias Provinciales sobre incumplimiento esencial en contratos de obra, citando ECLI y fecha verificados.
+- Construir plan probatorio: para cada hecho, asignar medio probatorio y finalidad probatoria.
+- Cerrar con suplico procesalmente correcto y listado de documentos adjuntos.`,
+          restricciones: `- No inventar jurisprudencia ni numeración de artículos; citar únicamente con verificación.
+- No introducir hechos ajenos a los documentos descritos.
+- Diferenciar hechos acreditados por documental/pericial y hechos discutidos.
+- Mantener estilo forense y estructura de demanda civil.`,
+          formato: `- Escrito de demanda.
+- Bloque 1: Partes, órgano, procedimiento, cuantía.
+- Bloque 2: Hechos numerados.
+- Bloque 3: Fundamentos de derecho (competencia, postulación, fondo).
+- Bloque 4: Petición principal y subsidiaria.
+- Bloque 5: Propuesta de prueba.
+- Anexo: índice de documentos con numeración y breve descripción.`
+        },
+
+        penal: {
+          rol: `- Eres un abogado penalista especializado en delitos patrimoniales y evidencia digital.
+- Actuar con disciplina de procedimiento penal: garantías, contradicción y control de la prueba.`,
+          contexto: `- Órgano: Juzgado de Instrucción nº 12 de Madrid.
+- Diligencias previas: 1041/2025.
+- Denunciante/perjudicada: Laura Méndez Pascual (DNI ficticio 50011223A).
+- Investigado: Sergio R. S. (identidad ficticia).
+- Hechos: Entre 03/03/2025 y 07/03/2025, la perjudicada recibe correos y SMS de suplantación bancaria; introduce credenciales en sitio fraudulento; se realizan transferencias inmediatas por total 9.870,00 EUR a cuentas “mulas”.
+- Actuaciones: denuncia 08/03/2025; oficio a entidad bancaria 12/03/2025; respuestas bancarias 25/03/2025; informe preliminar de UDEF 18/04/2025; volcado del móvil en sede policial (hashes y acta).
+- Documentos: justificantes de transferencias, pantallazos, cabeceras de correo, acta de entrega de terminal, respuesta de la entidad, informe policial.
+- Situación procesal: pendiente declaración del investigado y diligencias solicitadas por acusación particular.`,
+          tarea: `- Redactar escrito de personación y solicitud de diligencias de investigación orientadas a identificar autores y trazar el flujo del dinero.
+- Alternativamente, redactar escrito de oposición a diligencias invasivas si se actúa en defensa.
+- Articular calificación inicial delictiva sin fijar jurisprudencia no verificada.`,
+          pasos: `- Delimitar el tipo penal aplicable: estafa informática y, en su caso, blanqueo o receptación, citando el Código Penal por familias normativas (artículos y siguientes).
+- Identificar elementos del tipo: engaño bastante, acto de disposición, perjuicio y dolo; en modalidad informática, mecanismos de manipulación.
+- Plantear diligencias idóneas: oficios a bancos, solicitud de identificación de titulares y movimientos, preservación de logs, trazabilidad de IP, requerimientos a proveedores.
+- Controlar proporcionalidad de diligencias intrusivas (datos de comunicaciones), justificando necesidad y idoneidad.
+- Incorporar doctrina jurisprudencial únicamente con ECLI verificado, centrada en estafa informática y validez de prueba digital.
+- Cerrar con petición concreta y calendario de actuaciones.`,
+          restricciones: `- No atribuir autoría sin base documental.
+- No inventar ECLI ni citas jurisprudenciales.
+- Respetar presunción de inocencia si se actúa en defensa.
+- Mantener cadena de custodia como eje de toda propuesta probatoria.`,
+          formato: `- Escrito procesal dirigido al Juzgado de Instrucción.
+- Apartado 1: Comparecencia y personación.
+- Apartado 2: Hechos y encaje penal preliminar.
+- Apartado 3: Diligencias interesadas (enumeradas y motivadas).
+- Apartado 4: Otrosí (medidas de aseguramiento, oficios urgentes).
+- Apartado 5: Petición final.`
+        },
+
+        mercantil: {
+          rol: `- Eres un abogado mercantilista especializado en litigación societaria.
+- Operar con criterio de derecho societario: órganos, acuerdos, impugnación, deberes fiduciarios y daños.`,
+          contexto: `- Órgano: Juzgado de lo Mercantil nº 3 de Valencia.
+- Procedimiento: Ordinario mercantil.
+- Parte actora: Socios minoritarios de NaranjaLog, S.A. (titularidad conjunta 18,5%).
+- Demandada: NaranjaLog, S.A. y su consejo de administración.
+- Hechos: Junta general 28/06/2025 aprueba ampliación de capital con exclusión de derecho de suscripción preferente y posterior venta de activos esenciales a sociedad vinculada.
+- Indicios: informe de auditoría interna (extractos), correos corporativos aportados por socio, acta notarial de junta, informe de valoración independiente omitido.
+- Trámite previo: requerimiento de información societaria denegado por el consejo el 15/07/2025.
+- Objetivo: impugnar acuerdos por abuso de mayoría y ejercitar acción social/individual de responsabilidad frente a administradores.`,
+          tarea: `- Redactar demanda mercantil: impugnación de acuerdos sociales y acción de responsabilidad de administradores.
+- Preparar estrategia de obtención de documentación (diligencias preliminares) y plan de prueba.
+- Construir narrativa societaria sin introducir datos no documentados.`,
+          pasos: `- Identificar legitimación activa y plazos de impugnación, delimitando la vía procedimental.
+- Analizar la validez de la ampliación con exclusión de preferencia: requisitos formales, informes, interés social y motivación.
+- Analizar la operación vinculada: conflicto de interés, deber de lealtad, diligencia y transparencia.
+- Configurar pretensiones: nulidad/anulabilidad de acuerdos, restitución, indemnización de daños, medidas cautelares de suspensión si procede.
+- Localizar jurisprudencia del Tribunal Supremo y Audiencias Provinciales sobre abuso de mayoría, exclusión de preferencia y responsabilidad de administradores, citando ECLI verificado.
+- Proponer prueba: actas, informes, pericial económica de valoración, interrogatorio de administradores, testifical de auditor.
+- Cerrar con suplico y anexos societarios.`,
+          restricciones: `- No inventar cifras, valoraciones ni conclusiones periciales.
+- No inventar jurisprudencia; citar únicamente ECLI verificables.
+- Mantener distinción entre indicios, hechos acreditados y hechos a probar.
+- Ajustar la terminología a LSC y práctica mercantil.`,
+          formato: `- Demanda mercantil.
+- Hechos: estructura cronológica de acuerdos y operaciones.
+- Fundamentos: competencia, legitimación, plazos, análisis societario.
+- Petitum: impugnación, responsabilidad, medidas.
+- Plan probatorio: lista de pruebas con finalidad.
+- Anexos: actas, certificaciones, comunicaciones y documentos societarios.`
+        },
+
+        laboral: {
+          rol: `- Eres un abogado laboralista con práctica en despido y tutela de derechos.
+- Priorizar plazos de caducidad, hechos disciplinarios concretos y control formal del despido.`,
+          contexto: `- Órgano: Juzgado de lo Social nº 5 de Bilbao.
+- Actora: Irati Zubia Etxeberria (trabajadora, antigüedad 14/02/2017).
+- Demandada: Servicios Norte Limpiezas, S.L.
+- Hechos: carta de despido disciplinario entregada el 02/09/2025 por “disminución voluntaria de rendimiento” y “desobediencia”, sin concreción de hechos ni fechas.
+- Incidencias: ausencia de expediente contradictorio pese a condición de representante sindical (delegada de personal desde 2023); comunicaciones internas aportadas; cuadrantes de trabajo.
+- Trámite previo: papeleta de conciliación presentada el 10/09/2025; acto de conciliación sin avenencia el 26/09/2025.
+- Documentos: contrato, nóminas 12 meses, carta de despido, acta de conciliación, correos, registro horario, partes médicos (si existen).
+- Pretensión: declaración de nulidad o improcedencia, con salarios de tramitación si corresponde.`,
+          tarea: `- Redactar demanda por despido, articulando nulidad por vulneración de garantías y, subsidiariamente, improcedencia.
+- Preparar propuesta de prueba y, si procede, acumulación de acción de reclamación de cantidad.
+- Integrar cálculo de indemnización sin inventar bases salariales.`,
+          pasos: `- Verificar plazo de caducidad y requisitos formales de la demanda.
+- Analizar la carta de despido: concreción fáctica, tipificación disciplinaria y proporcionalidad.
+- Evaluar garantías reforzadas por representación sindical: expediente contradictorio y audiencia.
+- Citar Estatuto de los Trabajadores por materias (despido disciplinario, improcedencia, nulidad) evitando numeración dudosa.
+- Localizar jurisprudencia del TS/TSJ sobre falta de concreción en carta y garantías de representantes, con ECLI verificado.
+- Proponer prueba: documental laboral, testifical de responsables, pericial si hay métricas de rendimiento, requerimiento de registros.
+- Cerrar con suplico principal y subsidiario, y cálculo anexo si bases salariales están documentadas.`,
+          restricciones: `- No inventar salario regulador ni antigüedad.
+- No inventar jurisprudencia; citar ECLI verificable.
+- Mantener claridad entre nulidad e improcedencia, con pretensiones subsidiarias.
+- Ajustar terminología a orden social y a trámite de conciliación previa.`,
+          formato: `- Demanda laboral.
+- Hechos numerados.
+- Fundamentos: competencia, acción, garantías, valoración del despido.
+- Petición: nulidad o improcedencia (subsidiaria) y efectos.
+- Otrosí: propuesta de prueba y requerimientos documentales.
+- Anexo: cálculo indemnizatorio si procede con datos documentados.`
+        },
+
+        familia: {
+          rol: `- Eres un abogado especializado en derecho de familia y medidas sobre menores.
+- Priorizar interés superior del menor, audiencia del menor cuando proceda y coherencia del plan de parentalidad.`,
+          contexto: `- Órgano: Juzgado de Primera Instancia (Familia) nº 4 de Málaga.
+- Procedimiento: divorcio contencioso con medidas respecto de menor.
+- Demandante: Paula Rivas Ortega.
+- Demandado: Daniel C. M. (identidad ficticia).
+- Matrimonio: 17/06/2016 (inscripción en Registro Civil).
+- Menor: Sofía (nacida 09/09/2019).
+- Hechos: separación de hecho desde 11/02/2025; discrepancia sobre custodia (la madre interesa custodia exclusiva con visitas progresivas; el padre pide custodia compartida).
+- Circunstancias: cambios recientes de domicilio del padre; turnos laborales nocturnos; comunicaciones por mensajería; gastos escolares y sanitarios.
+- Documentos: certificado literal matrimonio y nacimiento, empadronamientos, contratos de trabajo/turnos, recibos guardería/colegio, gastos extraordinarios, comunicaciones relevantes.
+- Trámite: medidas provisionales previas solicitadas el 20/02/2025; vista señalada.`,
+          tarea: `- Redactar demanda de divorcio contencioso con solicitud de medidas provisionales y definitivas.
+- Configurar plan de parentalidad y régimen de estancias, y pensión de alimentos, con base documental.
+- Preparar estrategia probatoria y propuesta de exploración judicial si procede.`,
+          pasos: `- Delimitar pretensiones: guarda, custodia, patria potestad, régimen de estancias, uso de vivienda familiar, alimentos y gastos extraordinarios.
+- Aplicar subsunción en normativa civil y procesal aplicable a medidas de familia, evitando numeración incierta.
+- Incorporar criterios jurisprudenciales verificados sobre custodia compartida, estabilidad, disponibilidad horaria y cooperación parental.
+- Construir plan de parentalidad: calendario, vacaciones, festivos, comunicaciones, traslados y decisiones sanitarias/educativas.
+- Proponer prueba: documental, testifical, pericial psicosocial, informes escolares y sanitarios; justificar pertinencia.
+- Cerrar con suplico y propuesta de medidas provisionales, con urgencia motivada cuando corresponda.`,
+          restricciones: `- No introducir valoraciones personales sobre los progenitores.
+- No inventar jurisprudencia; citar ECLI verificable.
+- No inventar ingresos; fijar alimentos conforme a datos documentados.
+- Mantener interés superior del menor como criterio rector.`,
+          formato: `- Demanda de divorcio contencioso.
+- Hechos.
+- Fundamentos.
+- Medidas solicitadas (provisionales y definitivas).
+- Plan de parentalidad en anexo.
+- Prueba propuesta y oficios interesados.
+- Petición final.`
+        },
+
+        contencioso: {
+          rol: `- Eres un abogado contencioso-administrativo especializado en procedimiento sancionador.
+- Priorizar control de legalidad: competencia, tipicidad, motivación, prueba y garantías procedimentales.`,
+          contexto: `- Órgano: Juzgado de lo Contencioso-Administrativo nº 2 de Valladolid.
+- Acto impugnado: resolución sancionadora del Ayuntamiento de Valladolid de 14/05/2025.
+- Expediente administrativo: SAN/URB/221/2024.
+- Recurrente: Talleres Pisuerga, S.L.
+- Hechos: sanción de 30.000,00 EUR por presunta infracción urbanística (obra menor sin licencia) realizada, según inspección, el 03/12/2024.
+- Tramitación: acuerdo de incoación 20/12/2024; pliego de cargos 08/01/2025; alegaciones 22/01/2025; propuesta de resolución 10/03/2025; resolución 14/05/2025.
+- Incidencias: notificación defectuosa del pliego de cargos (intento único), ausencia de prueba fotográfica fechada, informe técnico con incongruencias.
+- Documentos: expediente administrativo completo, recibos de tasas, solicitud de licencia presentada (borrador) y comunicaciones municipales.
+- Vía previa: recurso de reposición desestimado 30/06/2025.`,
+          tarea: `- Redactar demanda contencioso-administrativa solicitando anulación de la sanción por vicios procedimentales y, subsidiariamente, por falta de tipicidad o prueba.
+- Identificar motivos impugnatorios: nulidad/anulabilidad, indefensión, motivación insuficiente, prueba insuficiente, proporcionalidad.
+- Preparar solicitud de suspensión cautelar si concurren presupuestos.`,
+          pasos: `- Reconstruir el iter procedimental administrativo y detectar quiebras de garantías (audiencia, notificaciones, prueba).
+- Calificar el vicio: nulidad de pleno derecho o anulabilidad, sin fijar artículos si existe duda.
+- Analizar tipicidad y motivación: coherencia entre hechos, norma municipal y sanción.
+- Localizar jurisprudencia de TS/TSJ sobre notificaciones defectuosas, indefensión y prueba en sancionador, con ECLI verificado.
+- Diseñar prueba en sede contenciosa: documental del expediente, pericial técnica, testifical de inspector si procede.
+- Preparar pieza cautelar: perjuicio económico, solvencia, apariencia de buen derecho y ponderación de intereses.`,
+          restricciones: `- No inventar preceptos municipales ni jurisprudencia.
+- No asumir hechos no reflejados en expediente.
+- Mantener separación entre vicios procedimentales y cuestiones de fondo.
+- Evitar lenguaje valorativo sobre la Administración.`,
+          formato: `- Demanda contencioso-administrativa.
+- Antecedentes y acto impugnado.
+- Hechos.
+- Fundamentos de derecho: competencia, admisibilidad, motivos.
+- Suplico: anulación y costas.
+- Otrosí: suspensión cautelar (si procede).
+- Anexo: índice de documentos del expediente.`
+        },
+
+        constitucional: {
+          rol: `- Eres un abogado especializado en amparo constitucional y derechos fundamentales.
+- Operar con técnica de amparo: agotamiento de vía, especial trascendencia constitucional, invocación formal y lesión actual.`,
+          contexto: `- Órgano: Tribunal Constitucional.
+- Recurrente: Andrés Salvatierra L. (identidad ficticia).
+- Hechos: en procedimiento penal, la Audiencia Provincial confirma condena sin practicar prueba solicitada y sin motivar su rechazo; se alega vulneración del derecho a la tutela judicial efectiva y derecho de defensa.
+- Iter procesal: sentencia de primera instancia 18/02/2025; apelación 12/03/2025; sentencia de apelación 30/06/2025; incidente de nulidad de actuaciones 22/07/2025 desestimado 02/09/2025.
+- Documentos: sentencias, escritos de solicitud de prueba, auto/decisión sobre prueba, incidente de nulidad, acuses de notificación.
+- Plazo: preparación de amparo dentro de plazo legal.
+- Objetivo: articular lesión del art. 24 CE y especial trascendencia constitucional.`,
+          tarea: `- Redactar borrador de demanda de amparo constitucional.
+- Identificar lesión concreta, momento de invocación, agotamiento de vía judicial y especial trascendencia constitucional.
+- Preparar relación de documentos y solicitud de suspensión si procede.`,
+          pasos: `- Delimitar el derecho fundamental lesionado (art. 24 CE) y su contenido: motivación, prueba, contradicción.
+- Verificar requisitos de admisibilidad: agotamiento, invocación formal, plazo y legitimación.
+- Construir argumento de especial trascendencia constitucional con base en doctrina del TC, citando únicamente resoluciones verificadas.
+- Integrar dimensión convencional si procede (CEDH), con referencias verificables.
+- Cerrar con petitum: declaración de vulneración, nulidad de resoluciones y retroacción.
+- Preparar índice de documentos y solicitud cautelar de suspensión si concurren presupuestos.`,
+          restricciones: `- No inventar doctrina ni citas del TC.
+- No omitir requisitos de admisibilidad.
+- Mantener técnica procesal propia de amparo: claridad, concisión y trazabilidad del iter.
+- No incluir consideraciones ajenas al derecho fundamental invocado.`,
+          formato: `- Demanda de amparo.
+- Antecedentes y resoluciones impugnadas.
+- Hechos.
+- Fundamentos: admisibilidad y fondo.
+- Especial trascendencia constitucional.
+- Petición: nulidad y retroacción.
+- Otrosí: suspensión (si procede).
+- Anexos: índice documental.`
+        },
+
+        tributario: {
+          rol: `- Eres un abogado fiscalista especializado en revisión administrativa y reclamaciones económico-administrativas.
+- Priorizar motivación del acto, prueba contable y control de sanción: culpabilidad, proporcionalidad y tipicidad.`,
+          contexto: `- Órgano: Tribunal Económico-Administrativo Regional (TEAR) de Castilla y León.
+- Reclamante: Distribuciones Duero, S.L. (CIF B-33445566).
+- Actos impugnados: liquidación provisional de IVA 2023 (importe 42.180,00 EUR) y sanción tributaria asociada (importe 18.000,00 EUR), notificadas 09/07/2025.
+- Origen: procedimiento de comprobación limitada iniciado 14/04/2025.
+- Hechos: regularización por “deducciones no justificadas” y “incongruencias en libros registro”. La empresa aporta facturas, albaranes y extractos bancarios.
+- Vía previa: recurso de reposición desestimado 03/09/2025.
+- Documentos: acuerdo de inicio, requerimientos, respuestas, liquidación, acuerdo sancionador, contabilidad, libros IVA, facturas y justificantes bancarios.`,
+          tarea: `- Redactar reclamación económico-administrativa contra liquidación y sanción.
+- Separar motivos frente a liquidación (prueba y motivación) y frente a sanción (culpabilidad y proporcionalidad).
+- Proponer práctica de prueba documental y, si procede, pericial contable.`,
+          pasos: `- Reconstruir expediente y motivación del acto: hechos imputados, pruebas administrativas y prueba aportada.
+- Analizar requisitos de validez y motivación: suficiencia, congruencia, valoración de prueba.
+- Analizar sanción: tipicidad, culpabilidad, inexistencia de dolo/negligencia, proporcionalidad y motivación específica.
+- Localizar jurisprudencia y doctrina administrativa (TEAC/TS) sobre sanciones y carga de la prueba, citando únicamente referencias verificadas.
+- Preparar anexos contables: índice de facturas, trazabilidad de pagos, conciliación bancaria.
+- Cerrar con petición: estimación total o parcial, anulación de sanción y devolución de ingresos indebidos si procede.`,
+          restricciones: `- No inventar criterios del TEAC/TS; citar únicamente referencias verificables.
+- No inventar importes ni bases imponibles; usar exclusivamente los datos del expediente.
+- Mantener separación conceptual: liquidación versus sanción.
+- Evitar tecnicismos contables no explicados cuando afecten a la motivación.`,
+          formato: `- Reclamación económico-administrativa.
+- Identificación de actos y antecedentes.
+- Hechos.
+- Fundamentos: motivos contra liquidación.
+- Fundamentos: motivos contra sanción.
+- Prueba: relación y anexos.
+- Petición: anulación/rectificación y efectos.`
+        },
+
+        concursal: {
+          rol: `- Eres un abogado concursal con práctica ante juzgados mercantiles.
+- Priorizar presupuesto objetivo y subjetivo, documentación, inventario, lista de acreedores y medidas de conservación.`,
+          contexto: `- Órgano: Juzgado de lo Mercantil nº 1 de A Coruña.
+- Solicitante: Mar y Frío Galicia, S.L. (CIF B-90707070).
+- Hechos: caída de ventas desde 2024, impagos a proveedores desde 01/2025, ejecuciones iniciadas por entidad financiera, embargo de cuentas, imposibilidad de atender nóminas desde 08/2025.
+- Documentación disponible: cuentas anuales 2022-2024, balances y PyG 2025, relación de tesorería, inventario de activos (cámaras frigoríficas y vehículos), contratos de leasing, nóminas, listado de acreedores con importes, procedimientos en curso.
+- Objetivo: solicitud de concurso voluntario, con previsión de incidente concursal por rescisión de operación vinculada realizada el 15/12/2024.
+- Medidas urgentes: asegurar continuidad mínima, evitar deterioro de mercancía y preservar cadena de frío.`,
+          tarea: `- Redactar solicitud de concurso voluntario con documentación exigida.
+- Preparar esquema de inventario y lista de acreedores.
+- Plantear estrategia para incidente concursal (acción rescisoria) sin fijar artículos no verificados.`,
+          pasos: `- Verificar presupuesto objetivo (insolvencia actual/inminente) y subjetivo (deudor legitimado).
+- Estructurar memoria: historia económica, causas de insolvencia, medidas adoptadas y previsiones.
+- Preparar inventario: activos, cargas, localización y valoración, señalando fuentes de valoración.
+- Preparar lista de acreedores: naturaleza del crédito, vencimiento, garantías, litigiosidad.
+- Identificar operaciones susceptibles de reintegración y diseñar plan de obtención de prueba documental.
+- Localizar jurisprudencia concursal (TS/AP mercantil) sobre reintegración y operaciones vinculadas, citando ECLI verificable.
+- Cerrar con petitum: declaración de concurso, nombramiento de administración concursal y medidas de conservación si proceden.`,
+          restricciones: `- No inventar valoraciones; indicar método y fuente.
+- No inventar jurisprudencia; citar ECLI verificable.
+- No omitir documentación mínima; indicar faltantes y cómo obtenerlos.
+- Mantener separación entre solicitud de concurso e incidente concursal.`,
+          formato: `- Solicitud de concurso voluntario.
+- Memoria.
+- Inventario (anexo).
+- Lista de acreedores (anexo).
+- Procedimientos judiciales en curso.
+- Petición final y otrosí (medidas de conservación si proceden).`
+        }
+      };
+
+      if (!tipo || !ejemplos[tipo]) {
+        return;
+      }
+
+      const ej = ejemplos[tipo];
+      document.getElementById("rol").value = ej.rol;
+      document.getElementById("contexto").value = ej.contexto;
+      document.getElementById("tarea").value = ej.tarea;
+      document.getElementById("pasos").value = ej.pasos;
+      document.getElementById("restricciones").value = ej.restricciones;
+      document.getElementById("formato").value = ej.formato;
+
+      // Reset del select
+      document.getElementById("ejemploSelect").selectedIndex = 0;
+    }
+
+    function insertarEnTextarea(areaId, selectElement) {
+      const textarea = document.getElementById(areaId);
+      const texto = selectElement.value;
+      if (texto && !textarea.value.includes(texto)) {
+        if (textarea.value.trim() !== '') {
+          textarea.value += '\n';
+        }
+        textarea.value += `- ${texto}`;
+      }
+      selectElement.selectedIndex = 0;
+    }
+  </script>
+</body>
+
+</html>
