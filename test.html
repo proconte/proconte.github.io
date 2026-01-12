@@ -10,9 +10,9 @@ h2 { font-size: 1.2rem; text-transform: uppercase; border-bottom: 1px solid #000
 .descripcion-seccion { font-size: 0.95rem; margin-bottom: 15px; font-style: italic; color: #444; }
 .pregunta { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
 .ejemplo { font-size: 0.85rem; color: #666; margin-top: 5px; }
-.opciones { display: flex; justify-content: space-between; margin-top: 10px; flex-wrap: wrap; }
-.opcion { display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; min-width: 35px; }
-input[type="radio"] { width: 25px; height: 25px; cursor: pointer; margin-bottom: 5px; }
+.opciones { display: flex; justify-content: space-between; margin-top: 10px; flex-wrap: nowrap; gap: 2px; }
+.opcion { display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; flex: 1; min-width: 0; }
+input[type="radio"] { width: 20px; height: 20px; cursor: pointer; margin-bottom: 5px; }
 button { width: 100%; padding: 25px; font-size: 1.2rem; cursor: pointer; background: #000; color: #fff; border: none; margin: 40px 0; }
 #resultados { display: none; border: 2px solid #000; padding: 25px; background: #fdfdfd; margin-top: 20px; }
 .bloque-resultado { margin-bottom: 30px; }
