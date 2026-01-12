@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Protocolo de Evaluacion Relacional Multidimensional</title>
+<title>Protocolo de Evaluación Relacional Multidimensional</title>
 <style>
 body { font-family: sans-serif; padding: 20px; color: #1a1a1a; line-height: 1.6; max-width: 900px; margin: auto; }
 h2 { font-size: 1.2rem; text-transform: uppercase; border-bottom: 1px solid #000; padding-bottom: 5px; margin-top: 40px; font-weight: normal; }
@@ -17,38 +17,38 @@ button { width: 100%; padding: 25px; font-size: 1.2rem; cursor: pointer; backgro
 #resultados { display: none; border: 2px solid #000; padding: 25px; background: #fdfdfd; margin-top: 20px; }
 .bloque-resultado { margin-bottom: 30px; }
 .titulo-resultado { font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; text-decoration: underline; }
-.descripcion-resultado { text-align: justify; font-size: 0.95rem; }
+.descripcion-resultado { text-align: left; font-size: 0.95rem; }
 .referencias { margin-top: 50px; font-size: 0.85rem; border-top: 1px dashed #000; padding-top: 20px; color: #333; }
 </style>
 </head>
 <body>
 
 <form id="evaluacion">
-<h2>Dimension 1: Salud Relacional</h2>
+<h2>Dimensión 1: Salud Relacional</h2>
 <p class="descripcion-seccion">Evaluación de la integridad, seguridad y apoyo mutuo.</p>
 <div id="contSalud"></div>
 
-<h2>Dimension 2: Toxicidad</h2>
+<h2>Dimensión 2: Toxicidad</h2>
 <p class="descripcion-seccion">Identificación de patrones de control y erosión de la autonomía.</p>
 <div id="contTox"></div>
 
-<h2>Dimension 3: Compatibilidad Emocional</h2>
-<p class="descripcion-seccion">Análisis de alineamiento en valores fundamentales y proyectos vitales comunes.</p>
+<h2>Dimensión 3: Compatibilidad Emocional</h2>
+<p class="descripcion-seccion">Análisis de sintonía en valores y proyectos de vida comunes.</p>
 <div id="contComp"></div>
 
-<h2>Dimension 4: Tipo de Apego (Seguridad Vincular)</h2>
-<p class="descripcion-seccion">Evaluación del estilo de vinculación afectiva y disponibilidad del otro individuo.</p>
+<h2>Dimensión 4: Tipo de Apego (Seguridad Vincular)</h2>
+<p class="descripcion-seccion">Evaluación del estilo de conexión afectiva de la otra persona.</p>
 <div id="contApego"></div>
 
-<h2>Dimension 5: Inteligencia Emocional (Evaluacion del Otro)</h2>
-<p class="descripcion-seccion">Valoración de la gestión afectiva y responsabilidad del otro individuo.</p>
+<h2>Dimensión 5: Inteligencia Emocional (Evaluación de la otra persona)</h2>
+<p class="descripcion-seccion">Valoración de la gestión afectiva y responsabilidad de la otra persona.</p>
 <div id="contInt"></div>
 
 <button type="button" id="btnCalcular">CALCULAR EVALUACIÓN FINAL</button>
 </form>
 
 <div id="resultados">
-<h2>Informe Técnico de Resultados</h2>
+<h2>Informe de Resultados</h2>
 <div id="res1" class="bloque-resultado"></div>
 <div id="res2" class="bloque-resultado"></div>
 <div id="res3" class="bloque-resultado"></div>
@@ -60,102 +60,102 @@ button { width: 100%; padding: 25px; font-size: 1.2rem; cursor: pointer; backgro
 <script>
 const schema = {
 s: [
-{t:"Mantiene una coherencia absoluta entre lo que dice y hace.", e:"Ej: Cumple sus promesas sin necesidad de recordatorios externos.", w:1.5},
-{t:"Genera seguridad psicológica al permitirte hablar sin miedo.", e:"Ej: Escucha tus críticas sin reaccionar con ira o castigos emocionales.", w:1.4},
-{t:"Fomenta una reciprocidad equilibrada en el esfuerzo mutuo.", e:"Ej: Se involucra tanto como tú en el cuidado del vínculo y las tareas comunes.", w:1.3},
-{t:"Aplica una gestión reparadora ante los conflictos surgidos.", e:"Ej: Busca solucionar los problemas hablando en lugar de huir o castigarte.", w:1.2},
-{t:"Respeta escrupulosamente tus límites y tu autonomía personal.", e:"Ej: No insiste cuando dejas claro que algo no te apetece o te incomoda.", w:1.0},
-{t:"Ofrece un apoyo emocional estable y constante.", e:"Ej: Sientes que es un refugio seguro cuando atraviesas momentos de estrés.", w:0.9},
-{t:"Muestra disponibilidad real y ofrece tiempo de calidad.", e:"Ej: Prioriza vuestros momentos juntos sin distracciones constantes como el teléfono.", w:0.8},
-{t:"Manifiesta una empatía genuina que valida tus sentimientos.", e:"Ej: Entiende tu dolor o alegría sin cuestionar si es exagerada.", w:0.8},
-{t:"Produce una resonancia positiva que facilita el disfrute mutuo.", e:"Ej: Promueve un ambiente de risas y bienestar natural en la convivencia.", w:0.6},
-{t:"Impulsa activamente tu crecimiento y desarrollo personal.", e:"Ej: Se alegra sinceramente de tus éxitos y te anima a alcanzar tus metas.", w:0.5}
+{t:"Es una persona coherente entre lo que dice y lo que termina haciendo.", e:"Ej: Si se compromete a algo, lo cumple sin que tengas que insistir.", w:1.5},
+{t:"Te hace sentir en un entorno seguro donde puedes hablar sin miedo.", e:"Ej: Te escucha con respeto aunque lo que digas no le guste.", w:1.4},
+{t:"Se esfuerza tanto como tú en cuidar la relación.", e:"Ej: Notar que las ganas y el trabajo para estar bien vienen de ambas partes.", w:1.3},
+{t:"Busca arreglar las cosas cuando hay un problema, sin castigarte.", e:"Ej: Trata de solucionar el conflicto hablando en lugar de dejarte de hablar.", w:1.2},
+{t:"Respeta de verdad tus límites y tus ganas de hacer tus cosas.", e:"Ej: Si no te apetece un plan, no intenta convencerte ni se enfada.", w:1.0},
+{t:"Sientes que es un apoyo estable cuando las cosas se ponen feas.", e:"Ej: Es la persona en la que puedes apoyarte si tienes un mal día.", w:0.9},
+{t:"Te dedica tiempo de calidad y está presente cuando está contigo.", e:"Ej: Deja el móvil a un lado y te escucha con atención de verdad.", w:0.8},
+{t:"Valida lo que sientes y trata de entenderte.", e:"Ej: Entiende que estés triste o enfadado/a sin decirte que exageras.", w:0.8},
+{t:"Crea un ambiente positivo y agradable en vuestro día a día.", e:"Ej: Es fácil reírse y disfrutar de las cosas pequeñas a su lado.", w:0.6},
+{t:"Se alegra de tus éxitos y te anima a que sigas creciendo.", e:"Ej: Celebra tus logros como si fueran propios y te apoya en tus metas.", w:0.5}
 ],
 t: [
-{t:"Muestra una falta de empatía ante tus necesidades o dolor.", e:"Ej: Se muestra indiferente o molesto si le cuentas que te sientes mal.", w:1.5},
-{t:"Ejerce una manipulación constante mediante la culpa o el engaño.", e:"Ej: Usa el chantaje emocional para que hagas lo que él/ella quiere.", w:1.4},
-{t:"Realiza críticas destructivas enfocadas en minar tu autoestima.", e:"Ej: Se burla de tus inseguridades o defectos delante de otras personas.", w:1.3},
-{t:"Suele deslindar responsabilidades ante sus propios errores.", e:"Ej: Siempre encuentra una excusa o te culpa a ti de lo que sale mal.", w:1.2},
-{t:"Presenta una necesidad de control asfixiante sobre tu vida.", e:"Ej: Intenta decidir con quién sales, cómo vistes o qué planes haces.", w:1.0},
-{t:"Manifiesta un egocentrismo donde solo importan sus problemas.", e:"Ej: Monopoliza la conversación y nunca te pregunta cómo estás tú.", w:0.9},
-{t:"Expresa envidia o competitividad ante tus logros personales.", e:"Ej: Intenta quitarle importancia a tus éxitos comparándolos con los suyos.", w:0.8},
-{t:"Fomenta la generación de conflictos y dramas innecesarios.", e:"Ej: Se siente cómodo en la tensión y parece buscar la discusión constante.", w:0.8},
-{t:"Aplica invalidez emocional mediante frases de gaslighting.", e:"Ej: Te dice que 'estás exagerando' o que 'eso nunca pasó' para que dudes.", w:0.6},
-{t:"Demuestra un irrespeto total por tus límites y privacidad.", e:"Ej: Revisa tu móvil a escondidas o invade tu espacio sin consentimiento.", w:0.5}
+{t:"Sientes que le cuesta empatizar con tus necesidades o tu dolor.", e:"Ej: Se muestra indiferente si le cuentas que algo te ha herido mucho.", w:1.5},
+{t:"Intenta manipularte usando la culpa o el engaño para salir con la suya.", e:"Ej: Te hace sentir mal por hacer planes con tus amigos/as.", w:1.4},
+{t:"Te critica de una forma que hiere tu autoestima o te hace sentir pequeño/a.", e:"Ej: Resalta tus fallos delante de otros o se burla de tus miedos.", w:1.3},
+{t:"Evita sus responsabilidades y siempre busca a quien culpar.", e:"Ej: Dice que sus errores son por culpa de los demás o de la mala suerte.", w:1.2},
+{t:"Sientes que necesita controlar lo que haces o con quién hablas.", e:"Ej: Te cuestiona tus horarios, tus gastos o tu forma de vestir.", w:1.0},
+{t:"Parece que todo tiene que girar siempre en torno a lo que quiere o siente.", e:"Ej: Las conversaciones siempre acaban tratando sobre sus temas.", w:0.9},
+{t:"Notas envidia o que intenta competir contigo cuando te va bien.", e:"Ej: En lugar de felicitarte, intenta eclipsar tu éxito con algo suyo.", w:0.8},
+{t:"Parece que genera problemas o dramas donde no los hay.", e:"Ej: Discute o se enfada por detalles insignificantes con mucha frecuencia.", w:0.8},
+{t:"Te hace dudar de lo que has visto o vivido (Gaslighting).", e:"Ej: Te dice que 'estás loco/a' o que 'eso nunca pasó' para confundirte.", w:0.6},
+{t:"No respeta tu intimidad ni tus límites personales.", e:"Ej: Mira tus cosas sin permiso o invade tu espacio cuando quieres estar solo/a.", w:0.5}
 ],
 c: [
-{t:"Comparte tus mismos valores fundamentales y principios éticos.", e:"Ej: Coincidís en lo que es correcto respecto a la lealtad y la honestidad.", w:1.5},
-{t:"Alinea su proyecto de vida con el tuyo a largo plazo.", e:"Ej: Tiene metas de futuro (hijos, carrera, vivienda) en la misma dirección.", w:1.4},
-{t:"Posee una comunicación afectiva compatible con tus necesidades.", e:"Ej: Su forma de dar cariño te hace sentir amado/a de forma natural.", w:1.3},
-{t:"Gestiona el tiempo compartido y la independencia de forma similar.", e:"Ej: Está de acuerdo en cuánta cercanía y cuánto espacio necesita cada uno.", w:1.2},
-{t:"Mantiene una visión económica y de ahorro coherente con la tuya.", e:"Ej: Coincidís en las prioridades de gasto y en la administración del dinero.", w:1.0},
-{t:"Desarrolla intereses comunes que nutren el bienestar del vínculo.", e:"Ej: Tenéis aficiones que disfrutáis haciendo juntos de forma recurrente.", w:0.9},
-{t:"Genera una conexión física y sexual satisfactoria para ambos.", e:"Ej: Existe una sintonía natural en el deseo y la expresión de la intimidad.", w:0.8},
-{t:"Facilita la integración fluida con tu entorno social y familiar.", e:"Ej: Se lleva bien con tus amigos y respeta a tu círculo familiar directo.", w:0.8},
-{t:"Demuestra el mismo nivel de compromiso y exclusividad.", e:"Ej: Ambos entendéis la relación bajo el mismo marco de lealtad y futuro.", w:0.6},
-{t:"Provee un estímulo intelectual que despierta tu admiración.", e:"Ej: Sus razonamientos te resultan interesantes y te motiva aprender de él/ella.", w:0.5}
+{t:"Sentir que compartís los mismos valores y principios básicos.", e:"Ej: Estar de acuerdo en lo que significa la lealtad o la familia.", w:1.5},
+{t:"Tener metas de futuro que van en la misma dirección que las tuyas.", e:"Ej: Queréis el mismo tipo de vida o familia a largo plazo.", w:1.4},
+{t:"Sentir que vuestra forma de dar y recibir cariño encaja bien.", e:"Ej: Te demuestra afecto de la manera que a ti te gusta recibirlo.", w:1.3},
+{t:"Estar de acuerdo en cuánto tiempo pasar juntos y cuánto por separado.", e:"Ej: Ambos estáis cómodos con el espacio que os dais.", w:1.2},
+{t:"Tener una visión parecida sobre cómo gestionar el dinero.", e:"Ej: Coincidís en qué es importante gastar y en qué ahorrar.", w:1.0},
+{t:"Disfrutar de aficiones o temas de conversación que os unen.", e:"Ej: Tenéis intereses que os divierten y os hacen pasar buenos ratos.", w:0.9},
+{t:"Sentir que hay una buena conexión y sintonía en la intimidad.", e:"Ej: La parte física fluye de forma natural y satisfactoria para ambos.", w:0.8},
+{t:"Ver que se integra bien con tus amigos y con tu familia.", e:"Ej: Respeta tu mundo social y se lleva bien con tu gente.", w:0.8},
+{t:"Sentir que ambos tenéis el mismo grado de compromiso.", e:"Ej: Los dos buscáis lo mismo en esta relación y miráis hacia el futuro.", w:0.6},
+{t:"Admirar su forma de pensar y sentir que aprendes cosas a su lado.", e:"Ej: Te gusta cómo ve el mundo y te motiva su perspectiva intelectual.", w:0.5}
 ],
 a: [
-{t:"Se siente cómodo compartiendo su intimidad emocional contigo.", e:"Ej: Te cuenta sus miedos profundos sin sentirse vulnerable o juzgado.", w:1.5},
-{t:"Responde con calma y presencia cuando buscas su cercanía.", e:"Ej: No se agobia ni se aleja si necesitas pasar más tiempo juntos.", w:1.4},
-{t:"Confía en la estabilidad de la relación sin pedir pruebas constantes.", e:"Ej: No interpreta un mal día como una señal de ruptura inminente.", w:1.3},
-{t:"Te percibe como una base segura a la que acudir en crisis.", e:"Ej: Eres la primera persona a la que llama cuando recibe una mala noticia.", w:1.2},
-{t:"Permite que explores tus metas individuales sin sentirse amenazado.", e:"Ej: Se alegra de tus proyectos sin que su seguridad dependa de tu presencia.", w:1.0},
-{t:"Muestra una consistencia afectiva predecible a lo largo del tiempo.", e:"Ej: Su forma de tratarte es estable y no cambia bruscamente de un día a otro.", w:0.9},
-{t:"Es capaz de pedir apoyo de manera directa y clara.", e:"Ej: Te dice 'te necesito' en lugar de ponerse de mal humor para llamar tu atención.", w:0.8},
-{t:"No muestra un temor excesivo a ser rechazado o abandonado por ti.", e:"Ej: Acepta con naturalidad que tengas planes en los que él/ella no participe.", w:0.8},
-{t:"Posee una visión positiva de sí mismo y de ti dentro del vínculo.", e:"Ej: No necesita despreciarte para sentirse superior o seguro emocionalmente.", w:0.6},
-{t:"Gestiona la distancia física o emocional sin generar conflictos.", e:"Ej: Entiende que necesites tiempo a solas sin tomárselo como un ataque.", w:0.5}
+{t:"Sientes que se abre emocionalmente y comparte lo que siente.", e:"Ej: Te cuenta sus miedos o ilusiones de forma honesta y tranquila.", w:1.5},
+{t:"Se mantiene presente y con calma cuando buscas su cercanía.", e:"Ej: No se agobia ni se aleja si necesitas pasar más tiempo a su lado.", w:1.4},
+{t:"Confía en la relación sin necesitar que se lo demuestres a cada rato.", e:"Ej: No se imagina lo peor por un pequeño malentendido.", w:1.3},
+{t:"Sientes que eres su persona de confianza cuando tiene un problema.", e:"Ej: Cuenta contigo primero cuando necesita desahogarse o ayuda.", w:1.2},
+{t:"Te deja espacio para tus metas sin sentirse con miedo o amenaza.", e:"Ej: Te apoya en tus proyectos aunque no siempre estés disponible.", w:1.0},
+{t:"Su forma de quererte y tratarte es estable, no cambia de golpe.", e:"Ej: Sabes qué esperar, no tiene cambios de humor bruscos con el vínculo.", w:0.9},
+{t:"Sabe pedirte ayuda o cariño de una forma clara y directa.", e:"Ej: Te dice 'necesito un abrazo' en lugar de ponerse de mal humor.", w:0.8},
+{t:"Acepta bien que tengas planes sin él/ella, sin miedo a perderte.", e:"Ej: Entiende que salgas con tu gente y no se siente abandonado/a.", w:0.8},
+{t:"Tiene una imagen positiva de sí mismo/a y de ti en la relación.", e:"Ej: No necesita hacerse de menos ni atacarte para sentirse bien.", w:0.6},
+{t:"Lleva bien los momentos de distancia sin crear conflictos por ello.", e:"Ej: Entiende que necesites tu tarde de soledad sin tomárselo como un ataque.", w:0.5}
 ],
 i: [
-{t:"Manifiesta una autoconciencia clara sobre su propio estado emocional.", e:"Ej: Identifica cuando está estresado antes de pagarlo contigo.", w:1.5},
-{t:"Ejerce una autorregulación efectiva ante situaciones de tensión.", e:"Ej: Mantiene el respeto y la calma incluso cuando está muy enfadado.", w:1.4},
-{t:"Práctica una escucha activa genuina sin interrumpir ni juzgar.", e:"Ej: Te presta atención plena y te hace preguntas para entenderte mejor.", w:1.3},
-{t:"Actúa con una responsabilidad afectiva consciente y estable.", e:"Ej: Tiene en cuenta cómo te afectarán sus palabras antes de ejecutarlas.", w:1.2},
-{t:"Muestra una empatía situacional ajustada a lo que estás viviendo.", e:"Ej: Sabe cuándo necesitas un abrazo y cuándo necesitas que te escuche.", w:1.0},
-{t:"Utiliza una comunicación asertiva para expresar sus necesidades.", e:"Ej: Te dice lo que le molesta de forma directa, sin ataques ni sarcasmos.", w:0.9},
-{t:"Busca una resolución proactiva de las tensiones antes de que escalen.", e:"Ej: Propone hablar de un malentendido en cuanto detecta la incomodidad.", w:0.8},
-{t:"Posee una alfabetización emocional rica para describir sentimientos.", e:"Ej: Usa palabras precisas para explicar si siente decepción o miedo.", w:0.8},
-{t:"Demuestra una alta tolerancia a la frustración ante imprevistos.", e:"Ej: No se desmorona ni busca culpables si un plan importante sale mal.", w:0.6},
-{t:"Mantiene una motivación relacional alta para cuidar los detalles.", e:"Ej: Se esfuerza activamente por mantener vivos los gestos de atención diarios.", w:0.5}
+{t:"Se da cuenta de sus emociones y sabe cómo le están afectando.", e:"Ej: Sabe decir 'estoy estresado/a' antes de acabar pagándolo contigo.", w:1.5},
+{t:"Sabe controlarse y no reacciona de forma impulsiva o brusca.", e:"Ej: Aunque esté enfadado/a, mantiene las formas y el respeto.", w:1.4},
+{t:"Te escucha de verdad, prestando atención a lo que dices.", e:"Ej: Sientes que te entiende y no está solo esperando su turno para hablar.", w:1.3},
+{t:"Tiene en cuenta tus sentimientos antes de actuar o decidir.", e:"Ej: Piensa en cómo te va a sentar algo antes de hacerlo.", w:1.2},
+{t:"Sabe adaptarse a cómo te sientes en cada momento.", e:"Ej: Nota si necesitas un abrazo o si prefieres que te dejen tranquilo/a.", w:1.0},
+{t:"Te dice las cosas con claridad, pero con respeto y sin ataques.", e:"Ej: Te explica lo que le molesta sin insultar ni usar sarcasmos.", w:0.9},
+{t:"Trata de calmar las aguas y solucionar las tensiones pronto.", e:"Ej: Prefiere hablar y entenderse antes de que la discusión crezca.", w:0.8},
+{t:"Sabe poner nombre a lo que siente y explicártelo bien.", e:"Ej: Sabe distinguir si está decepcionado/a, cansado/a o simplemente triste.", w:0.8},
+{t:"No se viene abajo ni busca culpables si algo sale mal.", e:"Ej: Si un plan se tuerce, intenta buscar una alternativa sin enfadarse.", w:0.6},
+{t:"Se esfuerza día a día por cuidar los detalles de la relación.", e:"Ej: Mantiene vivos esos pequeños gestos que os hacen estar bien.", w:0.5}
 ]
 };
 
 const textRes = {
 s: [
-{min:0, max:4.0, t:"Salud Relacional: Inexistente", p:"Ausencia absoluta de bases vinculares. La dinámica carece de integridad y seguridad básica. El vínculo opera en un estado de abandono emocional donde no se percibe reciprocidad."},
-{min:4.1, max:6.0, t:"Salud Relacional: Insuficiente", p:"Estructura relacional deficiente. El vínculo presenta fallos sistémicos en la reciprocidad y el apoyo estable. Existe una desconexión que impide la formación de un refugio seguro."},
-{min:6.1, max:7.5, t:"Salud Relacional: Funcional", p:"Interacción propia de conocidos. El trato es cordial pero carece de profundidad y compromiso real. La seguridad psicológica es intermitente y no garantiza estabilidad."},
-{min:7.6, max:9.0, t:"Salud Relacional: Saludable", p:"Dinámica constructiva y equilibrada. Existe un soporte sólido basado en el respeto y la empatía. El vínculo es capaz de reparar conflictos de forma efectiva."},
-{min:9.1, max:10.0, t:"Salud Relacional: Vínculo Seguro", p:"Grado máximo de excelencia relacional. Existe una coherencia absoluta y una seguridad psicológica total. La relación constituye un puerto seguro de alta calidad."}
+{min:0, max:4.0, t:"Salud Relacional: Inexistente", p:"Faltan las bases mínimas para que la relación funcione. No se percibe seguridad ni compromiso. Se siente como un estado de abandono donde no hay un esfuerzo mutuo por cuidar el vínculo."},
+{min:4.1, max:6.0, t:"Salud Relacional: Insuficiente", p:"La relación es frágil. Hay fallos constantes en el apoyo y la confianza. No llegáis a sentiros en un refugio seguro el uno con el otro."},
+{min:6.1, max:7.5, t:"Salud Relacional: Funcional", p:"Os lleváis bien, pero de forma algo superficial. Hay respeto, pero falta esa profundidad y compromiso de verdad que da la seguridad emocional."},
+{min:7.6, max:9.0, t:"Salud Relacional: Saludable", p:"Tenéis una dinámica muy positiva. El respeto y la empatía son la base. Sabéis arreglar los problemas y os ayudáis a crecer mutuamente."},
+{min:9.1, max:10.0, t:"Salud Relacional: Vínculo Seguro", p:"Es una relación excelente. Hay una confianza y seguridad total. Sentís que estáis en un puerto seguro donde podéis ser vosotros mismos sin miedo."}
 ],
 t: [
-{min:0, max:2.0, t:"Toxicidad: Inexistente", p:"Entorno libre de rasgos destructivos. La interacción respeta la soberanía individual y la paz mental. No se detectan patrones de control o manipulación que afecten al sujeto."},
-{min:2.1, max:4.0, t:"Toxicidad: Baja", p:"Presencia de fricciones menores. No existen patrones manipuladores sistematizados que comprometan la integridad o la percepción de la realidad del individuo."},
-{min:4.1, max:6.0, t:"Toxicidad: Dinámica Conflictiva", p:"Se detectan conductas de invalidación o deslinde de responsabilidades. Estos rasgos requieren una revisión inmediata de los límites para evitar la erosión del bienestar."},
-{min:6.1, max:8.5, t:"Toxicidad: Manifiesta", p:"Patrones claros de control y manipulación recurrente. El gaslighting y la crítica destructiva erosionan activamente la autoestima y la autonomía del sujeto."},
-{min:8.6, max:10.0, t:"Toxicidad: Altamente Destructiva", p:"Relación de extrema gravedad. Existe una presencia severa de anulación de la identidad y abuso psicológico. El entorno es incompatible con la salud mental e integridad."}
+{min:0, max:2.0, t:"Toxicidad: Inexistente", p:"Es una relación limpia de comportamientos dañinos. Os respetáis y no hay intentos de control ni manipulación. Hay paz mental."},
+{min:2.1, max:4.0, t:"Toxicidad: Baja", p:"Hay pequeños roces normales, pero nada que dañe la identidad de ninguno. No hay patrones de manipulación que deban preocupar."},
+{min:4.1, max:6.0, t:"Toxicidad: Dinámica Conflictiva", p:"Cuidado. Empiezan a aparecer comportamientos de invalidación o falta de responsabilidad. Hay que revisar los límites para no acabar desgastados."},
+{min:6.1, max:8.5, t:"Toxicidad: Manifiesta", p:"Hay patrones claros de control y manipulación. Notas que te critican de más o que intentan confundirte. Esto daña mucho la autoestima."},
+{min:8.6, max:10.0, t:"Toxicidad: Altamente Destructiva", p:"Es una situación grave. Hay una anulación de quién eres y un daño psicológico constante. No es un entorno sano ni seguro para vivir."}
 ],
 c: [
-{min:0, max:4.0, t:"Compatibilidad: Divergencia Total", p:"No existe alineación en principios vitales. Las metas y visiones del mundo resultan opuestas, imposibilitando la construcción de cualquier proyecto común sostenible."},
-{min:4.1, max:6.0, t:"Compatibilidad: Escasa", p:"Afinidades mínimas. La relación demanda un esfuerzo adaptativo agotador debido a la falta de sincronía en valores fundamentales y ritmos vitales."},
-{min:6.1, max:7.5, t:"Compatibilidad: Media", p:"Puntos de encuentro intermitentes. Requiere negociación constante para alinear metas y lenguajes afectivos que permitan una convivencia funcional."},
-{min:7.6, max:9.0, t:"Compatibilidad: Sincronía Notable", p:"Elevada afinidad en dimensiones críticas. Los proyectos vitales convergen de manera fluida y los principios éticos están alineados satisfactoriamente."},
-{min:9.1, max:10.0, t:"Compatibilidad: Alineamiento Excepcional", p:"Sintonía plena en todas las esferas del desarrollo. Existe una visión compartida del futuro que potencia la autorrealización de ambos individuos."},
+{min:0, max:4.0, t:"Compatibilidad: Divergencia Total", p:"No buscáis lo mismo en la vida ni compartís valores. Es muy difícil construir algo juntos porque vuestros caminos van en direcciones opuestas."},
+{min:4.1, max:6.0, t:"Compatibilidad: Escasa", p:"Tenéis muy pocos puntos en común. Mantener la relación exige un esfuerzo agotador porque vuestros ritmos y metas no coinciden."},
+{min:6.1, max:7.5, t:"Compatibilidad: Media", p:"Hay cosas que os unen, pero otras que os separan. Necesitáis negociar mucho para poder estar en la misma página con los proyectos de futuro."},
+{min:7.6, max:9.0, t:"Compatibilidad: Sintonía Notable", p:"Encajáis muy bien en lo importante. Vuestros valores y planes de futuro van de la mano de forma bastante natural."},
+{min:9.1, max:10.0, t:"Compatibilidad: Sincronía Plena", p:"Vuestra sintonía es total. Tenéis una visión de la vida compartida que os hace crecer a los dos. Todo fluye de forma excepcional."},
 ],
 a: [
-{min:0, max:4.0, t:"Apego: Desorganizado o Evitativo Grave", p:"El otro individuo muestra una desconexión total o una inconsistencia que genera inseguridad profunda. La intimidad se percibe como una amenaza o el vínculo es caótico."},
-{min:4.1, max:6.0, t:"Apego: Inseguro (Ansioso o Evitativo)", p:"Existen dificultades para gestionar la cercanía. Se observan patrones de miedo al abandono o una fuerte necesidad de distancia que impiden un flujo afectivo relajado."},
-{min:6.1, max:7.5, t:"Apego: Tendencia a la Seguridad", p:"El vínculo es funcional pero afloran rasgos de inseguridad bajo estrés. La confianza es estable pero requiere validación externa frecuente para mantenerse sólida."},
-{min:7.6, max:9.0, t:"Apego: Seguro Predominante", p:"El otro sujeto se muestra como una figura disponible y confiable. La dinámica se basa en la calma afectiva, permitiendo una intimidad profunda y autonomía respetada."},
-{min:9.1, max:10.0, t:"Apego: Seguro Pleno", p:"Grado máximo de madurez vincular. El otro individuo actúa como una base segura total y coherente, fomentando una seguridad interna que potencia el desarrollo mutuo."}
+{min:0, max:4.0, t:"Apego: Desorganizado o Evitativo Grave", p:"A la otra persona le cuesta mucho conectar o es muy inestable. Esto crea una inseguridad profunda porque el afecto parece algo amenazante o caótico."},
+{min:4.1, max:6.0, t:"Apego: Inseguro (Ansioso o Evitativo)", p:"Hay miedos al compromiso o a que te alejes. Esto impide que el cariño fluya de forma tranquila y genera mucha tensión emocional."},
+{min:6.1, max:7.5, t:"Apego: Tendencia a la Seguridad", p:"La relación funciona bien, aunque a veces aparecen inseguridades cuando hay estrés. Hace falta reafirmar la confianza de vez en cuando."},
+{min:7.6, max:9.0, t:"Apego: Seguro Predominante", p:"La otra persona es alguien en quien puedes confiar. Hay una calma que permite estar unidos pero respetando el espacio de cada uno."},
+{min:9.1, max:10.0, t:"Apego: Seguro Pleno", p:"Hay una madurez emocional muy alta. La otra persona es una base segura de verdad, lo que os da una tranquilidad total para disfrutar de la relación."}
 ],
 i: [
-{min:0, max:4.0, t:"Inteligencia Emocional: Analfabetismo Profundo", p:"El otro individuo carece de responsabilidad afectiva y gestión de impulsos. No existe escucha activa ni consideración por el impacto emocional de sus actos."},
-{min:4.1, max:6.0, t:"Inteligencia Emocional: Deficiente", p:"Respuestas reactivas e impulsivas. La falta de autoconciencia genera un entorno de inseguridad donde la empatía es prácticamente inexistente."},
-{min:6.1, max:7.5, t:"Inteligencia Emocional: Básica", p:"Competencias afectivas intermitentes. La gestión emocional depende del nivel de estrés situacional y carece de una base asertiva sólida."},
-{min:7.6, max:9.0, t:"Inteligencia Emocional: Madurez Afectiva", p:"Buena capacidad de autorregulación y escucha. El otro sujeto valida emociones ajenas y asume la responsabilidad de su impacto en el vínculo."},
-{min:9.1, max:10.0, t:"Inteligencia Emocional: Maestría Afectiva", p:"Nivel excepcional de competencia emocional. Integra una responsabilidad afectiva total y una capacidad transformadora de resolver conflictos mediante la empatía."}
+{min:0, max:4.0, t:"Inteligencia Emocional: Analfabetismo Profundo", p:"A la otra persona le cuesta mucho entender y gestionar lo que siente. No se hace responsable del daño que pueden causar sus actos o palabras."},
+{min:4.1, max:6.0, t:"Inteligencia Emocional: Deficiente", p:"Suele reaccionar de forma impulsiva. No se da cuenta de sus procesos internos, lo que crea un ambiente de inseguridad y poca empatía."},
+{min:6.1, max:7.5, t:"Inteligencia Emocional: Básica", p:"Sabe gestionar las cosas a veces, pero cuando se estresa se bloquea o reacciona mal. Le falta ser más constante en la escucha y el respeto."},
+{min:7.6, max:9.0, t:"Inteligencia Emocional: Madurez Afectiva", p:"Sabe controlar sus impulsos y te escucha de verdad. Valida lo que sientes y se hace cargo del impacto de lo que dice o hace."},
+{min:9.1, max:10.0, t:"Inteligencia Emocional: Maestría Afectiva", p:"Tiene una capacidad excepcional para entenderse y entenderte. Sabe resolver los problemas con mucha empatía y cuida muchísimo el bienestar mutuo."}
 ]
 };
 
@@ -197,7 +197,7 @@ document.getElementById('refTexto').innerHTML = "FUNDAMENTACIÓN TÉCNICA Y BIBL
 "La dimensión de Toxicidad identifica patrones de control y gaslighting definidos por Robin Stern y George Simon. " + 
 "El análisis del Apego se fundamenta en la Teoría del Apego de John Bowlby y Mary Ainsworth. " + 
 "La Compatibilidad emplea el marco de la Teoría Triangular del Amor de Robert Sternberg y los modelos de valores de Shalom Schwartz. " + 
-"La Inteligencia Emocional se fundamenta en el modelo de competencias de Daniel Goleman y Salovey & Mayer.";
+"La Inteligencia Emocional se basa en el modelo de competencias de Daniel Goleman y Salovey & Mayer.";
 
 document.getElementById('resultados').style.display = 'block';
 window.scrollTo(0, document.body.scrollHeight);
