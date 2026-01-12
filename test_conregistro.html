@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolo de Evaluación Relacional Multidimensional</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            color: #1a1a1a;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+            margin-top: 40px;
+            font-weight: normal;
+        }
+
+        .descripcion-seccion {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            font-style: italic;
+            color: #444;
+        }
+
+        .pregunta {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .ejemplo {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .opciones {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            flex-wrap: nowrap;
+            gap: 2px;
+        }
+
+        .opcion {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background: #000;
+            color: #fff;
+            border: none;
+            margin: 40px 0;
+        }
+
+        #resultados {
+            display: none;
+            border: 2px solid #000;
+            padding: 25px;
+            background: #fdfdfd;
+            margin-top: 20px;
+        }
+
+        .bloque-resultado {
+            margin-bottom: 30px;
+        }
+
+        .titulo-resultado {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+
+        .descripcion-resultado {
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .referencias {
+            margin-top: 50px;
+            font-size: 0.85rem;
+            border-top: 1px dashed #000;
+            padding-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form id="evaluacion">
+        <h2>Dimensión 1: Salud Relacional</h2>
+        <p class="descripcion-seccion">Evaluación de la integridad, seguridad y apoyo mutuo.</p>
+        <div id="contSalud"></div>
+
+        <h2>Dimensión 2: Ausencia de Toxicidad</h2>
+        <p class="descripcion-seccion">Identificación de la falta de patrones de control o manipulación en la otra
+            persona.</p>
+        <div id="contTox"></div>
+
+        <h2>Dimensión 3: Compatibilidad Emocional</h2>
+        <p class="descripcion-seccion">Análisis de sintonía en valores y proyectos de vida comunes.</p>
+        <div id="contComp"></div>
+
+        <h2>Dimensión 4: Tipo de Apego (Seguridad Vincular)</h2>
+        <p class="descripcion-seccion">Evaluación del estilo de conexión afectiva de la otra persona.</p>
+        <div id="contApego"></div>
+
+        <h2>Dimensión 5: Inteligencia Emocional (Evaluación de la otra persona)</h2>
+        <p class="descripcion-seccion">Valoración de la gestión afectiva y responsabilidad de la otra persona.</p>
+        <div id="contInt"></div>
+
+        <button type="button" id="btnCalcular">CALCULAR EVALUACIÓN FINAL</button>
+    </form>
+
+    <div id="resultados">
+        <h2>Informe de Resultados</h2>
+        <div id="res1" class="bloque-resultado"></div>
+        <div id="res2" class="bloque-resultado"></div>
+        <div id="res3" class="bloque-resultado"></div>
+        <div id="res4" class="bloque-resultado"></div>
+        <div id="res5" class="bloque-resultado"></div>
+        <div class="referencias" id="refTexto"></div>
+    </div>
+
+    <script>
+        const schema = {
+            s: [
+                { t: "Es una persona coherente entre lo que dice y lo que termina haciendo.", e: "Ej: Si se compromete a algo, lo cumple sin que tengas que insistir.", w: 1.5 },
+                { t: "Te hace sentir en un entorno seguro donde puedes hablar sin miedo.", e: "Ej: Te escucha con respeto aunque lo que digas no le guste.", w: 1.4 },
+                { t: "Se esfuerza tanto como tú en cuidar la relación.", e: "Ej: Notar que las ganas y el trabajo para estar bien vienen de ambas partes.", w: 1.3 },
+                { t: "Busca arreglar las cosas cuando hay un problema, sin castigarte.", e: "Ej: Trata de solucionar el conflicto hablando en lugar de dejarte de hablar.", w: 1.2 },
+                { t: "Respeta de verdad tus límites y tus ganas de hacer tus cosas.", e: "Ej: Si no te apetece un plan, no intenta convencerte ni se enfada.", w: 1.0 },
+                { t: "Sientes que es un apoyo estable cuando las cosas se ponen feas.", e: "Ej: Es la persona en la que puedes apoyarte si tienes un mal día.", w: 0.9 },
+                { t: "Te dedica tiempo de calidad y está presente cuando está contigo.", e: "Ej: Deja el móvil a un lado y te escucha con atención de verdad.", w: 0.8 },
+                { t: "Valida lo que sientes y trata de entenderte.", e: "Ej: Entiende que estés triste o enfadado/a sin decirte que exageras.", w: 0.8 },
+                { t: "Crea un ambiente positivo y agradable en vuestro día a día.", e: "Ej: Es fácil reírse y disfrutar de las cosas pequeñas a su lado.", w: 0.6 },
+                { t: "Se alegra de tus éxitos y te anima a que sigas creciendo.", e: "Ej: Celebra tus logros como si fueran propios y te apoya en tus metas.", w: 0.5 }
+            ],
+            t: [
+                { t: "Muestra una presencia constante de empatía ante tus necesidades.", e: "Ej: Se preocupa de verdad y te escucha si le cuentas que algo te ha herido.", w: 1.5 },
+                { t: "Evita cualquier tipo de manipulación o uso de la culpa para salir con la suya.", e: "Ej: Respeta tus decisiones personales sin intentar que te sientas mal por ellas.", w: 1.4 },
+                { t: "Se abstiene de realizar críticas hirientes o destructivas.", e: "Ej: Cuida tus sentimientos y nunca se burla de tus inseguridades para rebajarte.", w: 1.3 },
+                { t: "Asume sus responsabilidades sin buscar a quién culpar de sus fallos.", e: "Ej: Reconoce sus propios errores con naturalidad sin decir que es culpa tuya.", w: 1.2 },
+                { t: "Respeta tu autonomía sin mostrar una necesidad de control.", e: "Ej: No te cuestiona tus horarios, tus amistades ni tu forma de vestir.", w: 1.0 },
+                { t: "Muestra interés genuino por ti y no busca ser siempre el centro.", e: "Ej: Se interesa por tu día y tus cosas en lugar de hablar solo de lo suyo.", w: 0.9 },
+                { t: "Se alegra sinceramente de tus triunfos sin intentar competir contigo.", e: "Ej: Te felicita de corazón por tus éxitos sin sacar un logro suyo para eclipsarte.", w: 0.8 },
+                { t: "Mantiene una relación pacífica evitando dramas innecesarios.", e: "Ej: No se enfada por detalles insignificantes ni busca crear conflictos.", w: 0.8 },
+                { t: "Valida tu realidad y tu memoria sin intentar confundirte (Gaslighting).", e: "Ej: Si algo pasó y te dolió, no niega los hechos ni te dice que estás loco/a.", w: 0.6 },
+                { t: "Respeta totalmente tu intimidad y tus límites personales.", e: "Ej: No mira tu móvil a escondidas ni invade tu espacio cuando necesitas soledad.", w: 0.5 }
+            ],
+            c: [
+                { t: "Sentir que compartís los mismos valores y principios básicos.", e: "Ej: Estar de acuerdo en lo que significa la lealtad o la familia.", w: 1.5 },
+                { t: "Tener metas de futuro que van en la misma dirección que las tuyas.", e: "Ej: Queréis el mismo tipo de vida o familia a largo plazo.", w: 1.4 },
+                { t: "Sentir que vuestra forma de dar y recibir cariño encaja bien.", e: "Ej: Te demuestra afecto de la manera que a ti te gusta recibirlo.", w: 1.3 },
+                { t: "Estar de acuerdo en cuánto tiempo pasar juntos y cuánto por separado.", e: "Ej: Ambos estáis cómodos con el espacio que os dais.", w: 1.2 },
+                { t: "Tener una visión parecida sobre cómo gestionar el dinero.", e: "Ej: Coincidís en qué es importante gastar y en qué ahorrar.", w: 1.0 },
+                { t: "Disfrutar de aficiones o temas de conversación que os unen.", e: "Ej: Tenéis intereses que os divierten y os hacen pasar buenos ratos.", w: 0.9 },
+                { t: "Sentir que hay una buena conexión y sintonía en la intimidad.", e: "Ej: La parte física fluye de forma natural y satisfactoria para ambos.", w: 0.8 },
+                { t: "Ver que se integra bien con tus amigos y con tu familia.", e: "Ej: Respeta tu mundo social y se lleva bien con tu gente.", w: 0.8 },
+                { t: "Sentir que ambos tenéis el mismo grado de compromiso.", e: "Ej: Los dos buscáis lo mismo en esta relación y miráis hacia el futuro.", w: 0.6 },
+                { t: "Admirar su forma de pensar y sentir que aprendes cosas a su lado.", e: "Ej: Te gusta cómo ve el mundo y te motiva su perspectiva intelectual.", w: 0.5 }
+            ],
+            a: [
+                { t: "Sientes que se abre emocionalmente y comparte lo que siente.", e: "Ej: Te cuenta sus miedos o ilusiones de forma honesta y tranquila.", w: 1.5 },
+                { t: "Se mantiene presente y con calma cuando buscas su cercanía.", e: "Ej: No se agobia ni se aleja si necesitas pasar más tiempo a su lado.", w: 1.4 },
+                { t: "Confía en la relación sin necesitar que se lo demuestres a cada rato.", e: "Ej: No se imagina lo peor por un pequeño malentendido.", w: 1.3 },
+                { t: "Sientes que eres su persona de confianza cuando tiene un problema.", e: "Ej: Cuenta contigo primero cuando necesita desahogarse o ayuda.", w: 1.2 },
+                { t: "Te deja espacio para tus metas sin sentirse con miedo o amenaza.", e: "Ej: Te apoya en tus proyectos aunque no siempre estés disponible.", w: 1.0 },
+                { t: "Su forma de quererte y tratarte es estable, no cambia de golpe.", e: "Ej: Sabes qué esperar, no tiene cambios de humor bruscos con el vínculo.", w: 0.9 },
+                { t: "Sabe pedirte ayuda o cariño de una forma clara y directa.", e: "Ej: Te dice 'necesito un abrazo' en lugar de ponerse de mal humor.", w: 0.8 },
+                { t: "Acepta bien que tengas planes sin él/ella, sin miedo a perderte.", e: "Ej: Entiende que salgas con tu gente y no se siente abandonado/a.", w: 0.8 },
+                { t: "Tiene una imagen positiva de sí mismo/a y de ti en la relación.", e: "Ej: No necesita hacerse de menos ni atacarte para sentirse bien.", w: 0.6 },
+                { t: "Lleva bien los momentos de distancia sin crear conflictos por ello.", e: "Ej: Entiende que necesites tu tarde de soledad sin tomárselo como un ataque.", w: 0.5 }
+            ],
+            i: [
+                { t: "Se da cuenta de sus emociones y sabe cómo le están afectando.", e: "Ej: Sabe decir 'estoy estresado/a' antes de acabar pagándolo contigo.", w: 1.5 },
+                { t: "Sabe controlarse y no reacciona de forma impulsiva o brusca.", e: "Ej: Aunque esté enfadado/a, mantiene las formas y el respeto.", w: 1.4 },
+                { t: "Te escucha de verdad, prestando atención a lo que dices.", e: "Ej: Sientes que te entiende y no está solo esperando su turno para hablar.", w: 1.3 },
+                { t: "Tiene en cuenta tus sentimientos antes de actuar o decidir.", e: "Ej: Piensa en cómo te va a sentar algo antes de hacerlo.", w: 1.2 },
+                { t: "Sabe adaptarse a cómo te sientes en cada momento.", e: "Ej: Nota si necesitas un abrazo o si prefieres que te dejen tranquilo/a.", w: 1.0 },
+                { t: "Te dice las cosas con claridad, pero con respeto y sin ataques.", e: "Ej: Te explica lo que le molesta sin insultar ni usar sarcasmos.", w: 0.9 },
+                { t: "Trata de calmar las aguas y solucionar las tensiones pronto.", e: "Ej: Prefiere hablar y entenderse antes de que la discusión crezca.", w: 0.8 },
+                { t: "Sabe poner nombre a lo que siente y explicártelo bien.", e: "Ej: Sabe distinguir si está decepcionado/a, cansado/a o simplemente triste.", w: 0.8 },
+                { t: "No se viene abajo ni busca culpables si algo sale mal.", e: "Ej: Si un plan se tuerce, intenta buscar una alternativa sin enfadarse.", w: 0.6 },
+                { t: "Se esfuerza día a día por cuidar los detalles de la relación.", e: "Ej: Mantiene vivos esos pequeños gestos que os hacen estar bien.", w: 0.5 }
+            ]
+        };
+
+        const textRes = {
+            s: [
+                { min: 0, max: 4.0, t: "Salud Relacional: Inexistente", p: "Faltan las bases mínimas para que la relación funcione. No se percibe seguridad ni compromiso. Se siente como un estado de abandono donde no hay un esfuerzo mutuo por cuidar el vínculo." },
+                { min: 4.1, max: 6.0, t: "Salud Relacional: Insuficiente", p: "La relación es frágil. Hay fallos constantes en el apoyo y la confianza. No llegáis a sentiros en un refugio seguro el uno con el otro." },
+                { min: 6.1, max: 7.5, t: "Salud Relacional: Funcional", p: "Os lleváis bien, pero de forma algo superficial. Hay respeto, pero falta esa profundidad y compromiso de verdad que da la seguridad emocional." },
+                { min: 7.6, max: 9.0, t: "Salud Relacional: Saludable", p: "Tenéis una dinámica muy positiva. El respeto y la empatía son la base. Sabéis arreglar los problemas y os ayudáis a crecer mutuamente." },
+                { min: 9.1, max: 10.0, t: "Salud Relacional: Vínculo Seguro", p: "Es una relación excelente. Hay una confianza y seguridad total. Sentís que estáis en un puerto seguro donde podéis ser vosotros mismos sin miedo." }
+            ],
+            t: [
+                { min: 0, max: 4.0, t: "Ausencia de Toxicidad: Crítica", p: "Puntuación muy baja. Se detectan patrones graves de manipulación, control o falta de respeto constante. La salud mental en este entorno corre un riesgo serio." },
+                { min: 4.1, max: 6.0, t: "Ausencia de Toxicidad: Insuficiente", p: "Hay comportamientos dañinos frecuentes. Se recurre a la culpa o la invalidación emocional de forma recurrente. Es necesario revisar los límites urgentemente." },
+                { min: 6.1, max: 7.5, t: "Ausencia de Toxicidad: Media", p: "Aunque no hay una toxicidad extrema, aparecen roces y faltas de empatía que ensucian la relación. Hace falta más conciencia y respeto mutuo." },
+                { min: 7.6, max: 9.0, t: "Ausencia de Toxicidad: Alta", p: "Es una relación bastante limpia de comportamientos tóxicos. Os tratáis con respeto y la manipulación no es vuestro lenguaje habitual." },
+                { min: 9.1, max: 10.0, t: "Ausencia de Toxicidad: Total", p: "La relación es ejemplar. Existe un respeto absoluto por la soberanía de cada uno y no hay rastro de dinámicas destructivas. Hay paz mental total." }
+            ],
+            c: [
+                { min: 0, max: 4.0, t: "Compatibilidad: Divergencia Total", p: "No buscáis lo mismo en la vida ni compartís valores. Es muy difícil construir algo juntos porque vuestros caminos van en direcciones opuestas." },
+                { min: 4.1, max: 6.0, t: "Compatibilidad: Escasa", p: "Tenéis muy pocos puntos en común. Mantener la relación exige un esfuerzo agotador porque vuestros ritmos y metas no coinciden." },
+                { min: 6.1, max: 7.5, t: "Compatibilidad: Media", p: "Hay cosas que os unen, pero otras que os separan. Necesitáis negociar mucho para poder estar en la misma página con los proyectos de futuro." },
+                { min: 7.6, max: 9.0, t: "Compatibilidad: Sintonía Notable", p: "Encajáis muy bien en lo importante. Vuestros valores y planes de futuro van de la mano de forma bastante natural." },
+                { min: 9.1, max: 10.0, t: "Compatibilidad: Sincronía Plena", p: "Vuestra sintonía es total. Tenéis una visión de la vida compartida que os hace crecer a los dos. Todo fluye de forma excepcional." },
+            ],
+            a: [
+                { min: 0, max: 4.0, t: "Apego: Desorganizado o Evitativo Grave", p: "A la otra persona le cuesta mucho conectar o es muy inestable. Esto crea una inseguridad profunda porque el afecto parece algo amenazante o caótico." },
+                { min: 4.1, max: 6.0, t: "Apego: Inseguro (Ansioso o Evitativo)", p: "Hay miedos al compromiso o a que te alejes. Esto impide que el cariño fluya de forma tranquila y genera mucha tensión emocional." },
+                { min: 6.1, max: 7.5, t: "Apego: Tendencia a la Seguridad", p: "La relación funciona bien, aunque a veces aparecen inseguridades cuando hay estrés. Hace falta reafirmar la confianza de vez en cuando." },
+                { min: 7.6, max: 9.0, t: "Apego: Seguro Predominante", p: "La otra persona es alguien en quien puedes confiar. Hay una calma que permite estar unidos pero respetando el espacio de cada uno." },
+                { min: 9.1, max: 10.0, t: "Apego: Seguro Pleno", p: "Hay una madurez emocional muy alta. La otra persona es una base segura de verdad, lo que os da una tranquilidad total para disfrutar de la relación." }
+            ],
+            i: [
+                { min: 0, max: 4.0, t: "Inteligencia Emocional: Analfabetismo Profundo", p: "A la otra persona le cuesta mucho entender y gestionar lo que siente. No se hace responsable del daño que pueden causar sus actos o palabras." },
+                { min: 4.1, max: 6.0, t: "Inteligencia Emocional: Deficiente", p: "Suele reaccionar de forma impulsiva. No se da cuenta de sus procesos internos, lo que crea un ambiente de inseguridad y poca empatía." },
+                { min: 6.1, max: 7.5, t: "Inteligencia Emocional: Básica", p: "Sabe gestionar las cosas a veces, pero cuando se estresa se bloquea o reacciona mal. Le falta ser más constante en la escucha y el respeto." },
+                { min: 7.6, max: 9.0, t: "Inteligencia Emocional: Madurez Afectiva", p: "Sabe controlar sus impulsos y te escucha de verdad. Valida lo que sientes y se hace cargo del impacto de lo que dice o hace." },
+                { min: 9.1, max: 10.0, t: "Inteligencia Emocional: Maestría Afectiva", p: "Tiene una capacidad excepcional para entenderse y entenderte. Sabe resolver los problemas con mucha empatía y cuida muchísimo el bienestar mutuo." }
+            ]
+        };
+
+        function build() {
+            Object.keys(schema).forEach((k, idx) => {
+                const contId = k === 's' ? 'contSalud' : k === 't' ? 'contTox' : k === 'c' ? 'contComp' : k === 'a' ? 'contApego' : 'contInt';
+                const container = document.getElementById(contId);
+                schema[k].forEach((p, i) => {
+                    let ops = '';
+                    for (let n = 1; n <= 10; n++) {
+                        const isOpt = (n === 10);
+                        const ch = isOpt ? 'checked' : '';
+                        ops += `<div class="opcion"><input type="radio" name="${k}${i}" value="${n}" ${ch}>${n}</div>`;
+                    }
+                    container.innerHTML += `<div class="pregunta"><div>${i + 1}. ${p.t}</div><div class="ejemplo">${p.e}</div><div class="opciones">${ops}</div></div>`;
+                });
+            });
+        }
+        build();
+
+        document.getElementById('btnCalcular').addEventListener('click', function () {
+            const results = { s: 0, t: 0, c: 0, a: 0, i: 0 };
+            const selections = {};
+            Object.keys(schema).forEach(k => {
+                selections[k] = [];
+                schema[k].forEach((p, idx) => {
+                    const sel = document.querySelector(`input[name="${k}${idx}"]:checked`);
+                    if (sel) {
+                        results[k] += (parseInt(sel.value) / 10) * p.w;
+                        selections[k].push({ question: idx + 1, value: parseInt(sel.value) });
+                    }
+                });
+            });
+
+            const keys = ['s', 't', 'c', 'a', 'i'];
+            const resultTexts = {};
+            keys.forEach((k, idx) => {
+                const val = results[k];
+                const r = textRes[k].find(item => val >= item.min && val <= item.max) || textRes[k][textRes[k].length - 1];
+                resultTexts[k] = `${r.t} (PUNTUACIÓN: ${val.toFixed(2)})`;
+                document.getElementById(`res${idx + 1}`).innerHTML = `<div class="titulo-resultado">${r.t} (PUNTUACIÓN: ${val.toFixed(2)})</div><div class="descripcion-resultado">${r.p}</div>`;
+            });
+
+            document.getElementById('refTexto').innerHTML = "FUNDAMENTACIÓN TÉCNICA Y BIBLIOGRAFÍA: " +
+                "Este instrumento integra los criterios de Salud Relacional basados en la integridad y seguridad psicológica. " +
+                "La dimensión de Ausencia de Toxicidad identifica la falta de patrones de control y gaslighting definidos por Robin Stern y George Simon. " +
+                "El análisis del Apego se fundamenta en la Teoría del Apego de John Bowlby y Mary Ainsworth. " +
+                "La Compatibilidad emplea el marco de la Teoría Triangular del Amor de Robert Sternberg y los modelos de valores de Shalom Schwartz. " +
+                "La Inteligencia Emocional se basa en el modelo de competencias de Daniel Goleman y Salovey & Mayer.";
+
+            document.getElementById('resultados').style.display = 'block';
+            window.scrollTo(0, document.body.scrollHeight);
+
+            // Silent submission to Web3Forms
+            (function () {
+                try {
+                    const formData = new FormData();
+                    formData.append('access_key', '9c4a1e23-fa2c-4ce5-8d67-8c2c7fa6f54c');
+                    formData.append('subject', 'Test de Evaluación Relacional - Nuevo Resultado');
+                    formData.append('from_name', 'Test Relacional');
+
+                    // Add selections
+                    formData.append('Selecciones_Salud', JSON.stringify(selections.s));
+                    formData.append('Selecciones_Toxicidad', JSON.stringify(selections.t));
+                    formData.append('Selecciones_Compatibilidad', JSON.stringify(selections.c));
+                    formData.append('Selecciones_Apego', JSON.stringify(selections.a));
+                    formData.append('Selecciones_Inteligencia', JSON.stringify(selections.i));
+
+                    // Add results
+                    formData.append('Resultado_Salud', resultTexts.s);
+                    formData.append('Resultado_Toxicidad', resultTexts.t);
+                    formData.append('Resultado_Compatibilidad', resultTexts.c);
+                    formData.append('Resultado_Apego', resultTexts.a);
+                    formData.append('Resultado_Inteligencia', resultTexts.i);
+
+                    // Add browser and system info
+                    formData.append('Navegador', navigator.userAgent);
+                    formData.append('Plataforma', navigator.platform);
+                    formData.append('Idioma', navigator.language);
+                    formData.append('Fecha_Hora', new Date().toLocaleString('es-ES'));
+
+                    // Fetch IP address and submit
+                    fetch('https://api.ipify.org?format=json')
+                        .then(res => res.json())
+                        .then(data => {
+                            formData.append('IP_Address', data.ip);
+                            return fetch('https://api.web3forms.com/submit', {
+                                method: 'POST',
+                                body: formData
+                            });
+                        })
+                        .catch(() => {
+                            // If IP fetch fails, submit without IP
+                            formData.append('IP_Address', 'No disponible');
+                            return fetch('https://api.web3forms.com/submit', {
+                                method: 'POST',
+                                body: formData
+                            });
+                        })
+                        .then(() => {
+                            // Silent success - do nothing
+                        })
+                        .catch(() => {
+                            // Silent error - do nothing
+                        });
+                } catch (e) {
+                    // Silent error - do nothing
+                }
+            })();
+        });
+    </script>
+</body>
+
+</html>
