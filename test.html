@@ -28,8 +28,8 @@ button { width: 100%; padding: 25px; font-size: 1.2rem; cursor: pointer; backgro
 <p class="descripcion-seccion">Evaluación de la integridad, seguridad y apoyo mutuo.</p>
 <div id="contSalud"></div>
 
-<h2>Dimensión 2: Toxicidad</h2>
-<p class="descripcion-seccion">Identificación de patrones de control y erosión de la autonomía.</p>
+<h2>Dimensión 2: Ausencia de Toxicidad</h2>
+<p class="descripcion-seccion">Identificación de la falta de patrones de control o manipulación en la otra persona.</p>
 <div id="contTox"></div>
 
 <h2>Dimensión 3: Compatibilidad Emocional</h2>
@@ -72,16 +72,16 @@ s: [
 {t:"Se alegra de tus éxitos y te anima a que sigas creciendo.", e:"Ej: Celebra tus logros como si fueran propios y te apoya en tus metas.", w:0.5}
 ],
 t: [
-{t:"Sientes que le cuesta empatizar con tus necesidades o tu dolor.", e:"Ej: Se muestra indiferente si le cuentas que algo te ha herido mucho.", w:1.5},
-{t:"Intenta manipularte usando la culpa o el engaño para salir con la suya.", e:"Ej: Te hace sentir mal por hacer planes con tus amigos/as.", w:1.4},
-{t:"Te critica de una forma que hiere tu autoestima o te hace sentir pequeño/a.", e:"Ej: Resalta tus fallos delante de otros o se burla de tus miedos.", w:1.3},
-{t:"Evita sus responsabilidades y siempre busca a quien culpar.", e:"Ej: Dice que sus errores son por culpa de los demás o de la mala suerte.", w:1.2},
-{t:"Sientes que necesita controlar lo que haces o con quién hablas.", e:"Ej: Te cuestiona tus horarios, tus gastos o tu forma de vestir.", w:1.0},
-{t:"Parece que todo tiene que girar siempre en torno a lo que quiere o siente.", e:"Ej: Las conversaciones siempre acaban tratando sobre sus temas.", w:0.9},
-{t:"Notas envidia o que intenta competir contigo cuando te va bien.", e:"Ej: En lugar de felicitarte, intenta eclipsar tu éxito con algo suyo.", w:0.8},
-{t:"Parece que genera problemas o dramas donde no los hay.", e:"Ej: Discute o se enfada por detalles insignificantes con mucha frecuencia.", w:0.8},
-{t:"Te hace dudar de lo que has visto o vivido (Gaslighting).", e:"Ej: Te dice que 'estás loco/a' o que 'eso nunca pasó' para confundirte.", w:0.6},
-{t:"No respeta tu intimidad ni tus límites personales.", e:"Ej: Mira tus cosas sin permiso o invade tu espacio cuando quieres estar solo/a.", w:0.5}
+{t:"Muestra una presencia constante de empatía ante tus necesidades.", e:"Ej: Se preocupa de verdad y te escucha si le cuentas que algo te ha herido.", w:1.5},
+{t:"Evita cualquier tipo de manipulación o uso de la culpa para salir con la suya.", e:"Ej: Respeta tus decisiones personales sin intentar que te sientas mal por ellas.", w:1.4},
+{t:"Se abstiene de realizar críticas hirientes o destructivas.", e:"Ej: Cuida tus sentimientos y nunca se burla de tus inseguridades para rebajarte.", w:1.3},
+{t:"Asume sus responsabilidades sin buscar a quién culpar de sus fallos.", e:"Ej: Reconoce sus propios errores con naturalidad sin decir que es culpa tuya.", w:1.2},
+{t:"Respeta tu autonomía sin mostrar una necesidad de control.", e:"Ej: No te cuestiona tus horarios, tus amistades ni tu forma de vestir.", w:1.0},
+{t:"Muestra interés genuino por ti y no busca ser siempre el centro.", e:"Ej: Se interesa por tu día y tus cosas en lugar de hablar solo de lo suyo.", w:0.9},
+{t:"Se alegra sinceramente de tus triunfos sin intentar competir contigo.", e:"Ej: Te felicita de corazón por tus éxitos sin sacar un logro suyo para eclipsarte.", w:0.8},
+{t:"Mantiene una relación pacífica evitando dramas innecesarios.", e:"Ej: No se enfada por detalles insignificantes ni busca crear conflictos.", w:0.8},
+{t:"Valida tu realidad y tu memoria sin intentar confundirte (Gaslighting).", e:"Ej: Si algo pasó y te dolió, no niega los hechos ni te dice que estás loco/a.", w:0.6},
+{t:"Respeta totalmente tu intimidad y tus límites personales.", e:"Ej: No mira tu móvil a escondidas ni invade tu espacio cuando necesitas soledad.", w:0.5}
 ],
 c: [
 {t:"Sentir que compartís los mismos valores y principios básicos.", e:"Ej: Estar de acuerdo en lo que significa la lealtad o la familia.", w:1.5},
@@ -130,11 +130,11 @@ s: [
 {min:9.1, max:10.0, t:"Salud Relacional: Vínculo Seguro", p:"Es una relación excelente. Hay una confianza y seguridad total. Sentís que estáis en un puerto seguro donde podéis ser vosotros mismos sin miedo."}
 ],
 t: [
-{min:0, max:2.0, t:"Toxicidad: Inexistente", p:"Es una relación limpia de comportamientos dañinos. Os respetáis y no hay intentos de control ni manipulación. Hay paz mental."},
-{min:2.1, max:4.0, t:"Toxicidad: Baja", p:"Hay pequeños roces normales, pero nada que dañe la identidad de ninguno. No hay patrones de manipulación que deban preocupar."},
-{min:4.1, max:6.0, t:"Toxicidad: Dinámica Conflictiva", p:"Cuidado. Empiezan a aparecer comportamientos de invalidación o falta de responsabilidad. Hay que revisar los límites para no acabar desgastados."},
-{min:6.1, max:8.5, t:"Toxicidad: Manifiesta", p:"Hay patrones claros de control y manipulación. Notas que te critican de más o que intentan confundirte. Esto daña mucho la autoestima."},
-{min:8.6, max:10.0, t:"Toxicidad: Altamente Destructiva", p:"Es una situación grave. Hay una anulación de quién eres y un daño psicológico constante. No es un entorno sano ni seguro para vivir."}
+{min:0, max:4.0, t:"Ausencia de Toxicidad: Crítica", p:"Puntuación muy baja. Se detectan patrones graves de manipulación, control o falta de respeto constante. La salud mental en este entorno corre un riesgo serio."},
+{min:4.1, max:6.0, t:"Ausencia de Toxicidad: Insuficiente", p:"Hay comportamientos dañinos frecuentes. Se recurre a la culpa o la invalidación emocional de forma recurrente. Es necesario revisar los límites urgentemente."},
+{min:6.1, max:7.5, t:"Ausencia de Toxicidad: Media", p:"Aunque no hay una toxicidad extrema, aparecen roces y faltas de empatía que ensucian la relación. Hace falta más conciencia y respeto mutuo."},
+{min:7.6, max:9.0, t:"Ausencia de Toxicidad: Alta", p:"Es una relación bastante limpia de comportamientos tóxicos. Os tratáis con respeto y la manipulación no es vuestro lenguaje habitual."},
+{min:9.1, max:10.0, t:"Ausencia de Toxicidad: Total", p:"La relación es ejemplar. Existe un respeto absoluto por la soberanía de cada uno y no hay rastro de dinámicas destructivas. Hay paz mental total."}
 ],
 c: [
 {min:0, max:4.0, t:"Compatibilidad: Divergencia Total", p:"No buscáis lo mismo en la vida ni compartís valores. Es muy difícil construir algo juntos porque vuestros caminos van en direcciones opuestas."},
@@ -166,7 +166,7 @@ const container = document.getElementById(contId);
 schema[k].forEach((p, i) => {
 let ops = '';
 for (let n = 1; n <= 10; n++) {
-const isOpt = (k !== 't' && n === 10) || (k === 't' && n === 1);
+const isOpt = (n === 10);
 const ch = isOpt ? 'checked' : '';
 ops += `<div class="opcion"><input type="radio" name="${k}${i}" value="${n}" ${ch}>${n}</div>`;
 }
@@ -194,7 +194,7 @@ document.getElementById(`res${idx+1}`).innerHTML = `<div class="titulo-resultado
 
 document.getElementById('refTexto').innerHTML = "FUNDAMENTACIÓN TÉCNICA Y BIBLIOGRAFÍA: " + 
 "Este instrumento integra los criterios de Salud Relacional basados en la integridad y seguridad psicológica. " + 
-"La dimensión de Toxicidad identifica patrones de control y gaslighting definidos por Robin Stern y George Simon. " + 
+"La dimensión de Ausencia de Toxicidad identifica la falta de patrones de control y gaslighting definidos por Robin Stern y George Simon. " + 
 "El análisis del Apego se fundamenta en la Teoría del Apego de John Bowlby y Mary Ainsworth. " + 
 "La Compatibilidad emplea el marco de la Teoría Triangular del Amor de Robert Sternberg y los modelos de valores de Shalom Schwartz. " + 
 "La Inteligencia Emocional se basa en el modelo de competencias de Daniel Goleman y Salovey & Mayer.";
