@@ -4,15 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Generador de PROMPT Estructurado para LLMs</title>
+  <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #f3f4f6;
+      --bg-color: #f8f9fa;
       --card-bg: #ffffff;
-      --text-main: #111827;
-      --text-sub: #4b5563;
-      --accent: #2563eb;
-      --border: #d1d5db;
+      --text-main: #212529;
+      --text-sub: #495057;
+      --accent: #1e3a5f;
+      --border: #dee2e6;
     }
 
     body {
@@ -29,7 +30,7 @@
     h1 {
       font-size: 1.8rem;
       font-weight: 600;
-      color: var(--text-main);
+      color: var(--accent);
       margin-bottom: 2rem;
       border-bottom: 2px solid var(--accent);
       padding-bottom: 0.5rem;
@@ -103,7 +104,7 @@
     }
 
     button:hover {
-      background-color: #1d4ed8;
+      background-color: #2c5282;
     }
 
     button.secondary {
@@ -126,11 +127,54 @@
 
 <body>
 
-  <h1>Generador de Prompt Estructurado para LLMs</h1>
-  <p style="margin-top: -1.5rem; margin-bottom: 1.5rem;">
-    <a href="mailto:javierarevaloroyo@gmail.com"
-      style="color: var(--accent); text-decoration: none; font-size: 0.9rem;">javierarevaloroyo@gmail.com</a>
-  </p>
+  <header class="main-header">
+    <h1>Generador de PROMPT Estructurado</h1>
+    <p>Herramienta avanzada para la estructuración y refinamiento de instrucciones orientadas a modelos de lenguaje de
+      gran escala.</p>
+    <div class="header-contact">
+      <a href="mailto:javierarevaloroyo@gmail.com">javierarevaloroyo@gmail.com</a>
+    </div>
+  </header>
+
+  <div class="top-bar-buttons">
+    <button class="btn-help" onclick="document.getElementById('helpModal').style.display='flex'">Ayuda</button>
+    <a href="index.html" class="btn-home">Inicio</a>
+  </div>
+
+  <div id="helpModal" class="modal-overlay" onclick="if(event.target==this) this.style.display='none'">
+    <div class="modal-content">
+      <span class="modal-close" onclick="document.getElementById('helpModal').style.display='none'">&times;</span>
+      <h3>Guía para la Estructura de un Prompt Eficaz</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Un prompt estructurado maximiza la
+        calidad y coherencia de las respuestas de la IA.</p>
+      <ul>
+        <li><strong>1. Rol (Persona)</strong>
+          Define la identidad y maestría de la IA. Ejemplo: "Actúa como un experto en análisis de datos senior" o "Eres
+          un redactor creativo especializado en marketing digital".
+        </li>
+        <li><strong>2. Contexto y Antecedentes</strong>
+          Proporciona la información de base necesaria. Describe el proyecto, los datos de entrada o la audiencia a la
+          que te diriges.
+        </li>
+        <li><strong>3. Tarea (Instrucción Principal)</strong>
+          Especifica la acción concreta. Ejemplo: "Genera un informe técnico", "Escribe un guion para un vídeo" o
+          "Resuelve este problema de optimización".
+        </li>
+        <li><strong>4. Metodología (Razonamiento)</strong>
+          Indica los pasos lógicos. Puedes pedirle que "piense paso a paso", que "busque alternativas antes de decidir"
+          o que "evalúe pros y contras".
+        </li>
+        <li><strong>5. Restricciones y Guías</strong>
+          Establece límites claros. Define qué evitar (ej: "no uses tecnicismos", "máximo 300 palabras") y qué
+          principios seguir (ej: "mantén un tono objetivo").
+        </li>
+        <li><strong>6. Formato de Salida</strong>
+          Determina cómo quieres recibir la información. Ejemplo: "Tabla de comparación", "Código en Python", "Lista de
+          puntos" o "Formato Markdown".
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <div class="btn-group">
     <select id="ejemploSelect" onchange="cargarEjemplo(this.value)">
@@ -576,6 +620,12 @@ ${formato}
       selectElement.selectedIndex = 0;
     }
   </script>
+  <footer class="main-footer">
+    <p><strong>Cláusula de Exención de Responsabilidad:</strong> El contenido de este repositorio técnico es
+      exclusivamente informativo y metodológico. No constituye asesoramiento jurídico ni sustituye el criterio
+      profesional del abogado. Los autores no asumen responsabilidad alguna por la exactitud de los resultados
+      generados por IA o por las consecuencias legales derivadas del uso práctico de estas herramientas y modelos.</p>
+  </footer>
 </body>
 
 </html>

@@ -4,15 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Generador de PROMPT Estructurado para LLMs (Práctica Jurídica)</title>
+  <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #f3f4f6;
+      --bg-color: #f8f9fa;
       --card-bg: #ffffff;
-      --text-main: #111827;
-      --text-sub: #4b5563;
-      --accent: #2563eb;
-      --border: #d1d5db;
+      --text-main: #212529;
+      --text-sub: #495057;
+      --accent: #1e3a5f;
+      --border: #dee2e6;
     }
 
     body {
@@ -29,7 +30,7 @@
     h1 {
       font-size: 1.8rem;
       font-weight: 600;
-      color: var(--text-main);
+      color: var(--accent);
       margin-bottom: 2rem;
       border-bottom: 2px solid var(--accent);
       padding-bottom: 0.5rem;
@@ -103,7 +104,7 @@
     }
 
     button:hover {
-      background-color: #1d4ed8;
+      background-color: #2c5282;
     }
 
     button.secondary {
@@ -126,11 +127,54 @@
 
 <body>
 
-  <h1>Generador de Prompt Estructurado para LLMs (Práctica Jurídica)</h1>
-  <p style="margin-top: -1.5rem; margin-bottom: 1.5rem;">
-    <a href="mailto:javierarevaloroyo@gmail.com"
-      style="color: var(--accent); text-decoration: none; font-size: 0.9rem;">javierarevaloroyo@gmail.com</a>
-  </p>
+  <header class="main-header">
+    <h1>Generador de PROMPT Jurídico</h1>
+    <p>Sistema de asistencia para la formulación de instrucciones técnicas y procesales adaptadas al ordenamiento
+      jurídico.</p>
+    <div class="header-contact">
+      <a href="mailto:javierarevaloroyo@gmail.com">javierarevaloroyo@gmail.com</a>
+    </div>
+  </header>
+
+  <div class="top-bar-buttons">
+    <button class="btn-help" onclick="document.getElementById('helpModal').style.display='flex'">Ayuda</button>
+    <a href="index.html" class="btn-home">Inicio</a>
+  </div>
+
+  <div id="helpModal" class="modal-overlay" onclick="if(event.target==this) this.style.display='none'">
+    <div class="modal-content">
+      <span class="modal-close" onclick="document.getElementById('helpModal').style.display='none'">&times;</span>
+      <h3>Estructura del Prompt para Práctica Legal</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">La precisión en la estructura
+        garantiza resultados válidos para ser utilizados en sede judicial.</p>
+      <ul>
+        <li><strong>1. Rol (Criterio Jurídico)</strong>
+          Identifica al operador (ej. Letrado, Magistrado o Fiscal). Define la jurisdicción y especialidad para que la
+          IA adopte la lógica apropiada.
+        </li>
+        <li><strong>2. Contexto (Expediente)</strong>
+          Detalla el órgano judicial, número de autos, identidad de las partes y el iter fáctico concreto basado en los
+          documentos del caso.
+        </li>
+        <li><strong>3. Tarea (Objetivo Procesal)</strong>
+          Instrucción exacta: desde redactar los Fundamentos de Derecho de una demanda hasta preparar un interrogatorio
+          o un plan probatorio.
+        </li>
+        <li><strong>4. Metodología (Subsunción)</strong>
+          Pide a la IA que realice un razonamiento jurídico: 1) Análisis de hechos relevantes, 2) Identificación de
+          norma y jurisprudencia, 3) Deducción de consecuencias.
+        </li>
+        <li><strong>5. Restricciones (Seguridad Jurídica)</strong>
+          Prohibición estricta de alucinaciones. Pide citar únicamente normas vigentes y resoluciones con ECLI
+          verificado, evitando leyes derogadas.
+        </li>
+        <li><strong>6. Formato (Escrito Forense)</strong>
+          Define la estructura del documento: Encabezamiento, Hechos numerados, Fundamentos (Procesales/Fondo) y Suplico
+          con Otrosí.
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <div class="btn-group">
     <select id="ejemploSelect" onchange="cargarEjemplo(this.value)">
@@ -155,129 +199,187 @@
       <option selected disabled>-- Seleccionar Rol Predefinido --</option>
 
       <optgroup label="Litigación por jurisdicción">
-        <option>Eres un abogado litigante especializado en derecho civil, obligaciones y contratos, con práctica habitual ante Juzgados de Primera Instancia.</option>
-        <option>Eres un abogado penalista con experiencia en instrucción, juicio oral y recursos, especializado en delitos patrimoniales y prueba digital.</option>
-        <option>Eres un abogado mercantilista especializado en derecho societario, impugnación de acuerdos sociales, responsabilidad de administradores y litigación mercantil.</option>
-        <option>Eres un abogado laboralista con práctica ante el orden social, especializado en despidos, reclamaciones de cantidad y tutela de derechos fundamentales en el trabajo.</option>
-        <option>Eres un abogado especializado en derecho de familia, con experiencia en divorcio contencioso, medidas provisionales, custodia, alimentos y ejecución de medidas.</option>
-        <option>Eres un abogado contencioso-administrativo especializado en sancionador, responsabilidad patrimonial, urbanismo y recursos frente a la Administración.</option>
-        <option>Eres un abogado fiscalista especializado en procedimientos de gestión e inspección, recursos y reclamaciones económico-administrativas, y contencioso tributario.</option>
-        <option>Eres un abogado concursal con práctica en concurso voluntario, comunicaciones al juzgado mercantil, incidentes concursales y calificación del concurso.</option>
-        <option>Eres un abogado especializado en derecho constitucional, amparo y tutela de derechos fundamentales, con capacidad de articular doctrina constitucional y convencional.</option>
+        <option>Eres un abogado litigante especializado en derecho civil, obligaciones y contratos, con práctica
+          habitual ante Juzgados de Primera Instancia.</option>
+        <option>Eres un abogado penalista con experiencia en instrucción, juicio oral y recursos, especializado en
+          delitos patrimoniales y prueba digital.</option>
+        <option>Eres un abogado mercantilista especializado en derecho societario, impugnación de acuerdos sociales,
+          responsabilidad de administradores y litigación mercantil.</option>
+        <option>Eres un abogado laboralista con práctica ante el orden social, especializado en despidos, reclamaciones
+          de cantidad y tutela de derechos fundamentales en el trabajo.</option>
+        <option>Eres un abogado especializado en derecho de familia, con experiencia en divorcio contencioso, medidas
+          provisionales, custodia, alimentos y ejecución de medidas.</option>
+        <option>Eres un abogado contencioso-administrativo especializado en sancionador, responsabilidad patrimonial,
+          urbanismo y recursos frente a la Administración.</option>
+        <option>Eres un abogado fiscalista especializado en procedimientos de gestión e inspección, recursos y
+          reclamaciones económico-administrativas, y contencioso tributario.</option>
+        <option>Eres un abogado concursal con práctica en concurso voluntario, comunicaciones al juzgado mercantil,
+          incidentes concursales y calificación del concurso.</option>
+        <option>Eres un abogado especializado en derecho constitucional, amparo y tutela de derechos fundamentales, con
+          capacidad de articular doctrina constitucional y convencional.</option>
       </optgroup>
 
       <optgroup label="Órganos y operadores jurídicos">
-        <option>Eres un fiscal con experiencia en diligencias de investigación, escritos de acusación, conformidades y juicio oral.</option>
-        <option>Eres un letrado de la Administración de Justicia con experiencia en impulso procesal, admisión de escritos, ejecución y gestión de señalamientos.</option>
-        <option>Eres un magistrado especializado en el orden civil, con atención a la valoración de la prueba y motivación de resoluciones.</option>
-        <option>Eres un magistrado especializado en el orden penal, con experiencia en prueba testifical, pericial y documental electrónica.</option>
-        <option>Eres un magistrado especializado en el orden contencioso-administrativo, con atención a legalidad del procedimiento administrativo y control de discrecionalidad.</option>
+        <option>Eres un fiscal con experiencia en diligencias de investigación, escritos de acusación, conformidades y
+          juicio oral.</option>
+        <option>Eres un letrado de la Administración de Justicia con experiencia en impulso procesal, admisión de
+          escritos, ejecución y gestión de señalamientos.</option>
+        <option>Eres un magistrado especializado en el orden civil, con atención a la valoración de la prueba y
+          motivación de resoluciones.</option>
+        <option>Eres un magistrado especializado en el orden penal, con experiencia en prueba testifical, pericial y
+          documental electrónica.</option>
+        <option>Eres un magistrado especializado en el orden contencioso-administrativo, con atención a legalidad del
+          procedimiento administrativo y control de discrecionalidad.</option>
       </optgroup>
 
       <optgroup label="Representación, mediación y pericia">
-        <option>Eres un procurador con práctica en coordinación de señalamientos, traslado de escritos, ejecución y gestión de plazos procesales.</option>
-        <option>Eres un mediador civil y mercantil, con capacidad de diseñar propuestas de acuerdo, actas y clausulados de transacción.</option>
-        <option>Eres un perito informático forense, especializado en cadena de custodia, análisis de logs, trazabilidad y evidencias digitales en procedimientos penales y civiles.</option>
-        <option>Eres un perito economista especializado en cuantificación de daños, lucro cesante, valoración de empresa y análisis contable para procedimientos civiles y mercantiles.</option>
-        <option>Eres un notario especializado en redacción de instrumentos públicos, legitimación de firmas y asesoramiento en operaciones civiles y mercantiles.</option>
+        <option>Eres un procurador con práctica en coordinación de señalamientos, traslado de escritos, ejecución y
+          gestión de plazos procesales.</option>
+        <option>Eres un mediador civil y mercantil, con capacidad de diseñar propuestas de acuerdo, actas y clausulados
+          de transacción.</option>
+        <option>Eres un perito informático forense, especializado en cadena de custodia, análisis de logs, trazabilidad
+          y evidencias digitales en procedimientos penales y civiles.</option>
+        <option>Eres un perito economista especializado en cuantificación de daños, lucro cesante, valoración de empresa
+          y análisis contable para procedimientos civiles y mercantiles.</option>
+        <option>Eres un notario especializado en redacción de instrumentos públicos, legitimación de firmas y
+          asesoramiento en operaciones civiles y mercantiles.</option>
       </optgroup>
     </select>
   </div>
 
   <div class="section">
     <label for="contexto">Context (Contexto y Antecedentes)</label>
-    <textarea id="contexto" placeholder="Delimitación del expediente: partes, órgano, número, hechos, documentos, trámites ya practicados..."></textarea>
+    <textarea id="contexto"
+      placeholder="Delimitación del expediente: partes, órgano, número, hechos, documentos, trámites ya practicados..."></textarea>
   </div>
 
   <div class="section">
     <label for="tarea">Task (Instrucción Principal)</label>
-    <textarea id="tarea" placeholder="Determinación del objetivo procesal: redactar escrito, preparar estrategia, analizar viabilidad, plan probatorio..."></textarea>
+    <textarea id="tarea"
+      placeholder="Determinación del objetivo procesal: redactar escrito, preparar estrategia, analizar viabilidad, plan probatorio..."></textarea>
   </div>
 
   <div class="section">
     <label for="pasos">Methodology (Estrategia de Razonamiento)</label>
-    <textarea id="pasos" placeholder="Instrucciones para razonamiento jurídico: subsunción, interpretación, jurisprudencia, prueba y procedimiento..."></textarea>
+    <textarea id="pasos"
+      placeholder="Instrucciones para razonamiento jurídico: subsunción, interpretación, jurisprudencia, prueba y procedimiento..."></textarea>
     <select onchange="insertarEnTextarea('pasos', this)">
       <option selected disabled>-- Seleccionar Metodología --</option>
 
       <optgroup label="Subsunción e interpretación">
-        <option>Subsunción normativa: delimitar hechos relevantes, identificar el supuesto de hecho normativo y derivar consecuencias jurídicas.</option>
-        <option>Interpretación literal: determinar el sentido ordinario del texto legal y su aplicación al caso.</option>
-        <option>Interpretación sistemática: integrar el precepto en el conjunto del ordenamiento y en su coherencia interna.</option>
+        <option>Subsunción normativa: delimitar hechos relevantes, identificar el supuesto de hecho normativo y derivar
+          consecuencias jurídicas.</option>
+        <option>Interpretación literal: determinar el sentido ordinario del texto legal y su aplicación al caso.
+        </option>
+        <option>Interpretación sistemática: integrar el precepto en el conjunto del ordenamiento y en su coherencia
+          interna.</option>
         <option>Interpretación teleológica: atender a la finalidad de la norma y al bien jurídico protegido.</option>
-        <option>Interpretación conforme: armonizar norma interna con Constitución, Derecho de la Unión Europea y CEDH cuando resulte aplicable.</option>
+        <option>Interpretación conforme: armonizar norma interna con Constitución, Derecho de la Unión Europea y CEDH
+          cuando resulte aplicable.</option>
       </optgroup>
 
       <optgroup label="Jurisprudencia y doctrina">
-        <option>Localización jurisprudencial: localizar resoluciones aplicables (TS, AP, AN, TSJ, TC, TJUE, TEDH) y extraer ratio decidendi.</option>
-        <option>Verificación con ECLI: citar únicamente resoluciones con ECLI, órgano, fecha y ponente verificados en repositorio oficial (CENDOJ u homólogo).</option>
-        <option>Contraste doctrinal: identificar doctrina científica y criterios interpretativos doctrinales cuando se requiera argumentación reforzada.</option>
+        <option>Localización jurisprudencial: localizar resoluciones aplicables (TS, AP, AN, TSJ, TC, TJUE, TEDH) y
+          extraer ratio decidendi.</option>
+        <option>Verificación con ECLI: citar únicamente resoluciones con ECLI, órgano, fecha y ponente verificados en
+          repositorio oficial (CENDOJ u homólogo).</option>
+        <option>Contraste doctrinal: identificar doctrina científica y criterios interpretativos doctrinales cuando se
+          requiera argumentación reforzada.</option>
       </optgroup>
 
       <optgroup label="Prueba, hechos controvertidos y estrategia procesal">
-        <option>Teoría del caso: estructurar relato fáctico, tesis jurídica, pretensión y respuesta a la tesis contraria.</option>
-        <option>Carga de la prueba: distribuir onus probandi, concretar hechos controvertidos y seleccionar medios probatorios idóneos.</option>
-        <option>Plan probatorio: proponer prueba documental, testifical, pericial y reconocimiento, con finalidad y pertinencia.</option>
-        <option>Control procesal: verificar competencia, legitimación, postulación, cuantía, procedimiento aplicable y plazos.</option>
-        <option>Anticipación de excepciones: identificar excepciones procesales y materiales previsibles y articular contestación.</option>
-        <option>Medidas cautelares: valorar periculum in mora y fumus boni iuris, y preparar propuesta y caución.</option>
+        <option>Teoría del caso: estructurar relato fáctico, tesis jurídica, pretensión y respuesta a la tesis
+          contraria.</option>
+        <option>Carga de la prueba: distribuir onus probandi, concretar hechos controvertidos y seleccionar medios
+          probatorios idóneos.</option>
+        <option>Plan probatorio: proponer prueba documental, testifical, pericial y reconocimiento, con finalidad y
+          pertinencia.</option>
+        <option>Control procesal: verificar competencia, legitimación, postulación, cuantía, procedimiento aplicable y
+          plazos.</option>
+        <option>Anticipación de excepciones: identificar excepciones procesales y materiales previsibles y articular
+          contestación.</option>
+        <option>Medidas cautelares: valorar periculum in mora y fumus boni iuris, y preparar propuesta y caución.
+        </option>
       </optgroup>
 
       <optgroup label="Revisión y consistencia">
-        <option>Revisión de coherencia: verificar consistencia entre hechos, fundamentos de derecho y petitum, evitando contradicciones internas.</option>
-        <option>Control de citas: revisar numeración de artículos y referencias normativas, evitando atribuciones incorrectas.</option>
-        <option>Control de plazos: validar caducidad, prescripción, preclusión y cómputo de días hábiles según orden jurisdiccional.</option>
+        <option>Revisión de coherencia: verificar consistencia entre hechos, fundamentos de derecho y petitum, evitando
+          contradicciones internas.</option>
+        <option>Control de citas: revisar numeración de artículos y referencias normativas, evitando atribuciones
+          incorrectas.</option>
+        <option>Control de plazos: validar caducidad, prescripción, preclusión y cómputo de días hábiles según orden
+          jurisdiccional.</option>
       </optgroup>
     </select>
   </div>
 
   <div class="section">
     <label for="restricciones">Constraints (Reglas Negativas y Guías)</label>
-    <textarea id="restricciones" placeholder="Límites: no inventar jurisprudencia ni artículos, diferenciar hechos probados, respetar plazos, anonimizar datos..."></textarea>
+    <textarea id="restricciones"
+      placeholder="Límites: no inventar jurisprudencia ni artículos, diferenciar hechos probados, respetar plazos, anonimizar datos..."></textarea>
     <select onchange="insertarEnTextarea('restricciones', this)">
       <option selected disabled>-- Añadir Restricción --</option>
-      <option>No inventar jurisprudencia; citar únicamente resoluciones con ECLI y datos verificables en repositorio oficial.</option>
+      <option>No inventar jurisprudencia; citar únicamente resoluciones con ECLI y datos verificables en repositorio
+        oficial.</option>
       <option>No inventar numeración de artículos; si existe duda, citar la norma sin precepto concreto.</option>
       <option>Diferenciar con precisión hechos acreditados, hechos discutidos y meras alegaciones.</option>
       <option>Respetar competencia objetiva y territorial; evitar mezclar órdenes jurisdiccionales.</option>
       <option>Respetar caducidad, prescripción y preclusión; incorporar cómputo y dies a quo/dies ad quem.</option>
       <option>Evitar datos personales reales; utilizar datos ficticios y anonimización consistente.</option>
-      <option>Mantener estilo forense: hechos, fundamentos de derecho y suplico, con redacción sobria y verificable.</option>
-      <option>No omitir la fase procesal; ajustar el escrito al trámite exacto (interposición, demanda, contestación, recurso, conclusiones, ejecución).</option>
-      <option>Evitar afirmaciones técnicas no sustentadas; en materia pericial, incorporar hipótesis y metodología verificable.</option>
+      <option>Mantener estilo forense: hechos, fundamentos de derecho y suplico, con redacción sobria y verificable.
+      </option>
+      <option>No omitir la fase procesal; ajustar el escrito al trámite exacto (interposición, demanda, contestación,
+        recurso, conclusiones, ejecución).</option>
+      <option>Evitar afirmaciones técnicas no sustentadas; en materia pericial, incorporar hipótesis y metodología
+        verificable.</option>
     </select>
   </div>
 
   <div class="section">
     <label for="formato">Output Format (Formato de Salida)</label>
-    <textarea id="formato" placeholder="Estructura esperada: escrito procesal, dictamen, matriz de hechos y prueba, cronología, checklist..."></textarea>
+    <textarea id="formato"
+      placeholder="Estructura esperada: escrito procesal, dictamen, matriz de hechos y prueba, cronología, checklist..."></textarea>
     <select onchange="insertarEnTextarea('formato', this)">
       <option selected disabled>-- Seleccionar Formato --</option>
 
       <optgroup label="Escritos procesales">
-        <option>Escrito de demanda con hechos, fundamentos de derecho y suplico; anexos documentales numerados y lista de documentos.</option>
-        <option>Escrito de contestación con oposición a hechos, fundamentos de derecho, excepciones procesales y suplico.</option>
-        <option>Escrito de recurso: identificación del acto o resolución recurrida, motivos tasados, fundamentos y petición.</option>
-        <option>Escrito de medidas cautelares con exposición de urgencia, apariencia de buen derecho, riesgo por demora y caución.</option>
-        <option>Escrito de ejecución con título, liquidación, intereses, costas y medidas ejecutivas solicitadas.</option>
+        <option>Escrito de demanda con hechos, fundamentos de derecho y suplico; anexos documentales numerados y lista
+          de documentos.</option>
+        <option>Escrito de contestación con oposición a hechos, fundamentos de derecho, excepciones procesales y
+          suplico.</option>
+        <option>Escrito de recurso: identificación del acto o resolución recurrida, motivos tasados, fundamentos y
+          petición.</option>
+        <option>Escrito de medidas cautelares con exposición de urgencia, apariencia de buen derecho, riesgo por demora
+          y caución.</option>
+        <option>Escrito de ejecución con título, liquidación, intereses, costas y medidas ejecutivas solicitadas.
+        </option>
       </optgroup>
 
       <optgroup label="Penal">
-        <option>Denuncia o querella con relato fáctico, calificación jurídica inicial, diligencias interesadas y documentos.</option>
-        <option>Escrito de acusación con calificación provisional, hechos, tipificación, participación, pena y responsabilidad civil.</option>
-        <option>Escrito de defensa con impugnación de hechos, prueba, calificación alternativa y petición principal.</option>
+        <option>Denuncia o querella con relato fáctico, calificación jurídica inicial, diligencias interesadas y
+          documentos.</option>
+        <option>Escrito de acusación con calificación provisional, hechos, tipificación, participación, pena y
+          responsabilidad civil.</option>
+        <option>Escrito de defensa con impugnación de hechos, prueba, calificación alternativa y petición principal.
+        </option>
       </optgroup>
 
       <optgroup label="Informes y matrices">
-        <option>Dictamen jurídico: cuestiones planteadas, hechos asumidos, análisis normativo y jurisprudencial, y conclusiones operativas.</option>
-        <option>Matriz de hechos controvertidos y prueba: tabla con hecho, quién lo afirma, medio probatorio, finalidad y riesgo.</option>
-        <option>Cronología procesal: línea temporal con fechas, actuaciones, plazos y próxima actuación recomendada.</option>
-        <option>Checklist procesal: requisitos formales, documentos, plazos y actos de comunicación a verificar antes de presentar el escrito.</option>
+        <option>Dictamen jurídico: cuestiones planteadas, hechos asumidos, análisis normativo y jurisprudencial, y
+          conclusiones operativas.</option>
+        <option>Matriz de hechos controvertidos y prueba: tabla con hecho, quién lo afirma, medio probatorio, finalidad
+          y riesgo.</option>
+        <option>Cronología procesal: línea temporal con fechas, actuaciones, plazos y próxima actuación recomendada.
+        </option>
+        <option>Checklist procesal: requisitos formales, documentos, plazos y actos de comunicación a verificar antes de
+          presentar el escrito.</option>
       </optgroup>
 
       <optgroup label="Pericial y técnico">
-        <option>Informe pericial informático: alcance, metodología, cadena de custodia, hallazgos, limitaciones y conclusiones técnicas.</option>
-        <option>Informe pericial económico: hipótesis, fuentes contables, método de cálculo, cuantificación de daños e intervalos de sensibilidad.</option>
+        <option>Informe pericial informático: alcance, metodología, cadena de custodia, hallazgos, limitaciones y
+          conclusiones técnicas.</option>
+        <option>Informe pericial económico: hipótesis, fuentes contables, método de cálculo, cuantificación de daños e
+          intervalos de sensibilidad.</option>
       </optgroup>
     </select>
   </div>
@@ -683,6 +785,12 @@ ${formato}
       selectElement.selectedIndex = 0;
     }
   </script>
+  <footer class="main-footer">
+    <p><strong>Cláusula de Exención de Responsabilidad:</strong> El contenido de este repositorio técnico es
+      exclusivamente informativo y metodológico. No constituye asesoramiento jurídico ni sustituye el criterio
+      profesional del abogado. Los autores no asumen responsabilidad alguna por la exactitud de los resultados
+      generados por IA o por las consecuencias legales derivadas del uso práctico de estas herramientas y modelos.</p>
+  </footer>
 </body>
 
 </html>

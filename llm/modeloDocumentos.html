@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario de Modelos Legales - Práctica Profesional</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .category-block {
+            margin-bottom: 3.5rem;
+        }
+
+        .category-block h2 {
+            font-family: var(--font-heading);
+            border-bottom: 1px solid var(--accent-border);
+            padding-bottom: 0.75rem;
+            margin-bottom: 2rem;
+            color: var(--accent-primary);
+            font-size: 1.75rem;
+        }
+
+        .subcategory {
+            margin-bottom: 2rem;
+            padding-left: 1.25rem;
+            border-left: 2px solid var(--accent-border);
+        }
+
+        .subcategory h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        .model-list {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .model-list li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            padding: 0.35rem 0;
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .model-list li::before {
+            content: "—";
+            color: var(--accent-border);
+            font-weight: 300;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>Inventario de Modelos y Formularios Legales</h1>
+            <p>Compendio jerarquizado de formularios procesales y escritos extrajudiciales para la gestión jurídica
+                integral.</p>
+            <div class="header-contact">
+                <a href="mailto:javierarevaloroyo@gmail.com">javierarevaloroyo@gmail.com</a>
+            </div>
+        </header>
+
+        <div class="top-bar-buttons">
+            <a href="index.html" class="btn-home">Inicio</a>
+        </div>
+
+        <main class="content">
+            <div class="card" style="max-width: 1000px; margin: 0 auto; cursor: default;">
+
+                <section class="category-block">
+                    <h2>I. Modelos Extrajudiciales</h2>
+
+                    <div class="subcategory">
+                        <h3>Consumo y Servicios de Telefonía</h3>
+                        <ul class="model-list">
+                            <li>Reclamación por error de portabilidad en telefonía.</li>
+                            <li>Reclamación por facturación indebida en telefonía.</li>
+                            <li>Reclamación y desistimiento de curso online.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Transportes y Viajes</h3>
+                        <ul class="model-list">
+                            <li>Reclamación por vuelo cancelado.</li>
+                            <li>Reclamación por vuelo retrasado.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Responsabilidad Civil y Daños</h3>
+                        <ul class="model-list">
+                            <li>Reclamación administrativa por aceite en calzada.</li>
+                            <li>Reclamación administrativa por caída en la calle.</li>
+                            <li>Reclamación extrajudicial por caída en tienda.</li>
+                            <li>Reclamación patrimonial por caída de rama de árbol sobre coche.</li>
+                            <li>Reclamación por filtraciones.</li>
+                            <li>Reclamación por obras mal realizadas contra reformista.</li>
+                            <li>Respuesta a burofax por rehúse de responsabilidad civil.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Administrativo y Arrendamientos</h3>
+                        <ul class="model-list">
+                            <li>Comunicación procedimiento contencioso a tercero interesado.</li>
+                            <li>Escrito de personación en procedimiento administrativo.</li>
+                            <li>Escrito de solicitud por silencio negativo.</li>
+                            <li>Modelo comunicación no renovación contrato arrendamiento de vivienda.</li>
+                            <li>Modelo de alegaciones contra multa de tráfico defecto de notificación.</li>
+                            <li>Reclamación administrativa de aguas.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Familia y Sucesiones (Preventivo)</h3>
+                        <ul class="model-list">
+                            <li>Convenio regulador de mutuo acuerdo (Borrador técnico).</li>
+                            <li>Capitulaciones matrimoniales (Minuta para notaría).</li>
+                            <li>Solicitud de certificado de actos de última voluntad y seguros.</li>
+                            <li>Escrito de aceptación de herencia a beneficio de inventario.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Mercantil y Empresa</h3>
+                        <ul class="model-list">
+                            <li>Contrato de confidencialidad (NDA) para socios o empleados.</li>
+                            <li>Contrato de compraventa de participaciones sociales.</li>
+                            <li>Estatutos sociales tipo para S.L. unipersonal.</li>
+                            <li>Reclamación previa por inclusión indebida en ficheros de morosidad (ASNEF/BADEXCUG).
+                            </li>
+                            <li>Modelo de acta de junta general ordinaria / extraordinaria.</li>
+                            <li>Certificación de acuerdos sociales para elevación a público.</li>
+                            <li>Contrato de prestación de servicios profesionales.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Arrendamientos Rústicos y Propiedad</h3>
+                        <ul class="model-list">
+                            <li>Contrato de arrendamiento rústico (Ley 49/2003).</li>
+                            <li>Comunicación de ejercicio de derecho de retracto.</li>
+                            <li>Notificación de terminación de aparcería.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="category-block">
+                    <h2>II. Modelos Judiciales</h2>
+
+                    <div class="subcategory">
+                        <h3>Inicio de Acciones: Demandas y Denuncias</h3>
+                        <ul class="model-list">
+                            <li>Demanda de filtraciones de agua contra vecino por daño emergente y lucro cesante.</li>
+                            <li>Demanda de juicio verbal de desahucio por impago de rentas y reclamación.</li>
+                            <li>Demanda ejecutiva dineraria.</li>
+                            <li>Denuncia al juzgado por ocupación ilegal de plaza de garaje.</li>
+                            <li>Denuncia por encriptación de datos.</li>
+                            <li>Solicitud de monitorio con factura.</li>
+                            <li>Solicitud de Medidas Cautelares.</li>
+                            <li>Solicitud conciliación caída ascensor Comunidad Propietarios.</li>
+                            <li>Solicitud de Habeas Corpus por motivos psiquiátricos.</li>
+                            <li>Solicitud habeas corpus general detención ilegal.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Representación, Personación y Poderes</h3>
+                        <ul class="model-list">
+                            <li>Ampliación de plazo para acta apud acta.</li>
+                            <li>Aportación apud acta.</li>
+                            <li>Aportación apud acta previa audiencia previa.</li>
+                            <li>Cambio de denominación social.</li>
+                            <li>Comunicación de cambio de domicilio a efecto de notificaciones.</li>
+                            <li>Comunicación de cambio de domicilio procesal.</li>
+                            <li>Comunicación de cambio de letrado en proceso penal.</li>
+                            <li>Comunicación de nombramiento de representante legal de persona jurídica.</li>
+                            <li>Designación de abogado y procurador en diligencias previas.</li>
+                            <li>Designación de letrado en el orden social.</li>
+                            <li>Escrito de personación letrado administración pública nombramiento procurador sustituto.
+                            </li>
+                            <li>Escrito de personación por interesado ex art 49 LJCA contencioso-administrativo.</li>
+                            <li>Modelo de comunicación de cambio de letrado.</li>
+                            <li>Modelo de escrito de personación en procedimiento civil.</li>
+                            <li>Modelo de escrito para personación en apelación en audiencia provincial.</li>
+                            <li>Personación del denunciado en delitos leves.</li>
+                            <li>Personación en conciliación civil.</li>
+                            <li>Personación en conciliación civil con oposición.</li>
+                            <li>Personación en diligencias preliminares.</li>
+                            <li>Personación en diligencias previas.</li>
+                            <li>Personación en procedimiento social.</li>
+                            <li>Personación rebelde en procedimiento civil.</li>
+                            <li>Personación recurso casación unificación doctrina social TS.</li>
+                            <li>Renuncia de letrado en el orden social.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Gestión de la Prueba y Documentación</h3>
+                        <ul class="model-list">
+                            <li>Aportación de documentación al proceso penal.</li>
+                            <li>Aportación de informe pericial posterior.</li>
+                            <li>Aportación de prueba documental anticipada.</li>
+                            <li>Aportación de prueba documental anticipada por hecho nuevo.</li>
+                            <li>Aportación de prueba documental anticipada posterior por nueva noticia.</li>
+                            <li>Citación judicial de testigos.</li>
+                            <li>Escrito de acreditación de emplazamiento a perito o testigo.</li>
+                            <li>Escrito preparación prueba adelantada contencioso administrativo abreviado.</li>
+                            <li>Modelo de escrito solicitando enumeración de documentos judicial.</li>
+                            <li>Nota de minuta de prueba.</li>
+                            <li>Solicitud de acceso a la grabación de declaración o juicio en instrucción.</li>
+                            <li>Solicitud de acceso a la grabación de juicio oral ante juzgado de lo penal.</li>
+                            <li>Solicitud de acceso y copia de expediente judicial para interesado.</li>
+                            <li>Solicitud de copia íntegra de actuaciones penales.</li>
+                            <li>Solicitud de preparación de prueba.</li>
+                            <li>Solicitud diligencia reconocimiento fotográfico.</li>
+                            <li>Copia testimoniada de actuaciones.</li>
+                            <li>Copia testimoniada de demanda para solicitar acumulación.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Suspensiones y Gestión de Plazos</h3>
+                        <ul class="model-list">
+                            <li>Ampliación de plazo judicial.</li>
+                            <li>Solicitud de suspensión de juicio por enfermedad del abogado ante juzgado de lo penal.
+                            </li>
+                            <li>Solicitud de suspensión de juicio por enfermedad de abogado en delitos leves o rápidos.
+                            </li>
+                            <li>Solicitud de suspensión de juicio por enfermedad de cliente.</li>
+                            <li>Solicitud de suspensión de plazo por falta de documentación.</li>
+                            <li>Solicitud de suspensión de vista y nuevo sealamiento por enfermedad del letrado.</li>
+                            <li>Solicitud de suspensión por acuerdo.</li>
+                            <li>Solicitud de suspensión por enfermedad.</li>
+                            <li>Solicitud de traducción y suspensión de plazo.</li>
+                            <li>Suspensión juicio social por emplazamiento tardío.</li>
+                            <li>Suspensión juicio social por prejudicialidad recargo de prestaciones.</li>
+                            <li>Suspensión y nuevo señalamiento por coincidencia del letrado (v1).</li>
+                            <li>Suspensión y nuevo señalamiento por coincidencia del letrado (v2).</li>
+                            <li>Suspensión y nuevo señalamiento por el perito.</li>
+                            <li>Solicitud prórroga instrucción por acusación particular.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Desarrollo de Vistas y Trámite Procesal</h3>
+                        <ul class="model-list">
+                            <li>Averiguación domiciliaria citación judicial y testigos.</li>
+                            <li>Averiguación domiciliaria y notificación edictal.</li>
+                            <li>Datos para la vista telemática.</li>
+                            <li>Escrito de conclusiones.</li>
+                            <li>Escrito genérico de mero trámite.</li>
+                            <li>Impulso procesal.</li>
+                            <li>Instructa de juicio oral ordinario civil.</li>
+                            <li>Instructa para juicio verbal.</li>
+                            <li>Instructa vista procedimiento abreviado contencioso administrativo.</li>
+                            <li>Modelo de instructa para la Audiencia Previa.</li>
+                            <li>Modelo de escrito para solicitud de vista verbal.</li>
+                            <li>Modelo de solicitud para no celebrar vista oral.</li>
+                            <li>Solicitud de Comparecencia Telemática.</li>
+                            <li>Solicitud de comparecencia telemática de perito.</li>
+                            <li>Solicitud de impulso para señalar juicio oral.</li>
+                            <li>Solicitud de subsanación de defectos en demanda.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Recursos, Alegaciones y Oposiciones</h3>
+                        <ul class="model-list">
+                            <li>Alegaciones del demandante sobre competencia territorial en consumo.</li>
+                            <li>Ampliación de demanda.</li>
+                            <li>Contestación a la Demanda de Oposición a Franquicia.</li>
+                            <li>Escrito de defensa penal.</li>
+                            <li>Escrito de no alegaciones a recurso de reposición Civil.</li>
+                            <li>Oposición al desistimiento sin costas.</li>
+                            <li>Oposición al incidente de nulidad de actuaciones.</li>
+                            <li>Oposición al recurso de apelación sobre costas.</li>
+                            <li>Oposición a medidas de ejecución provisional civil dineraria.</li>
+                            <li>Oposición a monitorio inferior a 15.000€.</li>
+                            <li>Oposición a monitorio superior a 15.000€.</li>
+                            <li>Recurso de apelación.</li>
+                            <li>Recurso de reforma y subsidiario de apelación.</li>
+                            <li>Recurso de reposición frente a providencia por inadmisión de prueba.</li>
+                            <li>Recurso de reposición sobre denegación de prueba.</li>
+                            <li>Recurso de reposición sobre denegación de prueba pericial médica.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Incidentes de Finalización y Resoluciones</h3>
+                        <ul class="model-list">
+                            <li>Desistimiento consensuado.</li>
+                            <li>Desistimiento solo contra codemandado por error.</li>
+                            <li>Desistimiento unilateral.</li>
+                            <li>Escrito de aclaración de resolución.</li>
+                            <li>Escrito de aclaración de sentencia social.</li>
+                            <li>Escrito de complemento de resolución.</li>
+                            <li>Escrito de solicitud para publicación de convocatoria de subasta en el BOE.</li>
+                            <li>Escrito solicitud archivo civil por concurso de acreedores.</li>
+                            <li>Escrito solicitud archivo social por concurso de acreedores.</li>
+                            <li>Escrito solicitud firmeza sentencia civil.</li>
+                            <li>Homologación de acuerdo judicial.</li>
+                            <li>Solicitud de acumulación de procedimientos ante el mismo tribunal.</li>
+                            <li>Solicitud de acumulación de procedimientos ante tribunales distintos.</li>
+                            <li>Solicitud de cancelación de antecedentes penales y policiales.</li>
+                            <li>Solicitud de Sucesión Procesal por Fallecimiento.</li>
+                            <li>Solicitud de sucesión procesal por transmisión del objeto litigioso.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Aspectos Económicos y Costas</h3>
+                        <ul class="model-list">
+                            <li>Aportación de CCC para pago de consignaciones.</li>
+                            <li>Consignación de cantidad en condena.</li>
+                            <li>Consignación de cantidad por allanamiento parcial.</li>
+                            <li>Consignación de liquidación de intereses.</li>
+                            <li>Escrito de impugnación por costas indebidas o excesivas.</li>
+                            <li>Escrito instando costas.</li>
+                            <li>Escrito instando costas e intereses.</li>
+                            <li>Escrito proponiendo intereses.</li>
+                            <li>Escrito solicitando averiguación patrimonial.</li>
+                            <li>Jura de cuentas de procurador.</li>
+                            <li>Justificante de pago de tasa.</li>
+                            <li>Solicitud de Account Corriente ante el juzgado.</li>
+                            <li>Solicitud de devolución de efectos intervenidos.</li>
+                            <li>Solicitud de devolución de ingreso indebido al fondo ingresos erróneos.</li>
+                            <li>Terminación por satisfacción extraprocesal y carencia sobrevenida.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Derecho de Familia</h3>
+                        <ul class="model-list">
+                            <li>Demanda de divorcio contencioso / Guardía y Custodia.</li>
+                            <li>Demanda de divorcio de mutuo acuerdo con convenio regulador.</li>
+                            <li>Ejecución de sentencia por impago de pensión de alimentos.</li>
+                            <li>Modificación de medidas definitivas por alteración sustancial.</li>
+                            <li>Solicitud de medidas provisionales previas a la demanda.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Derecho Laboral</h3>
+                        <ul class="model-list">
+                            <li>Papeleta de conciliación ante el SMAC por despido improcedente.</li>
+                            <li>Demanda de despido ante el Juzgado de lo Social.</li>
+                            <li>Reclamación de cantidad por salarios impagados y finiquito.</li>
+                            <li>Demanda por vulneración de derechos fundamentales (Acoso).</li>
+                            <li>Impugnación de alta médica ante la Seguridad Social.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Derecho de Sucesiones</h3>
+                        <ul class="model-list">
+                            <li>Demanda de división judicial de herencia.</li>
+                            <li>Impugnación de testamento por preterición o falta de capacidad.</li>
+                            <li>Solicitud de formación de inventario judicial.</li>
+                            <li>Escrito instando el nombramiento de contador-partidor.</li>
+                            <li>Demanda de petición de herencia (legítima).</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Propiedad Horizontal y Comunidades</h3>
+                        <ul class="model-list">
+                            <li>Demanda de impugnación de acuerdos de junta de propietarios.</li>
+                            <li>Procedimiento monitorio especial de reclamación a vecinos morosos.</li>
+                            <li>Demanda por actividades molestas, insalubres o ilícitas (Acción de cesación).</li>
+                            <li>Solicitud de instalación de ascensor / rampas de accesibilidad.</li>
+                            <li>Demanda de desahucio por precario.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Derecho Penal Avanzado</h3>
+                        <ul class="model-list">
+                            <li>Escrito de acusación particular detallado.</li>
+                            <li>Solicitud de libertad provisional con medidas cautelares.</li>
+                            <li>Recurso de queja por inadmisión de apelación.</li>
+                            <li>Solicitud de indulto particular.</li>
+                            <li>Petición de tercer grado penitenciario.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subcategory">
+                        <h3>Mediación y Arbitraje</h3>
+                        <ul class="model-list">
+                            <li>Solicitud de inicio de procedimiento de mediación civil/mercantil.</li>
+                            <li>Acta de sesión constitutiva de mediación.</li>
+                            <li>Escrito solicitando el nombramiento de árbitro ante la Corte de Arbitraje.</li>
+                            <li>Acuerdo de transacción extrajudicial con eficacia de título ejecutivo.</li>
+                        </ul>
+                    </div>
+                </section>
+
+
+
+                <div
+                    style="margin-top: 2rem; padding: 1.5rem; text-align: center; border-top: 2px dashed var(--border-subtle); color: var(--accent-primary); font-weight: bold; font-size: 1.2rem;">
+                    Total de modelos y formularios citados: 201
+                </div>
+            </div>
+        </main>
+
+        <footer class="main-footer">
+            <p><strong>Cláusula de Exención de Responsabilidad:</strong> El contenido de este repositorio técnico es
+                exclusivamente informativo y metodológico. No constituye asesoramiento jurídico ni sustituye el criterio
+                profesional del abogado. Los autores no asumen responsabilidad alguna por la exactitud de los
+                resultados generados por IA o por las consecuencias legales derivadas del uso práctico de estas
+                herramientas y modelos.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
