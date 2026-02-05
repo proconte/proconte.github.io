@@ -1,0 +1,6 @@
+Tercera edición (febrero-marzo 2026) de 17:00 a 20:00
+1- 17 (martes) - Panorama Juridico General (Yangüela) + intro app comerciales (Arévalo)
+2- 19 (jueves) - Lefebvre (uso de app especifica)
+3- 24 (martes) - Fundamentos de IA Generativa y LLMs (Arévalo)
+4- 26 (jueves) - Ingeniería de prompts 1 ( Casero)
+5- 3 de marzo (martes) - Ingeniería de prompts 2 (Arévalo)
