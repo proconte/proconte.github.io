@@ -125,6 +125,40 @@ body {
     text-decoration: underline;
 }
 
+/* LinkedIn Badge - Estilo Sobrio */
+.linkedin-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 550;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    transition: all var(--transition);
+}
+
+.linkedin-badge:hover {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.linkedin-badge svg {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    /* Para evitar que se colapse o expanda */
+    fill: currentColor;
+}
+
 /* ============================================
    CARDS
    ============================================ */
