@@ -1,0 +1,1 @@
+@sdelete -z -nobanner %1
