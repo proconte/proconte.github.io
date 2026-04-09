@@ -1,0 +1,112 @@
+body {
+    font-family: 'Aptos', sans-serif;
+    font-size: 1em;
+    background-color: #2e2e2e;
+    color: #999;
+    margin: 0 auto;
+    padding: 1em;
+    max-width: 90vw;
+}
+a { color: #c9d1d9; text-decoration: none; }
+.drop-zone {
+    width: 90%; max-width: 800px;
+    height: 200px;
+    margin: 50px auto;
+    border: 2px dashed #888;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+    color: #666;
+    text-align: center;
+    cursor: pointer;
+}
+.drop-zone-small { height: 100px; }
+.drop-zone.hover { border-color: #444; color: #222; }
+#output { margin-top: 20px; }
+#output h1,#output h2,#output h3,#output h4,#output h5,#output h6 {
+    margin-bottom: 0!important;
+    color: #b8860b;
+}
+#output h1+p,#output h2+p,#output h3+p,#output h4+p,#output h5+p,#output h6+p {
+    margin-top: 0!important;
+}
+pre {
+    position: relative;
+    background: #3a3a3a;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 1em;
+    line-height: 1.4;
+    overflow: auto;
+    color: #FFC107;
+    font-family: 'Terminal', monospace;
+    font-size: calc(1em - 1pt);
+}
+pre code, #output code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: block;
+    font-family: 'Terminal', monospace;
+    font-size: calc(1em - 1pt);
+    color: #c9d1d9;
+}
+.copy-button {
+    position: absolute;
+    top: .25em; right: .25em;
+    background: #444;
+    color: #c9d1d9;
+    border: none;
+    padding: .25em .5em;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: .8em;
+    opacity: .8;
+}
+.copy-button:hover { opacity: 1; }
+
+#output table {
+    border-collapse: collapse;
+    /* width: 100%; */ /* Comentado correctamente */
+}
+#output table, #output th, #output td {
+    border: 1px solid #ccc;
+}
+#output th, #output td {
+    padding: 0.5em;
+}
+#output th {
+    background-color: #444; 
+    color: #eee;            
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        font-size: 1.2em; /* Slightly larger font for mobile */
+        padding: 0.5em;
+        max-width: 100vw;
+    }
+    
+    #output table {
+        font-size: 0.9em; /* Smaller for tables to fit */
+        width: 100%;
+        min-width: 600px; /* Ensure minimum width for scroll */
+    }
+    
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    #output h1, #output h2, #output h3, #output h4, #output h5, #output h6 {
+        font-size: 1.4em; /* Adjust heading sizes */
+    }
+    
+    #output p, #output li {
+        line-height: 1.6;
+    }
+}</content>
+<parameter name="filePath">c:\git\ksrolaw.github.io\tarifasperitaje\style.css
