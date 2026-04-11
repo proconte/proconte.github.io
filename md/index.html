@@ -205,6 +205,10 @@ pie6: "#1b5e20"
             const rawHTML = marked.parse(md);
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = rawHTML;
+            tempDiv.querySelectorAll('a[href]').forEach(link => {
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener noreferrer');
+            });
             tempDiv.querySelectorAll('pre > code.language-mermaid').forEach(code => {
                 const diagram = code.textContent.trim();
                 if (/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|gantt|erDiagram|journey|pie)\b/.test(diagram)) {
