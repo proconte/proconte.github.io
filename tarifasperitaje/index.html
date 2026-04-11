@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<!-- saved from url=(0023)file:///C:/util/md.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Tarifas de peritaje informático</title>
+    <style>
+        body {
+            font-family: 'Aptos', sans-serif;
+            font-size: 1em;
+            background-color: #2e2e2e;
+            color: #999;
+            margin: 0 auto;
+            padding: 1em;
+            max-width: 90vw;
+        }
+        a { color: #c9d1d9; text-decoration: none; }
+        .drop-zone {
+            width: 90%; max-width: 800px;
+            height: 200px;
+            margin: 50px auto;
+            border: 2px dashed #888;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            color: #666;
+            text-align: center;
+            cursor: pointer;
+        }
+        .drop-zone-small { height: 100px; }
+        .drop-zone.hover { border-color: #444; color: #222; }
+        #output { margin-top: 20px; }
+        #output h1,#output h2,#output h3,#output h4,#output h5,#output h6 {
+            margin-bottom: 0!important;
+            color: #b8860b;
+        }
+        #output h1+p,#output h2+p,#output h3+p,#output h4+p,#output h5+p,#output h6+p {
+            margin-top: 0!important;
+        }
+        pre {
+            position: relative;
+            background: #3a3a3a;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 1em;
+            line-height: 1.4;
+            overflow: auto;
+            color: #FFC107;
+            font-family: 'Terminal', monospace;
+            font-size: calc(1em - 1pt);
+        }
+        pre code, #output code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            display: block;
+            font-family: 'Terminal', monospace;
+            font-size: calc(1em - 1pt);
+            color: #c9d1d9;
+        }
+        .copy-button {
+            position: absolute;
+            top: .25em; right: .25em;
+            background: #444;
+            color: #c9d1d9;
+            border: none;
+            padding: .25em .5em;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: .8em;
+            opacity: .8;
+        }
+        .copy-button:hover { opacity: 1; }
+    
+		#output table {
+			border-collapse: collapse;
+			/* width: 100%; */ /* Comentado correctamente */
+		}
+		#output table, #output th, #output td {
+			border: 1px solid #ccc;
+		}
+		#output th, #output td {
+			padding: 0.5em;
+		}
+		#output th {
+			background-color: #444; 
+			color: #eee;            
+		}
+
+</style>
+    <script src="./Markdown_files/marked.min.js.descarga"></script>
+    <script src="./Markdown_files/mermaid.min.js.descarga"></script>
+    <script>
+mermaid.initialize({
+    startOnLoad: false,
+    theme: "base",
+    themeVariables: {
+        primaryColor: "#444",
+        primaryBorderColor: "#bbb",
+        primaryTextColor: "#eee",
+        lineColor: "#ccc",
+        textColor: "#eee",
+        fontSize: "16px",
+        actorBorder: "#ccc",
+        actorTextColor: "#eee",
+pie1: "#f9a825",  
+pie2: "#f57f17",  
+pie3: "#c0ca33",  
+pie4: "#aed581",  
+pie5: "#388e3c", 
+pie6: "#1b5e20"   
+
+    },
+    flowchart: { useMaxWidth: true }
+});
+    </script>
+    <script src="./Markdown_files/html-docx.js.descarga"></script>
+    <script src="./Markdown_files/FileSaver.min.js.descarga"></script>
+    <script src="./Markdown_files/mammoth.browser.min.js.descarga"></script>
+    <script src="./Markdown_files/turndown.min.js.descarga"></script>
+    <script>
+        const decodeText = buffer => {
+            try { return new TextDecoder('utf-8',{fatal:true}).decode(buffer); }
+            catch { return new TextDecoder('windows-1252').decode(buffer); }
+        };
+        const addCopyButtons = () => {
+            document.querySelectorAll('#output pre').forEach(pre => {
+                if (pre.querySelector('.copy-button')) return;
+                const btn = document.createElement('button');
+                btn.className = 'copy-button';
+                btn.textContent = 'Copiar';
+                btn.onclick = () => {
+                    const txt = pre.querySelector('code')?.innerText || pre.innerText;
+                    navigator.clipboard.writeText(txt).then(() => btn.textContent = 'Copiado');
+                    setTimeout(() => btn.textContent = 'Copiar', 2000);
+                };
+                pre.prepend(btn);
+            });
+        };
+        window.addEventListener('DOMContentLoaded', () => {
+            const output = document.getElementById('output');
+            const zones = [
+                {id: 'viewer-zone', accept: '.md', handler: async file => {
+                        if (!file.name.endsWith('.md')) return;
+                        zones.forEach(z => document.getElementById(z.id).style.display = 'none');
+                        const md = decodeText(await file.arrayBuffer());
+                        marked.setOptions({gfm:true,breaks:true,langPrefix:'language-'});
+                        const rawHTML = marked.parse(md);
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = rawHTML;
+                        tempDiv.querySelectorAll('pre > code.language-mermaid').forEach(code => {
+                            const diagram = code.textContent.trim();
+                            if (/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|gantt|erDiagram|journey|pie)\b/.test(diagram)) {
+                                const mermaidDiv = document.createElement('div');
+                                mermaidDiv.className = 'mermaid';
+                                mermaidDiv.textContent = diagram;
+                                code.parentElement.replaceWith(mermaidDiv);
+                            } else {
+                                const fallbackPre = document.createElement('pre');
+                                const fallbackCode = document.createElement('code');
+                                fallbackCode.textContent = diagram;
+                                fallbackPre.appendChild(fallbackCode);
+                                code.parentElement.replaceWith(fallbackPre);
+                            }
+                        });
+                        output.innerHTML = tempDiv.innerHTML;
+                        try {
+                            mermaid.init(undefined, output.querySelectorAll('.mermaid'));
+                        } catch (e) {
+                            console.warn("Error al renderizar Mermaid:", e);
+                        }
+                        addCopyButtons();
+                    }},
+                {id: 'converter-zone', accept: '.md', handler: async file => {
+                        if (!file.name.toLowerCase().endsWith('.md')) return;
+                        const md = decodeText(await file.arrayBuffer());
+                        const html = marked.parse(md,{gfm:true,breaks:true});
+                        const full = `<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><style>body{font-family:'Aptos',sans-serif;}pre,code{font-family:'Cascadia Code',monospace;}a{color:inherit;text-decoration:none;}
+        #output table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #output table, #output th, #output td {
+            border: 1px solid #ccc;
+        }
+        #output th, #output td {
+            padding: 0.5em;
+        }
+</style></head><body>${html}</body></html>`;
+                        saveAs(htmlDocx.asBlob(full),file.name.replace(/\.md$/i,'.docx'));
+                    }},
+                {id: 'docx2md-zone', accept: '.docx', handler: async file => {
+                        if (!file.name.toLowerCase().endsWith('.docx')) return;
+                        zones.forEach(z => document.getElementById(z.id).style.display = 'none');
+                        const arrayBuffer = await file.arrayBuffer();
+                        try {
+                            const res = await mammoth.convertToHtml({arrayBuffer});
+                            const md = new TurndownService().turndown(res.value);
+                            const blob = new Blob([md],{type:'text/markdown'});
+                            saveAs(blob,file.name.replace(/\.docx$/i,'.md'));
+                            output.innerHTML = `<pre><code>${md.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</code></pre>`;
+                            addCopyButtons();
+                        } catch {
+                            output.textContent = 'Error en conversión';
+                        }
+                    }}
+            ];
+            zones.forEach(({id,accept,handler}) => {
+                const zone = document.getElementById(id);
+                const input = Object.assign(document.createElement('input'),{type:'file',accept,style:'display:none;'});
+                document.body.append(input);
+                zone.onclick = () => input.click();
+                input.onchange = e => handler(e.target.files[0]);
+                ['dragenter','dragover','dragleave','drop'].forEach(evt => zone.addEventListener(evt,e=>{e.preventDefault();e.stopPropagation();}));
+                ['dragenter','dragover'].forEach(evt => zone.addEventListener(evt,()=>zone.classList.add('hover')));
+                ['dragleave','drop'].forEach(evt => zone.addEventListener(evt,()=>zone.classList.remove('hover')));
+                zone.ondrop = e => handler(e.dataTransfer.files[0]);
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="viewer-zone" class="drop-zone" style="position: relative; display: none;">
+	<span style="position: absolute; top: 10px; right: 10px; color: #f9a825; font-weight: bold; font-family: &#39;Terminal&#39;, monospace; font-size: 10px;">jar25</span>
+	<img src="./Markdown_files/Markdown-mark.svg" alt="Markdown Logo" style="max-height:80%;max-width:80%;filter:brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);">
+</div>
+    <div id="output"><h1>Tarifas de peritaje informático</h1>
+<p>Este documento recoge las <strong>tarifas orientativas</strong> aplicables a los servicios de peritaje informático, basadas en los baremos publicados por los colegios profesionales de ingeniería informática (CCII, CONCITI, COIICV) y la Asociación Nacional de Tasadores y Peritos Judiciales Informáticos (ANTPJI). Cada encargo recibe un <strong>presupuesto personalizado</strong> en función de la complejidad del caso, el volumen de evidencias y las actuaciones procesales previstas. <strong>Todos los importes se expresan sin IVA</strong> (21%).</p>
+
+<h2>Tarifas horarias de trabajo técnico</h2>
+<div class="table-responsive">
+<table>
+<thead>
+<tr>
+<th>Perfil profesional</th>
+<th>Rango bajo</th>
+<th>Rango medio</th>
+<th>Rango alto</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Perito junior</strong></td>
+<td>60 €/h</td>
+<td>75–90 €/h</td>
+<td>100 €/h</td>
+</tr>
+<tr>
+<td><strong>Perito senior</strong></td>
+<td>90 €/h</td>
+<td>100–120 €/h</td>
+<td>150 €/h</td>
+</tr>
+<tr>
+<td><strong>Alta especialización</strong> (criptografía, ingeniería inversa, ciberinteligencia)</td>
+<td>150 €/h</td>
+<td>170–200 €/h</td>
+<td>250 €/h</td>
+</tr>
+</tbody></table>
+</div>
+
+<h2>Informes periciales</h2>
+<div class="table-responsive">
+<table>
+<thead>
+<tr>
+<th>Tipo de informe</th>
+<th>Rango bajo</th>
+<th>Rango medio</th>
+<th>Rango alto</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Informe sencillo</strong> — correos electrónicos, capturas web, mensajería (WhatsApp, Telegram)</td>
+<td>400 €</td>
+<td>800–1.200 €</td>
+<td>2.000 €</td>
+</tr>
+<tr>
+<td><strong>Informe de complejidad media</strong> — análisis de un dispositivo, suplantación de identidad</td>
+<td>1.500 €</td>
+<td>2.500–3.500 €</td>
+<td>5.000 €</td>
+</tr>
+<tr>
+<td><strong>Informe complejo</strong> — múltiples dispositivos, ciberdelitos, análisis de código fuente</td>
+<td>3.000 €</td>
+<td>5.000–8.000 €</td>
+<td>15.000+ €</td>
+</tr>
+<tr>
+<td><strong>Contra-pericial</strong> — revisión y refutación de informe de parte contraria</td>
+<td>600 €</td>
+<td>1.000–2.000 €</td>
+<td>4.000 €</td>
+</tr>
+</tbody></table>
+</div>
+
+<h2>Análisis forense digital</h2>
+<div class="table-responsive">
+<table>
+<thead>
+<tr>
+<th>Servicio</th>
+<th>Rango bajo</th>
+<th>Rango medio</th>
+<th>Rango alto</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Clonado forense de disco duro</strong> (por unidad)</td>
+<td>150 €</td>
+<td>200–300 €</td>
+<td>500 €</td>
+</tr>
+<tr>
+<td><strong>Análisis forense de PC / disco duro</strong></td>
+<td>600 €</td>
+<td>1.000–2.000 €</td>
+<td>3.500 €</td>
+</tr>
+<tr>
+<td><strong>Análisis forense de dispositivo móvil</strong></td>
+<td>400 €</td>
+<td>800–1.500 €</td>
+<td>2.500 €</td>
+</tr>
+<tr>
+<td><strong>Análisis forense de servidor</strong></td>
+<td>1.500 €</td>
+<td>2.500–4.000 €</td>
+<td>8.000+ €</td>
+</tr>
+<tr>
+<td><strong>Análisis forense de correo electrónico</strong></td>
+<td>300 €</td>
+<td>500–1.000 €</td>
+<td>2.000 €</td>
+</tr>
+<tr>
+<td><strong>Análisis forense de redes sociales</strong></td>
+<td>300 €</td>
+<td>600–1.000 €</td>
+<td>1.500 €</td>
+</tr>
+<tr>
+<td><strong>Análisis de malware / ingeniería inversa</strong></td>
+<td>1.000 €</td>
+<td>2.000–3.500 €</td>
+<td>5.000 €</td>
+</tr>
+</tbody></table>
+</div>
+
+<h2>Otros servicios periciales</h2>
+<div class="table-responsive">
+<table>
+<thead>
+<tr>
+<th>Servicio</th>
+<th>Rango bajo</th>
+<th>Rango medio</th>
+<th>Rango alto</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Certificación de contenido web</strong> (acta digital)</td>
+<td>150 €</td>
+<td>300–500 €</td>
+<td>800 €</td>
+</tr>
+<tr>
+<td><strong>Peritaje de propiedad intelectual de software</strong></td>
+<td>1.500 €</td>
+<td>3.000–6.000 €</td>
+<td>12.000+ €</td>
+</tr>
+<tr>
+<td><strong>Recuperación de datos</strong></td>
+<td>300 €</td>
+<td>800–1.500 €</td>
+<td>2.000 €</td>
+</tr>
+</tbody></table>
+</div>
+
+<h2>Actuaciones judiciales y desplazamientos</h2>
+<div class="table-responsive">
+<table>
+<thead>
+<tr>
+<th>Concepto</th>
+<th>Rango bajo</th>
+<th>Rango medio</th>
+<th>Rango alto</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Asistencia a juicio / vista oral</strong></td>
+<td>300 €</td>
+<td>400–600 €</td>
+<td>800 €</td>
+</tr>
+<tr>
+<td><strong>Ratificación de informe en juzgado</strong></td>
+<td>200 €</td>
+<td>300–500 €</td>
+<td>600 €</td>
+</tr>
+<tr>
+<td><strong>Espera en juzgado</strong> (por hora)</td>
+<td>40 €</td>
+<td>50–75 €</td>
+<td>100 €</td>
+</tr>
+<tr>
+<td><strong>Asistencia a diligencias judiciales</strong> (registros, embargos)</td>
+<td>300 €</td>
+<td>450–600 €</td>
+<td>600 €</td>
+</tr>
+<tr>
+<td><strong>Desplazamiento</strong> (por km)</td>
+<td>0,26 €</td>
+<td>0,30–0,35 €</td>
+<td>0,40 €</td>
+</tr>
+<tr>
+<td><strong>Dieta completa</strong> (jornada fuera de sede)</td>
+<td>40 €</td>
+<td>50–70 €</td>
+<td>120 €</td>
+</tr>
+</tbody></table>
+</div>
+
+<h2>Conceptos adicionales que puede incluir su presupuesto</h2>
+<p>Según las necesidades de cada caso, el presupuesto podrá contemplar los siguientes conceptos:</p>
+<div class="table-responsive">
+<table>
+<thead>
+<tr>
+<th>Concepto</th>
+<th>Rango orientativo (sin IVA)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Estudio previo de viabilidad</strong></td>
+<td>150–500 €</td>
+</tr>
+<tr>
+<td><strong>Consulta inicial</strong></td>
+<td>50–150 €/hora</td>
+</tr>
+<tr>
+<td><strong>Informes complementarios o ampliaciones</strong></td>
+<td>300–1.000 € por informe</td>
+</tr>
+<tr>
+<td><strong>Aclaraciones escritas</strong> al tribunal o las partes</td>
+<td>150–500 €</td>
+</tr>
+<tr>
+<td><strong>Custodia de evidencias</strong> (almacenamiento seguro)</td>
+<td>50–150 €/mes por dispositivo</td>
+</tr>
+<tr>
+<td><strong>Documentación de cadena de custodia</strong></td>
+<td>100–300 €</td>
+</tr>
+<tr>
+<td><strong>Sellado de tiempo cualificado</strong> (eIDAS)</td>
+<td>50–150 € por evidencia</td>
+</tr>
+<tr>
+<td><strong>Licencias de software forense</strong> (EnCase, Cellebrite, FTK)</td>
+<td>100–500 € por caso</td>
+</tr>
+<tr>
+<td><strong>Uso de laboratorio forense</strong></td>
+<td>100–300 €/día</td>
+</tr>
+<tr>
+<td><strong>Transcripción forense de audios o vídeos</strong></td>
+<td>200–800 €</td>
+</tr>
+<tr>
+<td><strong>Análisis de metadatos</strong></td>
+<td>200–600 €</td>
+</tr>
+<tr>
+<td><strong>Formación técnica al letrado</strong> para preparar interrogatorios</td>
+<td>90–150 €/hora</td>
+</tr>
+<tr>
+<td><strong>Recargo por urgencia</strong></td>
+<td>+25% a +50% sobre tarifa base</td>
+</tr>
+<tr>
+<td><strong>Segunda copia certificada del informe</strong></td>
+<td>50–100 €</td>
+</tr>
+</tbody></table>
+</div>
+
+<h2>Forma de pago</h2>
+<p>Se solicita una <strong>provisión de fondos</strong> (anticipo) de entre el <strong>30% y el 50%</strong> del presupuesto estimado antes de iniciar los trabajos, conforme al artículo 342.3 de la LEC. El importe restante se abona a la entrega del informe pericial.</p>
+
+<h2>Sistemas de facturación</h2>
+<p>Según la naturaleza del encargo, se aplicará el sistema de facturación más adecuado:</p>
+<ul>
+<li><strong>Tarifa por horas</strong>: el sistema más habitual en peritaje informático forense. Se documentan las horas dedicadas a cada fase (adquisición de evidencias, análisis, redacción del informe, comparecencia judicial).</li>
+<li><strong>Tarifa fija por servicio</strong>: para servicios estandarizados como clonados forenses, certificaciones web o análisis de dispositivos concretos.</li>
+<li><strong>Porcentaje sobre cuantía del litigio</strong>: aplicable en determinados casos, con escalas decrecientes del <strong>4–6%</strong> (litigios hasta 6.000 €) al <strong>0,5–1%</strong> (litigios superiores a 600.000 €).</li>
+</ul>
+<p>Todos los honorarios se documentan de forma exhaustiva, detallando el tiempo y los recursos invertidos en cada fase del peritaje, lo que garantiza la máxima transparencia y constituye la mejor defensa ante cualquier revisión o tasación de costas.</p>
+
+<h2>Marco legal aplicable</h2>
+<p>La actividad pericial informática se desarrolla dentro del siguiente marco normativo:</p>
+<ul>
+<li><strong>Artículos 335 a 352 de la LEC</strong> — regulan el dictamen pericial, la designación del perito y la provisión de fondos.</li>
+<li><strong>Artículos 241 a 246 de la LEC</strong> — regulan las costas procesales, donde se integran los honorarios periciales.</li>
+<li><strong>Ley 25/2009</strong> (Ley Ómnibus) — establece que los baremos colegiales tienen carácter orientativo.</li>
+</ul>
+<p>En caso de impugnación de costas por excesivas (art. 243.2 LEC), el Letrado de la Administración de Justicia puede solicitar informe al colegio profesional correspondiente. Los tribunales aplican criterios de <strong>necesidad y proporcionalidad</strong>, y admiten los gastos de software forense y laboratorio cuando están debidamente justificados.</p>
+
+<h2>Referencias normativas y colegiales</h2>
+<ul>
+<li><a href="https://ccii.es" target="_blank"><strong>CCII</strong></a> — Consejo General de Colegios de Ingeniería Informática — baremos nacionales de referencia</li>
+<li><a href="https://conciti.es" target="_blank"><strong>CONCITI</strong></a> — Consejo General de Colegios Oficiales de Ingeniería Técnica en Informática — baremos nacionales de referencia</li>
+<li><a href="https://coiicv.org" target="_blank"><strong>COIICV</strong></a> — Colegio de Ingenieros Informáticos de la Comunidad Valenciana — baremos orientativos de referencia</li>
+<li><a href="https://antpji.com" target="_blank"><strong>ANTPJI</strong></a> — Asociación Nacional de Tasadores y Peritos Judiciales Informáticos — orientaciones tarifarias</li>
+<li><a href="https://www.boe.es/eli/es/l/2000/01/07/1/con" target="_blank"><strong>LEC 1/2000</strong></a> — Ley de Enjuiciamiento Civil, arts. 335-352 y 241-246</li>
+<li><a href="https://www.boe.es/eli/es/l/2009/12/22/25/con" target="_blank"><strong>Ley 25/2009</strong></a> — Ley Ómnibus</li>
+</ul>
+</div>
+    <div id="converter-zone" class="drop-zone drop-zone-small" style="display: none;">md2docx</div>
+    <div id="docx2md-zone" class="drop-zone drop-zone-small" style="display: none;">docx2md</div>
+
+
+<input type="file" accept=".md" style="display: none;"><input type="file" accept=".md" style="display: none;"><input type="file" accept=".docx" style="display: none;"></body></html>
