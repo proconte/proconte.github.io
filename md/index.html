@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Markdown</title>
+    <style>
+        body {
+            font-family: 'Aptos', sans-serif;
+            font-size: 1em;
+            background-color: #2e2e2e;
+            color: #999;
+            margin: 0 auto;
+            padding: 1em;
+            max-width: 90vw;
+        }
+        a { color: #c9d1d9; text-decoration: none; }
+        .drop-zone {
+            width: 90%; max-width: 800px;
+            height: 200px;
+            margin: 50px auto;
+            border: 2px dashed #888;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            color: #666;
+            text-align: center;
+            cursor: pointer;
+        }
+        .drop-zone-small { height: 100px; }
+        .drop-zone.hover { border-color: #444; color: #222; }
+        #output { margin-top: 20px; }
+        #output h1,#output h2,#output h3,#output h4,#output h5,#output h6 {
+            margin-bottom: 0!important;
+            color: #b8860b;
+        }
+        #output h1+p,#output h2+p,#output h3+p,#output h4+p,#output h5+p,#output h6+p {
+            margin-top: 0!important;
+        }
+        pre {
+            position: relative;
+            background: #3a3a3a;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 1em;
+            line-height: 1.35;
+            overflow: auto;
+            color: #FFC107;
+            font-family: 'Cascadia Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre;
+            tab-size: 4;
+            letter-spacing: 0;
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "calt" 0;
+        }
+        pre code, #output code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            display: block;
+            font-family: 'Cascadia Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
+            font-size: inherit;
+            line-height: inherit;
+            color: #c9d1d9;
+            white-space: inherit;
+            tab-size: inherit;
+            letter-spacing: inherit;
+            font-variant-ligatures: inherit;
+            font-feature-settings: inherit;
+        }
+        .copy-button {
+            position: absolute;
+            top: .25em; right: .25em;
+            background: #444;
+            color: #c9d1d9;
+            border: none;
+            padding: .25em .5em;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: .8em;
+            opacity: .8;
+        }
+        .copy-button:hover { opacity: 1; }
+    
+		#output table {
+			border-collapse: collapse;
+			/* width: 100%; */ /* Comentado correctamente */
+		}
+		#output table, #output th, #output td {
+			border: 1px solid #ccc;
+		}
+		#output th, #output td {
+			padding: 0.5em;
+		}
+		#output th {
+			background-color: #444; 
+			color: #eee;            
+		}
+
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+mermaid.initialize({
+    startOnLoad: false,
+    theme: "base",
+    themeVariables: {
+        primaryColor: "#444",
+        primaryBorderColor: "#bbb",
+        primaryTextColor: "#eee",
+        lineColor: "#ccc",
+        textColor: "#eee",
+        fontSize: "16px",
+        actorBorder: "#ccc",
+        actorTextColor: "#eee",
+pie1: "#f9a825",  
+pie2: "#f57f17",  
+pie3: "#c0ca33",  
+pie4: "#aed581",  
+pie5: "#388e3c", 
+pie6: "#1b5e20"   
+
+    },
+    flowchart: { useMaxWidth: true }
+});
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.14/mammoth.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/turndown@7.1.1/dist/turndown.min.js"></script>
+    <script>
+        const decodeText = buffer => {
+            try { return new TextDecoder('utf-8',{fatal:true}).decode(buffer); }
+            catch { return new TextDecoder('windows-1252').decode(buffer); }
+        };
+        const baseStyles = `
+            body {
+                font-family: 'Aptos', sans-serif;
+                font-size: 1em;
+                background-color: #2e2e2e;
+                color: #999;
+                margin: 0 auto;
+                padding: 1em;
+                max-width: 90vw;
+            }
+            a { color: #c9d1d9; text-decoration: none; }
+            h1,h2,h3,h4,h5,h6 {
+                margin-bottom: 0!important;
+                color: #b8860b;
+            }
+            h1 + p,h2 + p,h3 + p,h4 + p,h5 + p,h6 + p {
+                margin-top: 0!important;
+            }
+            pre {
+                position: relative;
+                background: #3a3a3a;
+                border: 1px solid #30363d;
+                border-radius: 10px;
+                padding: 1em;
+                line-height: 1.35;
+                overflow: auto;
+                color: #FFC107;
+                font-family: 'Cascadia Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
+                font-size: 14px;
+                white-space: pre;
+                tab-size: 4;
+                letter-spacing: 0;
+                font-variant-ligatures: none;
+                font-feature-settings: "liga" 0, "calt" 0;
+            }
+            pre code, code {
+                background: transparent;
+                border: none;
+                padding: 0;
+                display: block;
+                font-family: 'Cascadia Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
+                font-size: inherit;
+                line-height: inherit;
+                color: #c9d1d9;
+                white-space: inherit;
+                tab-size: inherit;
+                letter-spacing: inherit;
+                font-variant-ligatures: inherit;
+                font-feature-settings: inherit;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            table, th, td {
+                border: 1px solid #ccc;
+            }
+            th, td {
+                padding: 0.5em;
+            }
+            th {
+                background-color: #444;
+                color: #eee;
+            }
+        `;
+        const markedOptions = {gfm:true,breaks:true,langPrefix:'language-'};
+        const renderMarkdownFragment = md => {
+            marked.setOptions(markedOptions);
+            const rawHTML = marked.parse(md);
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = rawHTML;
+            tempDiv.querySelectorAll('a[href]').forEach(link => {
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener noreferrer');
+            });
+            tempDiv.querySelectorAll('pre > code.language-mermaid').forEach(code => {
+                const diagram = code.textContent.trim();
+                if (/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|gantt|erDiagram|journey|pie)\b/.test(diagram)) {
+                    const mermaidDiv = document.createElement('div');
+                    mermaidDiv.className = 'mermaid';
+                    mermaidDiv.textContent = diagram;
+                    code.parentElement.replaceWith(mermaidDiv);
+                } else {
+                    const fallbackPre = document.createElement('pre');
+                    const fallbackCode = document.createElement('code');
+                    fallbackCode.textContent = diagram;
+                    fallbackPre.appendChild(fallbackCode);
+                    code.parentElement.replaceWith(fallbackPre);
+                }
+            });
+            normalizeAsciiDiagrams(tempDiv);
+            return tempDiv;
+        };
+        const buildStandaloneHtml = contentHtml => `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>${baseStyles}</style></head><body>${contentHtml}</body></html>`;
+        const downloadHtmlFromMarkdown = async (md, fileName) => {
+            const tempDiv = renderMarkdownFragment(md);
+            const mermaidNodes = tempDiv.querySelectorAll('.mermaid');
+            if (mermaidNodes.length) {
+                const hiddenHost = document.createElement('div');
+                hiddenHost.style.position = 'fixed';
+                hiddenHost.style.left = '-99999px';
+                hiddenHost.style.top = '0';
+                hiddenHost.style.width = '1px';
+                hiddenHost.style.height = '1px';
+                hiddenHost.style.overflow = 'hidden';
+                hiddenHost.innerHTML = tempDiv.innerHTML;
+                document.body.appendChild(hiddenHost);
+                try {
+                    await mermaid.init(undefined, hiddenHost.querySelectorAll('.mermaid'));
+                    tempDiv.innerHTML = hiddenHost.innerHTML;
+                } catch (e) {
+                    console.warn('Error al renderizar Mermaid para exportación:', e);
+                } finally {
+                    hiddenHost.remove();
+                }
+            }
+            const fullHtml = buildStandaloneHtml(tempDiv.innerHTML);
+            saveAs(new Blob([fullHtml], {type: 'text/html;charset=utf-8'}), fileName.replace(/\.md$/i, '.html'));
+        };
+        const addCopyButtons = () => {
+            document.querySelectorAll('#output pre').forEach(pre => {
+                if (pre.querySelector('.copy-button')) return;
+                const btn = document.createElement('button');
+                btn.className = 'copy-button';
+                btn.textContent = 'Copiar';
+                btn.onclick = () => {
+                    const txt = pre.querySelector('code')?.innerText || pre.innerText;
+                    navigator.clipboard.writeText(txt).then(() => btn.textContent = 'Copiado');
+                    setTimeout(() => btn.textContent = 'Copiar', 2000);
+                };
+                pre.prepend(btn);
+            });
+        };
+        const normalizeAsciiDiagrams = root => {
+            const looksLikeDiagram = text => {
+                const clean = text.replace(/\r/g, '');
+                const lines = clean.split('\n').map(l => l.replace(/\s+$/g, ''));
+                const nonEmpty = lines.filter(l => l.trim().length > 0);
+                if (nonEmpty.length < 3) return false;
+
+                const hasBoxChars = /[\u2500-\u257f]/.test(clean);
+                const asciiShapeLines = nonEmpty.filter(l => /[+\-|_/\\<>\[\](){}]/.test(l)).length;
+                const spacedShapeLines = nonEmpty.filter(l => /\s{2,}/.test(l) && /[+\-|_/\\<>\[\](){}]/.test(l)).length;
+                const longLines = nonEmpty.filter(l => l.length >= 16).length;
+
+                if (hasBoxChars && longLines >= 2) return true;
+                return asciiShapeLines >= 3 && spacedShapeLines >= 2;
+            };
+
+            root.querySelectorAll('p, li, blockquote').forEach(node => {
+                if (node.closest('pre, code, .mermaid, table')) return;
+                const text = (node.innerText || '').trim();
+                if (!text || !looksLikeDiagram(text)) return;
+
+                const pre = document.createElement('pre');
+                const code = document.createElement('code');
+                code.textContent = node.innerText.replace(/\r/g, '');
+                pre.appendChild(code);
+                node.replaceWith(pre);
+            });
+        };
+        window.addEventListener('DOMContentLoaded', () => {
+            const output = document.getElementById('output');
+            const zones = [
+                {id: 'viewer-zone', accept: '.md', handler: async file => {
+                        if (!file.name.endsWith('.md')) return;
+                        zones.forEach(z => document.getElementById(z.id).style.display = 'none');
+                        const md = decodeText(await file.arrayBuffer());
+                        const tempDiv = renderMarkdownFragment(md);
+                        output.innerHTML = tempDiv.innerHTML;
+                        try {
+                            mermaid.init(undefined, output.querySelectorAll('.mermaid'));
+                        } catch (e) {
+                            console.warn("Error al renderizar Mermaid:", e);
+                        }
+                        addCopyButtons();
+                    }},
+                {id: 'html-zone', accept: '.md', handler: async file => {
+                        if (!file.name.toLowerCase().endsWith('.md')) return;
+                        const md = decodeText(await file.arrayBuffer());
+                        await downloadHtmlFromMarkdown(md, file.name);
+                    }},
+                {id: 'converter-zone', accept: '.md', handler: async file => {
+                        if (!file.name.toLowerCase().endsWith('.md')) return;
+                        const md = decodeText(await file.arrayBuffer());
+                        marked.setOptions(markedOptions);
+                        const html = marked.parse(md);
+                        const full = `<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><style>body{font-family:'Aptos',sans-serif;}pre,code{font-family:'Cascadia Code',monospace;}a{color:inherit;text-decoration:none;}
+        #output table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #output table, #output th, #output td {
+            border: 1px solid #ccc;
+        }
+        #output th, #output td {
+            padding: 0.5em;
+        }
+</style></head><body>${html}</body></html>`;
+                        saveAs(htmlDocx.asBlob(full),file.name.replace(/\.md$/i,'.docx'));
+                    }},
+                {id: 'docx2md-zone', accept: '.docx', handler: async file => {
+                        if (!file.name.toLowerCase().endsWith('.docx')) return;
+                        zones.forEach(z => document.getElementById(z.id).style.display = 'none');
+                        const arrayBuffer = await file.arrayBuffer();
+                        try {
+                            const res = await mammoth.convertToHtml({arrayBuffer});
+                            const md = new TurndownService().turndown(res.value);
+                            const blob = new Blob([md],{type:'text/markdown'});
+                            saveAs(blob,file.name.replace(/\.docx$/i,'.md'));
+                            output.innerHTML = `<pre><code>${md.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</code></pre>`;
+                            addCopyButtons();
+                        } catch {
+                            output.textContent = 'Error en conversión';
+                        }
+                    }}
+            ];
+            zones.forEach(({id,accept,handler}) => {
+                const zone = document.getElementById(id);
+                const input = Object.assign(document.createElement('input'),{type:'file',accept,style:'display:none;'});
+                document.body.append(input);
+                zone.onclick = () => input.click();
+                input.onchange = e => handler(e.target.files[0]);
+                ['dragenter','dragover','dragleave','drop'].forEach(evt => zone.addEventListener(evt,e=>{e.preventDefault();e.stopPropagation();}));
+                ['dragenter','dragover'].forEach(evt => zone.addEventListener(evt,()=>zone.classList.add('hover')));
+                ['dragleave','drop'].forEach(evt => zone.addEventListener(evt,()=>zone.classList.remove('hover')));
+                zone.ondrop = e => handler(e.dataTransfer.files[0]);
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="viewer-zone" class="drop-zone" style="position: relative;">
+	<span style="position: absolute; top: 10px; right: 10px; color: #f9a825; font-weight: bold; font-family: 'Terminal', monospace; font-size: 10px;">jar25</span>
+	<img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Markdown-mark.svg" alt="Markdown Logo"
+         style="max-height:80%;max-width:80%;filter:brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);">
+</div>
+    <div id="output"></div>
+    <div id="html-zone" class="drop-zone drop-zone-small">md2html</div>
+    <div id="converter-zone" class="drop-zone drop-zone-small">md2docx</div>
+    <div id="docx2md-zone" class="drop-zone drop-zone-small">docx2md</div>
+</body>
+</html>

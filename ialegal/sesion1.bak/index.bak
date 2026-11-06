@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluciones de IA Legal en España (2026)</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .solutions-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 3rem auto 0;
+            max-width: 800px;
+        }
+
+        .solution-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            transition: all var(--transition);
+        }
+
+        .solution-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .solution-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .solution-link {
+            display: inline-block;
+            margin-bottom: 1.25rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--accent-border);
+        }
+
+        .solution-card ul {
+            padding-left: 1.25rem;
+            margin: 0;
+        }
+
+        .solution-card li {
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .solution-card li strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>Soluciones de IA Legal en España (2026)</h1>
+            <p>Análisis comparativo de herramientas tecnológicas y bases de datos con soporte de inteligencia artificial
+                en España.</p>
+            <div class="header-contact">
+                <a href="mailto:javierarevaloroyo@gmail.com">javierarevaloroyo@gmail.com</a>
+            </div>
+        </header>
+
+        <div class="top-bar-buttons">
+            <a href="index.html" class="btn-home">Inicio</a>
+        </div>
+
+        <main class="content">
+            <div class="solutions-grid">
+
+                <div class="solution-card">
+                    <h3>1. Aranzadi LA LEY (K+)</h3>
+                    <a href="https://www.aranzadilaley.es/inteligencia-artificial/" target="_blank"
+                        class="solution-link">Visitar Sitio Oficial</a>
+                    <ul>
+                        <li><strong>Ecosistema K+:</strong> Integración profunda de IA generativa en la base de datos
+                            líder del mercado español.</li>
+                        <li><strong>Seguridad Editorial:</strong> Respuestas fundamentadas exclusivamente en sus fondos
+                            de jurisprudencia y doctrina.</li>
+                        <li><strong>Análisis de Expedientes:</strong> Capacidad para digerir miles de páginas y extraer
+                            cronologías y riesgos.</li>
+                        <li><strong>Redacción Técnica:</strong> Generación de borradores de demandas y recursos con
+                            rigor procesal.</li>
+                        <li><strong>Validación Normativa:</strong> Comprobación automática de la vigencia de todas las
+                            citas legales empleadas.</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h3>2. vLex (Vincent AI)</h3>
+                    <a href="https://vlex.es" target="_blank" class="solution-link">vlex.es</a>
+                    <ul>
+                        <li><strong>IA Multimodal:</strong> Análisis de audio y vídeo de vistas judiciales para su
+                            transcripción y resumen.</li>
+                        <li><strong>Vincent AI:</strong> Motor de búsqueda predictiva que detecta precedentes al cargar
+                            documentos externos.</li>
+                        <li><strong>Alcance Global:</strong> Conexión nativa con legislaciones de más de 100
+                            jurisdicciones internacionales.</li>
+                        <li><strong>Bad Law Detection:</strong> Alerta proactiva sobre sentencias que han sido superadas
+                            o annuladas.</li>
+                        <li><strong>Mapas de Relación:</strong> Gráficos visuales de autoridad que muestran la
+                            influencia de una sentencia.</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h3>3. Lefebvre (GenIA-L)</h3>
+                    <a href="https://lefebvre.es" target="_blank" class="solution-link">lefebvre.es</a>
+                    <ul>
+                        <li><strong>Sustrato Memento:</strong> IA entrenada con la metodología técnica y práctica de los
+                            Mementos Lefebvre.</li>
+                        <li><strong>Trazabilidad:</strong> Enlaces directos desde la respuesta de la IA al párrafo
+                            exacto del manual de referencia.</li>
+                        <li><strong>Especialización:</strong> Enfoque optimizado para áreas de fiscalidad, laboral y
+                            contabilidad.</li>
+                        <li><strong>Redactor Asistido:</strong> Creación de documentos basados en modelos editoriales
+                            verificados.</li>
+                        <li><strong>Control de Alucinaciones:</strong> Sistema cerrado que prioriza la veracidad sobre
+                            la creatividad del modelo.</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h3>4. Maite.ai</h3>
+                    <a href="https://www.maite.ai" target="_blank" class="solution-link">maite.ai</a>
+                    <ul>
+                        <li><strong>Copiloto Independiente:</strong> Funciona sobre el repositorio documental privado de
+                            cada despacho.</li>
+                        <li><strong>Análisis de Escritos:</strong> Detecta contradicciones y puntos débiles en
+                            documentos de la contraparte.</li>
+                        <li><strong>Resúmenes Ejecutivos:</strong> Traduce la complejidad técnica a notas comprensibles
+                            para el cliente.</li>
+                        <li><strong>Privacidad Garantizada:</strong> Arquitectura diseñada para el tratamiento seguro de
+                            datos confidenciales.</li>
+                        <li><strong>Agilidad:</strong> Interfaz minimalista que permite una adopción inmediata sin
+                            formación compleja.</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h3>5. Tirant lo Blanch (Conversa)</h3>
+                    <a href="https://tirant.com" target="_blank" class="solution-link">tirant.com</a>
+                    <ul>
+                        <li><strong>Tirant Conversa:</strong> Buscador conversacional con soporte documental íntegro de
+                            su biblioteca.</li>
+                        <li><strong>Analítica de Jueces:</strong> Datos estadísticos sobre el comportamiento y
+                            tendencias de magistrados específicos.</li>
+                        <li><strong>Personalización Pública:</strong> Adaptada para su uso intensivo en administraciones
+                            y entes públicos.</li>
+                        <li><strong>Formularios Dinámicos:</strong> Automatización de escritos mediante diálogos guiados
+                            por la herramienta.</li>
+                        <li><strong>Fondo Académico:</strong> Integración con miles de monografías científicas
+                            actualizadas.</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h3>6. Bigle Legal</h3>
+                    <a href="https://www.biglelegal.com" target="_blank" class="solution-link">biglelegal.com</a>
+                    <ul>
+                        <li><strong>Automatización CLM:</strong> Gestión completa del ciclo de vida contractual
+                            impulsada por IA.</li>
+                        <li><strong>Extracción de Datos:</strong> Identificación masiva de cláusulas y fechas en
+                            procesos de auditoría.</li>
+                        <li><strong>Libra IA:</strong> Asistente específico para la revisión y negociación de contratos
+                            complejos.</li>
+                        <li><strong>Cumplimiento Normativo:</strong> Asegura que los borradores respetan las políticas
+                            internas de la empresa.</li>
+                        <li><strong>Firma Electrónica:</strong> Flujo sin costuras desde la generación por IA hasta la
+                            firma legal.</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h3>7. Emerita Legal</h3>
+                    <a href="https://www.emerita.legal" target="_blank" class="solution-link">emerita.legal</a>
+                    <ul>
+                        <li><strong>Ranking de Éxito:</strong> Clasifica profesionales según su rendimiento real en
+                            tribunales españoles.</li>
+                        <li><strong>Perfil de Sentencias:</strong> Análisis masivo de resoluciones para determinar la
+                            especialidad técnica.</li>
+                        <li><strong>Big Data Judicial:</strong> Información objetiva extraída de millones de sentencias
+                            analizadas.</li>
+                        <li><strong>Inteligencia de Mercado:</strong> Permite seleccionar abogados según datos probados
+                            de victorias judiciales.</li>
+                        <li><strong>Predicción de Fallos:</strong> Estimación de probabilidades de éxito basada en casos
+                            precedentes similares.</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h3>8. Prudencia.ai</h3>
+                    <a href="https://prudencia.ai" target="_blank" class="solution-link">prudencia.ai</a>
+                    <ul>
+                        <li><strong>Detección de Riesgos:</strong> Localización de cláusulas peligrosas mediante
+                            análisis semántico.</li>
+                        <li><strong>Ratio Decidendi:</strong> Aísla el fundamento jurídico principal de resoluciones
+                            complejas.</li>
+                        <li><strong>Búsqueda Conceptual:</strong> Supera la búsqueda por palabras clave mediante
+                            comprensión del derecho.</li>
+                        <li><strong>Sintetizador Doctrinal:</strong> Agrupa jurisprudencia por líneas de decisión
+                            específicas.</li>
+                        <li><strong>Foco en Despachos:</strong> Diseñada para optimizar la rentabilidad de firmas
+                            medianas y pequeñas.</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h3>9. Parallel (Mike AI)</h3>
+                    <a href="https://www.onparallel.com" target="_blank" class="solution-link">onparallel.com</a>
+                    <ul>
+                        <li><strong>Mike AI:</strong> Validación automatizada de documentos e información aportada por
+                            clientes.</li>
+                        <li><strong>Checklists Inteligentes:</strong> Petición dinámica de datos según el tipo de asunto
+                            legal.</li>
+                        <li><strong>Revisión de Due Diligence:</strong> Acelera auditorías mediante la clasificación
+                            inteligente de activos.</li>
+                        <li><strong>Eficiencia Operativa:</strong> Reduce drásticamente el tiempo de onboarding de
+                            nuevos asuntos.</li>
+                        <li><strong>Seguridad de Datos:</strong> Entorno profesional cifrado para el intercambio de
+                            pruebas judiciales.</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card">
+                    <h3>10. Justicio</h3>
+                    <a href="https://justicio.es" target="_blank" class="solution-link">justicio.es</a>
+                    <ul>
+                        <li><strong>Acceso Democrático:</strong> IA diseñada para simplificar la consulta normativa a
+                            profesionales y ciudadanos.</li>
+                        <li><strong>Rastreo de Boletines:</strong> Conexión en tiempo real con el BOE y diarios
+                            oficiales autonómicos.</li>
+                        <li><strong>Lenguaje Accesible:</strong> Traduce la complejidad legal a un formato
+                            conversacional sencillo.</li>
+                        <li><strong>Consulta Directa:</strong> Resolución inmediata de dudas sobre vigencia y aplicación
+                            de decretos.</li>
+                        <li><strong>Agilidad de Búsqueda:</strong> Localización rápida de leyes y reglamentos
+                            específicos por voz o texto.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </main>
+
+        <footer class="main-footer">
+            <p><strong>Cláusula de Exención de Responsabilidad:</strong> El contenido de este repositorio técnico es
+                exclusivamente informativo y metodológico. No constituye asesoramiento jurídico ni sustituye el criterio
+                profesional del abogado. Los autores no asumen responsabilidad alguna por la exactitud de los
+                resultados generados por IA o por las consecuencias legales derivadas del uso práctico de estas
+                herramientas y modelos.</p>
+        </footer>
+    </div>
+</body>
+
+</html>

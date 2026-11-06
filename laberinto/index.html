@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laberinto con Explorador y Puntos</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #333;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        #info {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            width: 600px;
+        }
+        canvas {
+            border: 2px solid #fff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="laberintoCanvas" width="600" height="600"></canvas>
+    <div id="info">
+        <div>Puntos restantes: <span id="puntos"></span></div>
+        <div>Pasos: <span id="pasos">0</span></div>
+        <div>Tiempo: <span id="segundos">0</span> segundos</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('laberintoCanvas');
+        const ctx = canvas.getContext('2d');
+        const cols = 20;
+        const rows = 20;
+        const cellSize = canvas.width / cols;
+
+        let grid = [];
+        let stack = [];
+        let totalPoints = 0;
+        let explorer;
+        let puntosRestantes;
+        let pasos = 0;
+        let keys = { ArrowUp: false, ArrowRight: false, ArrowDown: false, ArrowLeft: false };
+        let lastMoveTime = 0;
+        let startTime;
+        let gameActive = false;
+
+        class Cell {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.walls = [true, true, true, true]; // top, right, bottom, left
+                this.visited = false;
+                this.hasPoint = true; // Puntos en cada celda
+            }
+
+            draw() {
+                const x = this.x * cellSize;
+                const y = this.y * cellSize;
+                
+                ctx.strokeStyle = "#fff";
+                ctx.lineWidth = 2;
+
+                // Dibujar paredes
+                if (this.walls[0]) ctx.beginPath(), ctx.moveTo(x, y), ctx.lineTo(x + cellSize, y), ctx.stroke(); // Superior
+                if (this.walls[1]) ctx.beginPath(), ctx.moveTo(x + cellSize, y), ctx.lineTo(x + cellSize, y + cellSize), ctx.stroke(); // Derecha
+                if (this.walls[2]) ctx.beginPath(), ctx.moveTo(x, y + cellSize), ctx.lineTo(x + cellSize, y + cellSize), ctx.stroke(); // Inferior
+                if (this.walls[3]) ctx.beginPath(), ctx.moveTo(x, y), ctx.lineTo(x, y + cellSize), ctx.stroke(); // Izquierda
+
+                // Marcar celda como visitada
+                if (this.visited) {
+                    ctx.fillStyle = "#222";
+                    ctx.fillRect(x, y, cellSize, cellSize);
+                }
+
+                // Dibujar punto si tiene
+                if (this.hasPoint) {
+                    ctx.fillStyle = "darkgreen";
+                    ctx.beginPath();
+                    ctx.arc(x + cellSize / 2, y + cellSize / 2, cellSize / 8, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            checkNeighbors() {
+                const neighbors = [];
+
+                const top = grid[index(this.x, this.y - 1)];
+                const right = grid[index(this.x + 1, this.y)];
+                const bottom = grid[index(this.x, this.y + 1)];
+                const left = grid[index(this.x - 1, this.y)];
+
+                if (top && !top.visited) neighbors.push(top);
+                if (right && !right.visited) neighbors.push(right);
+                if (bottom && !bottom.visited) neighbors.push(bottom);
+                if (left && !left.visited) neighbors.push(left);
+
+                if (neighbors.length > 0) {
+                    return neighbors[Math.floor(Math.random() * neighbors.length)];
+                }
+                return undefined;
+            }
+        }
+
+        function index(x, y) {
+            if (x < 0 || y < 0 || x >= cols || y >= rows) return -1;
+            return x + y * cols;
+        }
+
+        function removeWalls(a, b) {
+            const x = a.x - b.x;
+            if (x === 1) {
+                a.walls[3] = false;
+                b.walls[1] = false;
+            } else if (x === -1) {
+                a.walls[1] = false;
+                b.walls[3] = false;
+            }
+
+            const y = a.y - b.y;
+            if (y === 1) {
+                a.walls[0] = false;
+                b.walls[2] = false;
+            } else if (y === -1) {
+                a.walls[2] = false;
+                b.walls[0] = false;
+            }
+        }
+
+        function setup() {
+            grid = [];
+            stack = [];
+            totalPoints = 0;
+            pasos = 0;
+            gameActive = false;
+            document.getElementById("puntos").textContent = 0;
+            document.getElementById("segundos").textContent = 0;
+            document.getElementById("pasos").textContent = 0;
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const cell = new Cell(x, y);
+                    grid.push(cell);
+                    totalPoints++;
+                }
+            }
+            puntosRestantes = totalPoints;
+            document.getElementById("puntos").textContent = puntosRestantes;
+            const start = grid[0];
+            start.visited = true;
+            explorer = start;
+            stack.push(start);
+            drawMaze();
+        }
+
+        function drawMaze() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let cell of grid) {
+                cell.draw();
+            }
+
+            const current = stack[stack.length - 1];
+            const next = current.checkNeighbors();
+
+            if (next) {
+                next.visited = true;
+                stack.push(next);
+                removeWalls(current, next);
+            } else if (stack.length > 0) {
+                stack.pop();
+            }
+
+            if (stack.length > 0) {
+                requestAnimationFrame(drawMaze);
+            } else {
+                // Laberinto terminado, consumir el punto inicial
+                if (explorer.hasPoint) {
+                    explorer.hasPoint = false;
+                    puntosRestantes--;
+                    document.getElementById("puntos").textContent = puntosRestantes;
+                }
+
+                startTime = Date.now(); // Iniciar el temporizador cuando el laberinto está listo
+                gameActive = true;
+                updateTimer();
+                drawExplorer();
+                requestAnimationFrame(updateExplorer); // Iniciar el movimiento continuo
+            }
+        }
+
+        function drawExplorer() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let cell of grid) {
+                cell.draw();
+            }
+            const x = explorer.x * cellSize + cellSize / 2;
+            const y = explorer.y * cellSize + cellSize / 2;
+            ctx.fillStyle = "orange";
+            ctx.beginPath();
+            ctx.arc(x, y, cellSize / 4, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function moveExplorer(dx, dy) {
+            if (!gameActive) return; // Detener movimiento si el juego ha terminado
+
+            const newX = explorer.x + dx;
+            const newY = explorer.y + dy;
+            const newCell = grid[index(newX, newY)];
+
+            if (newCell && !explorer.walls[["top", "right", "bottom", "left"].indexOf(direction(dx, dy))]) {
+                explorer = newCell;
+                pasos++;
+                document.getElementById("pasos").textContent = pasos;
+
+                if (explorer.hasPoint) {
+                    explorer.hasPoint = false;
+                    puntosRestantes--;
+                    document.getElementById("puntos").textContent = puntosRestantes;
+                }
+                drawExplorer();
+
+                if (puntosRestantes === 0) {
+                    gameActive = false; // Detener el juego
+                }
+            }
+        }
+
+        function direction(dx, dy) {
+            if (dx === 0 && dy === -1) return "top";
+            if (dx === 1 && dy === 0) return "right";
+            if (dx === 0 && dy === 1) return "bottom";
+            if (dx === -1 && dy === 0) return "left";
+        }
+
+        function updateExplorer(timestamp) {
+            if (!gameActive) return; // Detener movimiento si el juego ha terminado
+            if (timestamp - lastMoveTime > 100) {
+                if (keys.ArrowUp) moveExplorer(0, -1);
+                if (keys.ArrowRight) moveExplorer(1, 0);
+                if (keys.ArrowDown) moveExplorer(0, 1);
+                if (keys.ArrowLeft) moveExplorer(-1, 0);
+                lastMoveTime = timestamp;
+            }
+            requestAnimationFrame(updateExplorer);
+        }
+
+        function updateTimer() {
+            if (!gameActive) return; // Detener el temporizador si el juego ha terminado
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById("segundos").textContent = elapsed;
+            requestAnimationFrame(updateTimer);
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (keys[e.key] !== undefined) keys[e.key] = true;
+        });
+
+        document.addEventListener("keyup", (e) => {
+            if (keys[e.key] !== undefined) keys[e.key] = false;
+        });
+
+        setup();
+    </script>
+</body>
+</html>

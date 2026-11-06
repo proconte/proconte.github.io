@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación - Sesión 3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        #presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        .slide {
+            height: 100vh;
+            width: auto;
+            object-fit: contain;
+            display: none;
+            user-select: none;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        #slide-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        #slide-counter.visible {
+            opacity: 1;
+        }
+
+        body:hover {
+            cursor: default;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="presentation-container">
+        <!-- Las imágenes se cargarán aquí dinámicamente o se pueden listar manualmente -->
+    </div>
+
+    <div id="slide-counter"></div>
+
+    <script>
+        // Lista de diapositivas basada en los archivos encontrados
+        const totalSlides = 27;
+        const container = document.getElementById('presentation-container');
+        const counter = document.getElementById('slide-counter');
+        let currentSlide = 1;
+        let counterTimeout;
+
+        // Inyectar imágenes
+        for (let i = 1; i <= totalSlides; i++) {
+            const img = document.createElement('img');
+            img.src = `Diapositiva${i}.PNG`;
+            img.className = 'slide' + (i === 1 ? ' active' : '');
+            img.id = `slide-${i}`;
+            img.loading = "eager"; // Carga prioritaria
+            container.appendChild(img);
+        }
+
+        function showSlide(index) {
+            if (index < 1 || index > totalSlides) return;
+
+            // Quitar clase active de la actual
+            const active = document.querySelector('.slide.active');
+            if (active) active.classList.remove('active');
+
+            // Poner clase active a la nueva
+            currentSlide = index;
+            const next = document.getElementById(`slide-${currentSlide}`);
+            if (next) next.classList.add('active');
+
+            // Mostrar contador
+            showCounter();
+
+            // Guardar en hash para persistencia al refrescar (opcional)
+            window.location.hash = currentSlide;
+        }
+
+        function showCounter() {
+            counter.textContent = `${currentSlide} de ${totalSlides}`;
+            counter.classList.add('visible');
+
+            clearTimeout(counterTimeout);
+            counterTimeout = setTimeout(() => {
+                counter.classList.remove('visible');
+            }, 2000);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'Home') {
+                showSlide(1);
+            } else if (e.key === 'End') {
+                showSlide(totalSlides);
+            }
+        });
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Navegación por clic y Pantalla Completa
+        document.addEventListener('mousedown', (e) => {
+            // Activar pantalla completa real al primer clic (opcional)
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error al intentar modo pantalla completa: ${err.message}`);
+                });
+            }
+
+            if (e.button === 0) { // Clic izquierdo
+                nextSlide();
+            } else if (e.button === 2) { // Clic derecho
+                prevSlide();
+            }
+        });
+
+        // Prevenir menú contextual en clic derecho para navegar
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // Cargar slide desde el hash si existe
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && !isNaN(hash)) {
+                const s = parseInt(hash);
+                if (s >= 1 && s <= totalSlides) {
+                    showSlide(s);
+                }
+            }
+        });
+
+        // Ocultar cursor tras 2 segundos de inactividad
+        let cursorTimeout;
+        document.addEventListener('mousemove', () => {
+            document.body.style.cursor = 'default';
+            clearTimeout(cursorTimeout);
+            cursorTimeout = setTimeout(() => {
+                document.body.style.cursor = 'none';
+            }, 2000);
+        });
+    </script>
+</body>
+
+</html>
